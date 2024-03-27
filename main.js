@@ -6,6 +6,28 @@ canvas.height = 400;
 let scoreOne = 0;
 let scoreTwo = 0;
 
+//key movment
+window.addEventListener("keypress", doKeyDown, false);
+
+function doKeyDown(e)
+{
+    const key = e.key;
+    if (key == "w" && playerOne.y-playerOne.gravity > 0)
+    {
+        playerOne.y -= playerOne.gravity * 4;
+    }
+    else if (key == 's' && playerOne.y + playerOne.height + playerOne.gravity < canvas.height)
+        playerOne.y += playerOne.gravity * 4;
+    //player2
+    if (key == "i" && playerTwo.y-playerTwo.gravity > 0)
+    {
+        playerTwo.y -= playerTwo.gravity * 4;
+    }
+    else if (key == 'k' && playerTwo.y + playerTwo.height + playerTwo.gravity < canvas.height)
+        playerTwo.y += playerTwo.gravity * 4;
+}
+
+
 class Element
 {
     constructor(options)
@@ -15,7 +37,7 @@ class Element
         this.width = options.width;
         this.height = options.height;
         this.color = options.color;
-        this.speed = options.x || 2;
+        this.speed = options.speed || 2;
         this.gravity = options.gravity;
     }
 }
@@ -72,15 +94,44 @@ function displayScoreTwo()
     context.fillText(scoreOne, canvas.width/2 + 60, 30)
 }
 
+function ballBounce()
+{
+    if (ball.y + ball.gravity <= 0 || ball.y + ball.gravity >= canvas.height){
+        ball.gravity = ball.gravity * -1;
+        ball.y += ball.gravity;
+        ball.x += ball.speed;
+    } else {
+        ball.y += ball.gravity;
+        ball.x += ball.speed;
+    }
+    ballWallCollision();
+}
+
+function ballWallCollision()
+{
+    if (ball.x + ball.speed <= 0 || ball.x+ball.speed + ball.width >= canvas.width){
+        ball.y += ball.gravity;
+        ball.speed = ball.speed * -1;
+        ball.x += ball.speed;
+    } else {
+        ball.y += ball.gravity;
+        ball.x += ball.speed;
+    }
+}
+
 function drawElements()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
     drawElement(playerOne);
     drawElement(playerTwo);
     drawElement(ball);
+    displayScoreOne();
+    displayScoreTwo();
 }
 
-function loop(){
+function loop()
+{
+    ballBounce();
     drawElements();
     window.requestAnimationFrame(loop)
 }
