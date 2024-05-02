@@ -58,9 +58,9 @@ function doKeyDown(e) {
     else if (key === "s" && playerOne.y + playerOne.height + playerOne.speed < canvas.height)
         playerOne.y += playerOne.speed;
 
-    if (key === "i" && playerTwo.y - playerTwo.speed > 0)
+    if (key === "ArrowUp" && playerTwo.y - playerTwo.speed > 0)
         playerTwo.y -= playerTwo.speed;
-    else if (key === "k" && playerTwo.y + playerTwo.height + playerTwo.speed < canvas.height)
+    else if (key === "ArrowDown" && playerTwo.y + playerTwo.height + playerTwo.speed < canvas.height)
         playerTwo.y += playerTwo.speed;
 }
 
