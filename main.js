@@ -49,19 +49,32 @@ const ball = {
 };
 
 // Key movement
-window.addEventListener("keydown", doKeyDown);
+// Key movement
+let keysPressed = {}; // Object to track keys being pressed
 
-function doKeyDown(e) {
-    const key = e.key;
-    if (key === "w" && playerOne.y - playerOne.speed > 0)
-        playerOne.y -= playerOne.speed;
-    else if (key === "s" && playerOne.y + playerOne.height + playerOne.speed < canvas.height)
-        playerOne.y += playerOne.speed;
+window.addEventListener("keydown", (e) => {
+    keysPressed[e.key] = true; // Mark key as pressed
+    doKeyDown(); // Call the movement function when a key is pressed
+});
 
-    if (key === "ArrowUp" && playerTwo.y - playerTwo.speed > 0)
-        playerTwo.y -= playerTwo.speed;
-    else if (key === "ArrowDown" && playerTwo.y + playerTwo.height + playerTwo.speed < canvas.height)
-        playerTwo.y += playerTwo.speed;
+window.addEventListener("keyup", (e) => {
+    delete keysPressed[e.key]; // Remove key from pressed keys
+});
+
+function doKeyDown() {
+    if (("w" in keysPressed || "s" in keysPressed) && playerOne.y >= 0 && playerOne.y + playerOne.height <= canvas.height) {
+        if ("w" in keysPressed && playerOne.y - playerOne.speed > 0)
+            playerOne.y -= playerOne.speed;
+        if ("s" in keysPressed && playerOne.y + playerOne.height + playerOne.speed < canvas.height)
+            playerOne.y += playerOne.speed;
+    }
+
+    if (("ArrowUp" in keysPressed || "ArrowDown" in keysPressed) && playerTwo.y >= 0 && playerTwo.y + playerTwo.height <= canvas.height) {
+        if ("ArrowUp" in keysPressed && playerTwo.y - playerTwo.speed > 0)
+            playerTwo.y -= playerTwo.speed;
+        if ("ArrowDown" in keysPressed && playerTwo.y + playerTwo.height + playerTwo.speed < canvas.height)
+            playerTwo.y += playerTwo.speed;
+    }
 }
 
 function displayScores() {
@@ -69,6 +82,14 @@ function displayScores() {
     context.fillStyle = "#ffd335";
     context.fillText(scoreOne, canvas.width / 2 - 60, 30);
     context.fillText(scoreTwo, canvas.width / 2 + 60, 30);
+}
+
+// Add text boxes for player labels
+function displayPlayerLabels() {
+    context.font = "18px Arial";
+    context.fillStyle = "#ffd335";
+    context.fillText("Player One", 20, 30);
+    context.fillText("Player Two", canvas.width - 100, 30);
 }
 
 function drawElement(element) {
@@ -123,6 +144,7 @@ function resetBall() {
 
 function drawElements() {
     context.clearRect(0, 0, canvas.width, canvas.height);
+    displayPlayerLabels(); // Display player labels
     drawElement(playerOne);
     drawElement(playerTwo);
     drawElement(ball);
