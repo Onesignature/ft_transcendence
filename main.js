@@ -49,33 +49,38 @@ const ball = {
 };
 
 // Key movement
-let keysPressed = {}; // Object to track keys being pressed
+let keysPressed = {
+    "w": false,
+    "s": false,
+    "ArrowUp": false,
+    "ArrowDown": false,
+}; // Object to track keys being pressed
+
+const PADDLE_SPEED = 3; // Adjust paddle speed as needed
 
 window.addEventListener("keydown", (e) => {
     keysPressed[e.key] = true; // Mark key as pressed
-    doKeyDown(); // Call the movement function when a key is pressed
 });
 
 window.addEventListener("keyup", (e) => {
-    delete keysPressed[e.key]; // Remove key from pressed keys
+    keysPressed[e.key] = false; // Mark key as released
 });
 
-function doKeyDown() {
-    if (("w" in keysPressed || "s" in keysPressed) && playerOne.y >= 0 && playerOne.y + playerOne.height <= canvas.height) {
-        if ("w" in keysPressed && playerOne.y - playerOne.speed > 0)
-            playerOne.y -= playerOne.speed;
-        if ("s" in keysPressed && playerOne.y + playerOne.height + playerOne.speed < canvas.height)
-            playerOne.y += playerOne.speed;
+function updatePlayerPositions() {
+    if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
+        playerOne.y -= PADDLE_SPEED;
+    }
+    if (keysPressed["s"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
+        playerOne.y += PADDLE_SPEED;
     }
 
-    if (("ArrowUp" in keysPressed || "ArrowDown" in keysPressed) && playerTwo.y >= 0 && playerTwo.y + playerTwo.height <= canvas.height) {
-        if ("ArrowUp" in keysPressed && playerTwo.y - playerTwo.speed > 0)
-            playerTwo.y -= playerTwo.speed;
-        if ("ArrowDown" in keysPressed && playerTwo.y + playerTwo.height + playerTwo.speed < canvas.height)
-            playerTwo.y += playerTwo.speed;
+    if (keysPressed["ArrowUp"] && playerTwo.y - PADDLE_SPEED > 0) {
+        playerTwo.y -= PADDLE_SPEED;
+    }
+    if (keysPressed["ArrowDown"] && playerTwo.y + playerTwo.height + PADDLE_SPEED < canvas.height) {
+        playerTwo.y += PADDLE_SPEED;
     }
 }
-
 // Create two divs for player labels and scores
 const playerLabelsDiv = document.createElement('div');
 playerLabelsDiv.style.position = 'absolute';
@@ -158,6 +163,7 @@ function drawElements() {
 }
 
 function loop() {
+    updatePlayerPositions();
     ballWallCollision();
     ball.x += ball.speedX; // Update ball's horizontal position
     ball.y += ball.speedY; // Update ball's vertical position
