@@ -36,8 +36,8 @@ const playerTwo = {
     speed: 10, // Adjust speed for paddle movement
 };
 
-const BALL_SPEED_X = 2; // Constant speed for the ball along X-axis
-const BALL_SPEED_Y = 2; // Constant speed for the ball along Y-axis
+const BALL_SPEED_X = 2.8; // Constant speed for the ball along X-axis
+const BALL_SPEED_Y = 2.8; // Constant speed for the ball along Y-axis
 
 const ball = {
     x: canvas.width / 2,
@@ -56,7 +56,7 @@ let keysPressed = {
     "ArrowDown": false,
 }; // Object to track keys being pressed
 
-const PADDLE_SPEED = 3; // Adjust paddle speed as needed
+const PADDLE_SPEED = 2.5; // Adjust paddle speed as needed
 
 window.addEventListener("keydown", (e) => {
     keysPressed[e.key] = true; // Mark key as pressed
