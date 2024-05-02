@@ -49,7 +49,6 @@ const ball = {
 };
 
 // Key movement
-// Key movement
 let keysPressed = {}; // Object to track keys being pressed
 
 window.addEventListener("keydown", (e) => {
@@ -77,19 +76,28 @@ function doKeyDown() {
     }
 }
 
-function displayScores() {
-    context.font = "18px Arial";
-    context.fillStyle = "#ffd335";
-    context.fillText(scoreOne, canvas.width / 2 - 60, 30);
-    context.fillText(scoreTwo, canvas.width / 2 + 60, 30);
-}
+// Create two divs for player labels and scores
+const playerLabelsDiv = document.createElement('div');
+playerLabelsDiv.style.position = 'absolute';
+playerLabelsDiv.style.top = '10px';
+playerLabelsDiv.style.left = '20px';
+playerLabelsDiv.style.color = '#ffd335';
+playerLabelsDiv.style.fontFamily = 'Arial';
+playerLabelsDiv.style.fontSize = '18px';
+playerLabelsDiv.innerHTML = 'Player One<br>Player Two';
+document.body.appendChild(playerLabelsDiv);
 
-// Add text boxes for player labels
-function displayPlayerLabels() {
-    context.font = "18px Arial";
-    context.fillStyle = "#ffd335";
-    context.fillText("Player One", 20, 30);
-    context.fillText("Player Two", canvas.width - 100, 30);
+const scoresDiv = document.createElement('div');
+scoresDiv.style.position = 'absolute';
+scoresDiv.style.top = '10px';
+scoresDiv.style.right = '20px';
+scoresDiv.style.color = '#ffd335';
+scoresDiv.style.fontFamily = 'Arial';
+scoresDiv.style.fontSize = '18px';
+document.body.appendChild(scoresDiv);
+
+function displayScores() {
+    scoresDiv.innerHTML = `${scoreOne} - ${scoreTwo}`;
 }
 
 function drawElement(element) {
@@ -134,7 +142,6 @@ function ballPaddleCollision(player) {
     }
 }
 
-
 function resetBall() {
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
@@ -144,7 +151,6 @@ function resetBall() {
 
 function drawElements() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    displayPlayerLabels(); // Display player labels
     drawElement(playerOne);
     drawElement(playerTwo);
     drawElement(ball);
