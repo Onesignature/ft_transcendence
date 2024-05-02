@@ -121,18 +121,43 @@ ballWallCollision();
 //detect collision
 function ballWallCollision()
 {
-    if (ball.x + ball.speed <= 0 || ball.x + ball.speed + ball.width >= canvas.width)
+    // if (ball.x + ball.speed <= 0 || ball.x + ball.speed + ball.width >= canvas.width)
+    // {
+    //     ball.y += ball.gravity;
+    //     ball.speed  = ball.speed * -1;
+    //     ball.x += ball.speed;
+    // }
+    // else
+    // {
+    //     ball.y += ball.gravity;
+    //     ball.x += ball.speed;
+    // }
+
+    if (ball.y + ball.gravity <= playerTwo.y + playerTwo.height &&
+        ball.x + ball.width + ball.speed >= playerTwo.x &&
+        ball.y + ball.gravity > playerTwo.y ||
+        ball.y + ball.gravity <= playerOne.y + playerOne.height &&
+        ball.x + ball.width + ball.speed >= playerOne.x &&
+        ball.y + ball.gravity > playerOne.y)
+        {
+            ball.speed = ball.speed * -1;
+        }
+    else if (ball.x + ball.speed < playerOne.x)
     {
+        scoreTwo += 1;
+        ball.speed = ball.speed * -1;
+        ball.x = 100 + ball.speed;
         ball.y += ball.gravity;
-        ball.speed  = ball.speed * -1;
-        ball.x += ball.speed;
     }
-    else
+    else if (ball.x + ball.speed > playerTwo.x + playerTwo.width)
     {
+        scoreOne += 1;
+        ball.speed = ball.speed * -1;
+        ball.x = 100 + ball.speed;
         ball.y += ball.gravity;
-        ball.x += ball.speed;
     }
-drawElements();
+
+    drawElements();
 }
 
 //drawelements
