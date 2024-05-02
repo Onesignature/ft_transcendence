@@ -148,10 +148,18 @@ function ballPaddleCollision(player) {
 }
 
 function resetBall() {
+    // Determine the direction based on the loser of the previous round
+    if (scoreOne > scoreTwo) {
+        // Player Two lost, so throw the ball towards Player Two
+        ball.speedX = BALL_SPEED_X; // Adjust the speed if needed
+    } else {
+        // Player One lost, so throw the ball towards Player One
+        ball.speedX = -BALL_SPEED_X; // Adjust the speed if needed
+    }
+
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.speedX = BALL_SPEED_X;
-    ball.speedY = BALL_SPEED_Y;
+    ball.speedY = BALL_SPEED_Y; // Reset the vertical speed
 }
 
 function drawElements() {
