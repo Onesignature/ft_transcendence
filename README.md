@@ -1,6 +1,6 @@
 # ft_transcendence
 
-Project contains these modules:-
+Project contains the following modules
 
 Web
 - Major module: Use a Framework as backend.
