@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { transform: 'translateY(0)' },
         { transform: 'translateY(-20px)' }
     ], {
-        duration: 5000,
+        duration: 4000,
         iterations: Infinity,
         direction: 'alternate',
         easing: 'ease-in-out'
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { transform: 'translateY(0)' },
         { transform: 'translateY(20px)' }
     ], {
-        duration: 5000,
+        duration: 4000,
         iterations: Infinity,
         direction: 'alternate',
         easing: 'ease-in-out'
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { transform: 'translateY(-30px)' },
         { transform: 'translateY(-10px)' }
     ], {
-        duration: 4000,
+        duration: 2000,
         iterations: Infinity,
         direction: 'alternate',
         easing: 'ease-in-out'
