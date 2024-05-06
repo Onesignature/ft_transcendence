@@ -1,22 +1,24 @@
 # ft_transcendence
 
+Project contains the following modules
+
 Web
 - Major module: Use a Framework as backend.
 - Minor module: Use a front-end framework or toolkit.
 - Minor module: Use a database for the backend.
 
 User Management
-- Major module: Standard user management, authentication, users across tournaments.
 - Major module: Implementing a remote authentication.
 
-Gameplay and user experience
-- Major module: Multiplayers (more than 2 in the same game).
+AI-Algo
+- Major module: Introduce an AI Opponent.
+
+Cybersecurity
+- Major module: Implement Two-Factor Authentication (2FA) and JWT
+
+Devops
+- Major module: Designing the Backend as Microservices.
 
 Accessibility
 - Minor module: Expanding Browser Compatibility.
 - Minor module: Multiple language supports.
-- Minor module: Add accessibility for Visually Impaired Users.
-- Minor module: Server-Side Rendering (SSR) Integration.
-
-
-SURPRISE!
