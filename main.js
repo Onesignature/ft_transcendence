@@ -1,139 +1,174 @@
+// Set canvas to be in the center of the browser window
 const canvas = document.getElementById("pongGame");
 const context = canvas.getContext("2d");
 canvas.width = 650;
 canvas.height = 400;
 
+// Calculate center position for canvas
+const centerX = (window.innerWidth - canvas.width) / 2;
+const centerY = (window.innerHeight - canvas.height) / 2;
+
+// Set canvas position and style
+canvas.style.position = "absolute";
+canvas.style.left = `${centerX}px`;
+canvas.style.top = `${centerY}px`;
+canvas.style.border = "yellow solid 5px";
+document.body.style.backgroundColor = "black";
+
 let scoreOne = 0;
 let scoreTwo = 0;
 
-//key movment
-window.addEventListener("keypress", doKeyDown, false);
-
-function doKeyDown(e)
-{
-    const key = e.key;
-    if (key == "w" && playerOne.y-playerOne.gravity > 0)
-    {
-        playerOne.y -= playerOne.gravity * 4;
-    }
-    else if (key == 's' && playerOne.y + playerOne.height + playerOne.gravity < canvas.height)
-        playerOne.y += playerOne.gravity * 4;
-    //player2
-    if (key == "i" && playerTwo.y-playerTwo.gravity > 0)
-    {
-        playerTwo.y -= playerTwo.gravity * 4;
-    }
-    else if (key == 'k' && playerTwo.y + playerTwo.height + playerTwo.gravity < canvas.height)
-        playerTwo.y += playerTwo.gravity * 4;
-}
-
-
-class Element
-{
-    constructor(options)
-    {
-        this.x = options.x;
-        this.y = options.y;
-        this.width = options.width;
-        this.height = options.height;
-        this.color = options.color;
-        this.speed = options.speed || 2;
-        this.gravity = options.gravity;
-    }
-}
-
-const playerOne = new Element({
+const playerOne = {
     x: 10,
     y: 200,
     width: 15,
     height: 80,
-    color: "#fff",
-    gravity: 2,
-});
+    color: '#ffd335',
+    speed: 10, // Adjust speed for paddle movement
+};
 
-const playerTwo = new Element({
+const playerTwo = {
     x: 625,
     y: 200,
     width: 15,
     height: 80,
-    color: "#fff",
-    gravity: 2,
+    color: '#ffd335',
+    speed: 10, // Adjust speed for paddle movement
+};
+
+const BALL_SPEED_X = 2.8; // Constant speed for the ball along X-axis
+const BALL_SPEED_Y = 2.8; // Constant speed for the ball along Y-axis
+
+const ball = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    radius: 8,
+    color: '#fff',
+    speedX: BALL_SPEED_X,
+    speedY: BALL_SPEED_Y,
+};
+
+let keysPressed = {
+    "w": false,
+    "s": false,
+    "ArrowUp": false,
+    "ArrowDown": false,
+};
+
+const PADDLE_SPEED = 2.5; // Adjust paddle speed as needed
+
+window.addEventListener("keydown", (e) => {
+    keysPressed[e.key] = true;
 });
 
-const ball = new Element({
-    x: 620/2,
-    y: 400/2,
-    width: 15,
-    height: 15,
-    color: "#20C20E",
-    gravity: 1,
-    speed: 1,
+window.addEventListener("keyup", (e) => {
+    keysPressed[e.key] = false;
 });
 
-//second paddle
+function updatePlayerPositions() {
+    if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
+        playerOne.y -= PADDLE_SPEED;
+    }
+    if (keysPressed["s"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
+        playerOne.y += PADDLE_SPEED;
+    }
+    if (keysPressed["ArrowUp"] && playerTwo.y - PADDLE_SPEED > 0) {
+        playerTwo.y -= PADDLE_SPEED;
+    }
+    if (keysPressed["ArrowDown"] && playerTwo.y + playerTwo.height + PADDLE_SPEED < canvas.height) {
+        playerTwo.y += PADDLE_SPEED;
+    }
+}
 
-//ball
+const playerLabelsDiv = document.createElement('div');
+playerLabelsDiv.style.position = 'absolute';
+playerLabelsDiv.style.top = '10px';
+playerLabelsDiv.style.left = '20px';
+playerLabelsDiv.style.color = '#ffd335';
+playerLabelsDiv.style.fontFamily = 'Arial';
+playerLabelsDiv.style.fontSize = '18px';
+playerLabelsDiv.innerHTML = 'Player One<br>Player Two';
+document.body.appendChild(playerLabelsDiv);
 
-//draw elements
-function drawElement(element){
+const scoresDiv = document.createElement('div');
+scoresDiv.style.position = 'absolute';
+scoresDiv.style.top = '10px';
+scoresDiv.style.right = '20px';
+scoresDiv.style.color = '#ffd335';
+scoresDiv.style.fontFamily = 'Arial';
+scoresDiv.style.fontSize = '18px';
+document.body.appendChild(scoresDiv);
+
+function displayScores() {
+    scoresDiv.innerHTML = `${scoreOne} - ${scoreTwo}`;
+}
+
+function drawElement(element) {
     context.fillStyle = element.color;
-    context.fillRect(element.x, element.y, element.width, element.height);
-}
-
-function displayScoreOne()
-{
-    context.font = "18px Arial"
-    context.fillStyle = '#fff'
-    context.fillText(scoreOne, canvas.width/2 - 60, 30)
-}
-
-function displayScoreTwo()
-{
-    context.font = "18px Arial"
-    context.fillStyle = '#fff'
-    context.fillText(scoreOne, canvas.width/2 + 60, 30)
-}
-
-function ballBounce()
-{
-    if (ball.y + ball.gravity <= 0 || ball.y + ball.gravity >= canvas.height){
-        ball.gravity = ball.gravity * -1;
-        ball.y += ball.gravity;
-        ball.x += ball.speed;
+    if (element === ball) {
+        context.beginPath();
+        context.arc(element.x, element.y, element.radius, 0, Math.PI * 2);
+        context.fill();
     } else {
-        ball.y += ball.gravity;
-        ball.x += ball.speed;
-    }
-    ballWallCollision();
-}
-
-function ballWallCollision()
-{
-    if (ball.x + ball.speed <= 0 || ball.x+ball.speed + ball.width >= canvas.width){
-        ball.y += ball.gravity;
-        ball.speed = ball.speed * -1;
-        ball.x += ball.speed;
-    } else {
-        ball.y += ball.gravity;
-        ball.x += ball.speed;
+        context.fillRect(element.x, element.y, element.width, element.height);
     }
 }
 
-function drawElements()
-{
-    context.clearRect(0,0,canvas.width, canvas.height);
+function ballWallCollision() {
+    if (ball.y + ball.speedY > canvas.height - ball.radius || ball.y + ball.speedY < ball.radius) {
+        ball.speedY = -ball.speedY;
+    }
+    if (ball.x + ball.speedX > canvas.width - ball.radius) {
+        scoreOne++;
+        resetBall();
+    } else if (ball.x - ball.speedX < ball.radius) {
+        scoreTwo++;
+        resetBall();
+    }
+}
+
+function ballPaddleCollision(player) {
+    if (
+        ball.x + ball.radius > player.x &&
+        ball.x - ball.radius < player.x + player.width &&
+        ball.y + ball.radius > player.y &&
+        ball.y - ball.radius < player.y + player.height
+    ) {
+        // Check if the ball is moving towards the paddle
+        if ((ball.speedX < 0 && player === playerOne) || (ball.speedX > 0 && player === playerTwo)) {
+            ball.speedX = -ball.speedX;
+            let hitPos = (ball.y - (player.y + player.height / 2)) / (player.height / 2);
+            ball.speedY = hitPos * BALL_SPEED_Y;
+        }
+    }
+}
+
+function resetBall() {
+    if (scoreOne > scoreTwo) {
+        ball.speedX = BALL_SPEED_X;
+    } else {
+        ball.speedX = -BALL_SPEED_X;
+    }
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    ball.speedY = BALL_SPEED_Y;
+}
+
+function drawElements() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
     drawElement(playerOne);
     drawElement(playerTwo);
     drawElement(ball);
-    displayScoreOne();
-    displayScoreTwo();
+    displayScores();
 }
 
-function loop()
-{
-    ballBounce();
+function loop() {
+    updatePlayerPositions();
+    ballWallCollision();
+    ball.x += ball.speedX;
+    ball.y += ball.speedY;
     drawElements();
-    window.requestAnimationFrame(loop)
+    requestAnimationFrame(loop);
 }
 
 loop();
