@@ -129,19 +129,32 @@ function ballWallCollision() {
 
 function ballPaddleCollision(player) {
     if (
-        ball.x + ball.radius > player.x &&
-        ball.x - ball.radius < player.x + player.width &&
-        ball.y + ball.radius > player.y &&
-        ball.y - ball.radius < player.y + player.height
+        ball.x < player.x + player.width + ball.radius &&
+        ball.x > player.x - ball.radius &&
+        ball.y < player.y + player.height + ball.radius &&
+        ball.y > player.y - ball.radius
     ) {
-        // Check if the ball is moving towards the paddle
-        if ((ball.speedX < 0 && player === playerOne) || (ball.speedX > 0 && player === playerTwo)) {
-            ball.speedX = -ball.speedX;
-            let hitPos = (ball.y - (player.y + player.height / 2)) / (player.height / 2);
-            ball.speedY = hitPos * BALL_SPEED_Y;
+        // Calculate the center of the paddle
+        let paddleCenter = player.y + player.height / 2;
+        // Calculate where the ball hits the paddle
+        let hitPos = (ball.y - paddleCenter) / (player.height / 2);
+
+        // Adjust ball's vertical speed based on hit position
+        ball.speedY = hitPos * BALL_SPEED_Y;
+
+        // Correct the horizontal position of the ball to prevent it from going through the paddle
+        if (ball.speedX > 0) { // Ball is moving right
+            ball.x = player.x - ball.radius; // Place ball outside the right paddle
+        } else { // Ball is moving left
+            ball.x = player.x + player.width + ball.radius; // Place ball outside the left paddle
         }
+
+        // Reverse horizontal direction
+        ball.speedX = -ball.speedX;
     }
 }
+
+
 
 function resetBall() {
     if (scoreOne > scoreTwo) {
@@ -165,6 +178,8 @@ function drawElements() {
 function loop() {
     updatePlayerPositions();
     ballWallCollision();
+    ballPaddleCollision(playerOne);  // Check collision with Player One
+    ballPaddleCollision(playerTwo);  // Check collision with Player Two
     ball.x += ball.speedX;
     ball.y += ball.speedY;
     drawElements();
