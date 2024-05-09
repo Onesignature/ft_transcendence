@@ -36,16 +36,16 @@ const playerTwo = {
     speed: 10, // Adjust speed for paddle movement
 };
 
-const BALL_SPEED_X = 2.8; // Constant speed for the ball along X-axis
-const BALL_SPEED_Y = 2.8; // Constant speed for the ball along Y-axis
+const INITIAL_SPEED = 4;
+let ballSpeed = INITIAL_SPEED;
 
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
     radius: 8,
     color: '#fff',
-    speedX: BALL_SPEED_X,
-    speedY: BALL_SPEED_Y,
+    speedX: ballSpeed,
+    speedY: 0,
 };
 
 let keysPressed = {
@@ -114,9 +114,16 @@ function drawElement(element) {
     }
 }
 
+function normalizeSpeed() {
+    const angle = Math.atan2(ball.speedY, ball.speedX);
+    ball.speedX = ballSpeed * Math.cos(angle);
+    ball.speedY = ballSpeed * Math.sin(angle);
+}
+
 function ballWallCollision() {
     if (ball.y + ball.speedY > canvas.height - ball.radius || ball.y + ball.speedY < ball.radius) {
         ball.speedY = -ball.speedY;
+        normalizeSpeed();  // Normalize speed after wall collision
     }
     if (ball.x + ball.speedX > canvas.width - ball.radius) {
         scoreOne++;
@@ -140,7 +147,7 @@ function ballPaddleCollision(player) {
         let hitPos = (ball.y - paddleCenter) / (player.height / 2);
 
         // Adjust ball's vertical speed based on hit position
-        ball.speedY = hitPos * BALL_SPEED_Y;
+        ball.speedY = hitPos * ballSpeed;
 
         // Correct the horizontal position of the ball to prevent it from going through the paddle
         if (ball.speedX > 0) { // Ball is moving right
@@ -151,20 +158,20 @@ function ballPaddleCollision(player) {
 
         // Reverse horizontal direction
         ball.speedX = -ball.speedX;
+        normalizeSpeed();  // Normalize speed after paddle collision
     }
 }
 
-
-
 function resetBall() {
+    ballSpeed = INITIAL_SPEED;  // Reset speed to initial after scoring
     if (scoreOne > scoreTwo) {
-        ball.speedX = BALL_SPEED_X;
+        ball.speedX = ballSpeed;
     } else {
-        ball.speedX = -BALL_SPEED_X;
+        ball.speedX = -ballSpeed;
     }
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.speedY = BALL_SPEED_Y;
+    ball.speedY = 0;  // Start with no vertical speed
 }
 
 function drawElements() {
@@ -178,8 +185,8 @@ function drawElements() {
 function loop() {
     updatePlayerPositions();
     ballWallCollision();
-    ballPaddleCollision(playerOne);  // Check collision with Player One
-    ballPaddleCollision(playerTwo);  // Check collision with Player Two
+    ballPaddleCollision(playerOne);
+    ballPaddleCollision(playerTwo);
     ball.x += ball.speedX;
     ball.y += ball.speedY;
     drawElements();
