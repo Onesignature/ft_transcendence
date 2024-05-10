@@ -106,9 +106,16 @@ function displayScores() {
 function drawElement(element) {
     context.fillStyle = element.color;
     if (element === ball) {
-        context.beginPath();
-        context.arc(element.x, element.y, element.radius, 0, Math.PI * 2);
-        context.fill();
+        // Draw a motion blur effect
+        const trailLength = 5;
+        const opacityStep = 0.1;
+        for (let i = 0; i < trailLength; i++) {
+            context.globalAlpha = opacityStep * (trailLength - i);
+            context.beginPath();
+            context.arc(ball.x - i * ball.speedX * 0.2, ball.y - i * ball.speedY * 0.2, ball.radius, 0, Math.PI * 2);
+            context.fill();
+        }
+        context.globalAlpha = 1; // Reset alpha after drawing
     } else {
         context.fillRect(element.x, element.y, element.width, element.height);
     }
