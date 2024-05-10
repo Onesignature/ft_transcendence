@@ -20,50 +20,49 @@ let scoreTwo = 0;
 
 const playerOne = {
     x: 10,
-    y: 200,
+    y: (canvas.height - 80) / 2,
     width: 15,
     height: 80,
     color: '#ffd335',
-    speed: 10, // Adjust speed for paddle movement
+    speed: 10,
 };
 
 const playerTwo = {
     x: 625,
-    y: 200,
+    y: (canvas.height - 80) / 2,
     width: 15,
     height: 80,
     color: '#ffd335',
-    speed: 10, // Adjust speed for paddle movement
+    speed: 10,
 };
 
-const BALL_SPEED_X = 2.8; // Constant speed for the ball along X-axis
-const BALL_SPEED_Y = 2.8; // Constant speed for the ball along Y-axis
+const INITIAL_SPEED = 4;
+let ballSpeed = INITIAL_SPEED;
 
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
-    radius: 8, // Adjust ball size
+    radius: 8,
     color: '#fff',
-    speedX: BALL_SPEED_X,
-    speedY: BALL_SPEED_Y,
+    speedX: ballSpeed,
+    speedY: 0,
 };
 
-// Key movement
 let keysPressed = {
     "w": false,
     "s": false,
     "ArrowUp": false,
     "ArrowDown": false,
-}; // Object to track keys being pressed
+};
 
-const PADDLE_SPEED = 2.5; // Adjust paddle speed as needed
+const PADDLE_SPEED = 2.5;
 
 window.addEventListener("keydown", (e) => {
-    keysPressed[e.key] = true; // Mark key as pressed
+    keysPressed[e.key] = true;
 });
 
 window.addEventListener("keyup", (e) => {
-    keysPressed[e.key] = false; // Mark key as released
+    keysPressed[e.key] = false;
 });
 
 function updatePlayerPositions() {
@@ -73,7 +72,6 @@ function updatePlayerPositions() {
     if (keysPressed["s"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
         playerOne.y += PADDLE_SPEED;
     }
-
     if (keysPressed["ArrowUp"] && playerTwo.y - PADDLE_SPEED > 0) {
         playerTwo.y -= PADDLE_SPEED;
     }
@@ -81,7 +79,7 @@ function updatePlayerPositions() {
         playerTwo.y += PADDLE_SPEED;
     }
 }
-// Create two divs for player labels and scores
+
 const playerLabelsDiv = document.createElement('div');
 playerLabelsDiv.style.position = 'absolute';
 playerLabelsDiv.style.top = '10px';
@@ -116,11 +114,17 @@ function drawElement(element) {
     }
 }
 
+function normalizeSpeed() {
+    const angle = Math.atan2(ball.speedY, ball.speedX);
+    ball.speedX = ballSpeed * Math.cos(angle);
+    ball.speedY = ballSpeed * Math.sin(angle);
+}
+
 function ballWallCollision() {
     if (ball.y + ball.speedY > canvas.height - ball.radius || ball.y + ball.speedY < ball.radius) {
         ball.speedY = -ball.speedY;
+        normalizeSpeed();
     }
-
     if (ball.x + ball.speedX > canvas.width - ball.radius) {
         scoreOne++;
         resetBall();
@@ -128,38 +132,44 @@ function ballWallCollision() {
         scoreTwo++;
         resetBall();
     }
-
-    ballPaddleCollision(playerOne);
-    ballPaddleCollision(playerTwo);
 }
 
 function ballPaddleCollision(player) {
     if (
-        ball.x + ball.radius >= player.x &&
-        ball.x - ball.radius <= player.x + player.width &&
-        ball.y + ball.radius >= player.y &&
-        ball.y - ball.radius <= player.y + player.height
+        ball.x < player.x + player.width + ball.radius &&
+        ball.x > player.x - ball.radius &&
+        ball.y < player.y + player.height + ball.radius &&
+        ball.y > player.y - ball.radius
     ) {
-        // Check if the ball is moving towards the paddle
-        if ((ball.speedX < 0 && player === playerOne) || (ball.speedX > 0 && player === playerTwo)) {
-            ball.speedX = -ball.speedX; // Change ball's horizontal direction
+        let paddleCenter = player.y + player.height / 2;
+        let hitPos = (ball.y - paddleCenter) / (player.height / 2);
+        ball.speedY = hitPos * ballSpeed;
+        if (ball.speedX > 0) {
+            ball.x = player.x - ball.radius;
+        } else {
+            ball.x = player.x + player.width + ball.radius;
         }
+        ball.speedX = -ball.speedX;
+        normalizeSpeed();
     }
 }
 
 function resetBall() {
-    // Determine the direction based on the loser of the previous round
+    ballSpeed = INITIAL_SPEED;
     if (scoreOne > scoreTwo) {
-        // Player Two lost, so throw the ball towards Player Two
-        ball.speedX = BALL_SPEED_X; // Adjust the speed if needed
+        ball.speedX = ballSpeed;
     } else {
-        // Player One lost, so throw the ball towards Player One
-        ball.speedX = -BALL_SPEED_X; // Adjust the speed if needed
+        ball.speedX = -ballSpeed;
     }
-
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.speedY = BALL_SPEED_Y; // Reset the vertical speed
+    ball.speedY = 0;
+    resetPaddles();
+}
+
+function resetPaddles() {
+    playerOne.y = (canvas.height - playerOne.height) / 2;
+    playerTwo.y = (canvas.height - playerTwo.height) / 2;
 }
 
 function drawElements() {
@@ -173,8 +183,10 @@ function drawElements() {
 function loop() {
     updatePlayerPositions();
     ballWallCollision();
-    ball.x += ball.speedX; // Update ball's horizontal position
-    ball.y += ball.speedY; // Update ball's vertical position
+    ballPaddleCollision(playerOne);
+    ballPaddleCollision(playerTwo);
+    ball.x += ball.speedX;
+    ball.y += ball.speedY;
     drawElements();
     requestAnimationFrame(loop);
 }
