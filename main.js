@@ -36,7 +36,7 @@ const playerTwo = {
     speed: 10,
 };
 
-const INITIAL_SPEED = 4;
+const INITIAL_SPEED = 2;
 let ballSpeed = INITIAL_SPEED;
 
 const ball = {
@@ -65,13 +65,36 @@ window.addEventListener("keyup", (e) => {
     keysPressed[e.key] = false;
 });
 
-function updatePlayerPositions() {
-    if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function updateAIposition() {
+    if (playerOne.y - PADDLE_SPEED > 0 && playerOne.y > futureBallY)
         playerOne.y -= PADDLE_SPEED;
-    }
-    if (keysPressed["s"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
+    if (playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height && playerOne.y < futureBallY)
         playerOne.y += PADDLE_SPEED;
-    }
+    else
+        playerOne.y += 0;
+}
+
+function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+var futureBallY;
+setInterval(() => {
+    futureBallY = Math.floor(ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40);
+    console.log("FUTUREBALLY ",futureBallY);
+}, 1000);
+
+function updatePlayerPositions() {
+    // if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
+    //     playerOne.y -= PADDLE_SPEED;
+    // }
+    // if (keysPressed["s"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
+    //     playerOne.y += PADDLE_SPEED;
+    // }
     if (keysPressed["ArrowUp"] && playerTwo.y - PADDLE_SPEED > 0) {
         playerTwo.y -= PADDLE_SPEED;
     }
@@ -164,6 +187,7 @@ function resetBall() {
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
     ball.speedY = 0;
+    futureBallY = canvas.height / 2;
     resetPaddles();
 }
 
@@ -182,6 +206,7 @@ function drawElements() {
 
 function loop() {
     updatePlayerPositions();
+    updateAIposition();
     ballWallCollision();
     ballPaddleCollision(playerOne);
     ballPaddleCollision(playerTwo);
