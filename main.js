@@ -65,6 +65,31 @@ window.addEventListener("keyup", (e) => {
     keysPressed[e.key] = false;
 });
 
+// Create additional canvases for player names and scores
+const canvasTop1 = document.createElement('canvas');
+const canvasTop2 = document.createElement('canvas');
+const contextTop1 = canvasTop1.getContext('2d');
+const contextTop2 = canvasTop2.getContext('2d');
+
+// Set width, height, and styling for the new canvases
+canvasTop1.width = 300;
+canvasTop1.height = 50;
+canvasTop2.width = 300;
+canvasTop2.height = 50;
+
+canvasTop1.style.position = "absolute";
+canvasTop2.style.position = "absolute";
+canvasTop1.style.left = `${centerX}px`;
+canvasTop2.style.left = `${centerX + 350}px`; // Adjusted to place next to the first top canvas
+canvasTop1.style.top = `${centerY - 60}px`; // Positioned above the main canvas
+canvasTop2.style.top = `${centerY - 60}px`; // Positioned above the main canvas
+canvasTop1.style.border = "yellow solid 2px";
+canvasTop2.style.border = "yellow solid 2px";
+
+// Append the new canvases to the body of the document
+document.body.appendChild(canvasTop1);
+document.body.appendChild(canvasTop2);
+
 function updatePlayerPositions() {
     if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
         playerOne.y -= PADDLE_SPEED;
@@ -80,27 +105,17 @@ function updatePlayerPositions() {
     }
 }
 
-const playerLabelsDiv = document.createElement('div');
-playerLabelsDiv.style.position = 'absolute';
-playerLabelsDiv.style.top = '10px';
-playerLabelsDiv.style.left = '20px';
-playerLabelsDiv.style.color = '#ffd335';
-playerLabelsDiv.style.fontFamily = 'Arial';
-playerLabelsDiv.style.fontSize = '18px';
-playerLabelsDiv.innerHTML = 'Player One<br>Player Two';
-document.body.appendChild(playerLabelsDiv);
-
-const scoresDiv = document.createElement('div');
-scoresDiv.style.position = 'absolute';
-scoresDiv.style.top = '10px';
-scoresDiv.style.right = '20px';
-scoresDiv.style.color = '#ffd335';
-scoresDiv.style.fontFamily = 'Arial';
-scoresDiv.style.fontSize = '18px';
-document.body.appendChild(scoresDiv);
-
 function displayScores() {
-    scoresDiv.innerHTML = `${scoreOne} - ${scoreTwo}`;
+
+    contextTop1.clearRect(0, 0, canvasTop1.width, canvasTop1.height);
+    contextTop1.fillStyle = '#ffd335';
+    contextTop1.font = '18px Arial';
+    contextTop1.fillText(`PlayerOne - ${scoreOne}`, 10, 30);
+
+    contextTop2.clearRect(0, 0, canvasTop2.width, canvasTop2.height);
+    contextTop2.fillStyle = '#ffd335';
+    contextTop2.font = '18px Arial';
+    contextTop2.fillText(`PlayerTwo - ${scoreTwo}`, 10, 30);
 }
 
 function drawElement(element) {
@@ -127,9 +142,11 @@ function ballWallCollision() {
     }
     if (ball.x + ball.speedX > canvas.width - ball.radius) {
         scoreOne++;
+        scoreOneScored = 1;
         resetBall();
     } else if (ball.x - ball.speedX < ball.radius) {
         scoreTwo++;
+        scoreTwoScored = 1;
         resetBall();
     }
 }
