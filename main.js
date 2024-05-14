@@ -85,7 +85,11 @@ function randomIntFromInterval(min, max) { // min and max included
 var futureBallY;
 setInterval(() => {
     futureBallY = Math.floor(ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40);
-    console.log("FUTUREBALLY ",futureBallY);
+        if ((ball.y < 40 || ball.y > 390 ) && ball.x < 280)
+            {
+                futureBallY = Math.floor(-ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40);
+                console.log("trigger");
+            }
 }, 1000);
 
 function updatePlayerPositions() {
@@ -147,6 +151,8 @@ function ballWallCollision() {
     if (ball.y + ball.speedY > canvas.height - ball.radius || ball.y + ball.speedY < ball.radius) {
         ball.speedY = -ball.speedY;
         normalizeSpeed();
+        console.log("Ball y", ball.y);
+        console.log("ball x", ball.x);
     }
     if (ball.x + ball.speedX > canvas.width - ball.radius) {
         scoreOne++;
