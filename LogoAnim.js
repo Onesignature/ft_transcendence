@@ -88,9 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const moveLine1Animation = line1.animate([
         { transform: 'translateY(0)' },
-        { transform: 'translateY(-20px)' }
+        { transform: 'translateY(-30px)' }
     ], {
-        duration: 4000,
+        duration: 1500,
         iterations: Infinity,
         direction: 'alternate',
         easing: 'ease-in-out'
@@ -98,9 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const moveLine2Animation = line2.animate([
         { transform: 'translateY(0)' },
-        { transform: 'translateY(20px)' }
+        { transform: 'translateY(32px)' }
     ], {
-        duration: 4000,
+        duration: 1500,
         iterations: Infinity,
         direction: 'alternate',
         easing: 'ease-in-out'

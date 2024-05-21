@@ -12,12 +12,6 @@ class BaseButton {
     const button = document.createElement('button');
     button.textContent = this.text;
     button.classList.add('base-button');
-    button.addEventListener('click', () => {
-      const onClick = button.getAttribute('data-onclick');
-      if (onClick && window[onClick] instanceof Function) {
-        window[onClick]();
-      }
-    });
     return button;
   }
 
@@ -87,6 +81,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const strokeColor = button.dataset.strokeColor || undefined;
     const hoverTextColor = button.dataset.hoverTextColor || undefined;
     const hoverBackgroundColor = button.dataset.hoverBackgroundColor || undefined;
+    const onClick = button.getAttribute('data-onclick') || undefined;
+
     const newButton = new BaseButton(text, {
       fontSize,
       textColor,
@@ -94,11 +90,11 @@ document.addEventListener("DOMContentLoaded", function() {
       hoverTextColor,
       hoverBackgroundColor,
     });
+
+    if (onClick && window[onClick] instanceof Function) {
+      newButton.element.addEventListener('click', window[onClick]);
+    }
+
     button.parentNode.replaceChild(newButton.element, button);
   });
 });
-
-// Example click handler function
-function handleButtonClick() {
-  alert('Button clicked!');
-}
