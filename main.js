@@ -51,11 +51,14 @@ const ball = {
 let keysPressed = {
     "w": false,
     "s": false,
+    "d": false,
+    "e": false,
     "ArrowUp": false,
     "ArrowDown": false,
 };
 
 const PADDLE_SPEED = 2.5;
+let isPlayerOneAI = true; // Toggle this variable to switch between AI and player control for Player One
 
 window.addEventListener("keydown", (e) => {
     keysPressed[e.key] = true;
@@ -65,40 +68,43 @@ window.addEventListener("keyup", (e) => {
     keysPressed[e.key] = false;
 });
 
-function randomIntFromInterval(min, max) { // min and max included 
-    return Math.floor(Math.random() * (max - min + 1) + min);
+function setKeyState(key, state) {
+    keysPressed[key] = state;
 }
+
+const TOLERANCE = 2;
 
 function updateAIposition() {
-    if (playerOne.y - PADDLE_SPEED > 0 && playerOne.y > futureBallY)
-        playerOne.y -= PADDLE_SPEED;
-    if (playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height && playerOne.y < futureBallY)
-        playerOne.y += PADDLE_SPEED;
-    else
-        playerOne.y += 0;
+    setKeyState("d", playerOne.y > futureBallY + TOLERANCE);
+    setKeyState("e", playerOne.y < futureBallY - TOLERANCE);
 }
 
-function randomIntFromInterval(min, max) { // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-var futureBallY;
+let futureBallY;
 setInterval(() => {
     futureBallY = Math.floor(ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40);
-        if ((ball.y < 40 || ball.y > 390 ) && ball.x < 280)
-            {
-                futureBallY = Math.floor(-ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40);
-                console.log("trigger");
-            }
+    if ((ball.y < 40 || ball.y > 390) && ball.x < 280) {
+        futureBallY = Math.floor(-ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40);
+    }
 }, 1000);
 
 function updatePlayerPositions() {
-    // if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
-    //     playerOne.y -= PADDLE_SPEED;
-    // }
-    // if (keysPressed["s"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
-    //     playerOne.y += PADDLE_SPEED;
-    // }
+    if (isPlayerOneAI) {
+        updateAIposition();
+        if (keysPressed["d"] && playerOne.y - PADDLE_SPEED > 0) {
+            playerOne.y -= PADDLE_SPEED;
+        }
+        if (keysPressed["e"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
+            playerOne.y += PADDLE_SPEED;
+        }
+    } else {
+        if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
+            playerOne.y -= PADDLE_SPEED;
+        }
+        if (keysPressed["s"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
+            playerOne.y += PADDLE_SPEED;
+        }
+    }
+
     if (keysPressed["ArrowUp"] && playerTwo.y - PADDLE_SPEED > 0) {
         playerTwo.y -= PADDLE_SPEED;
     }
@@ -212,7 +218,6 @@ function drawElements() {
 
 function loop() {
     updatePlayerPositions();
-    updateAIposition();
     ballWallCollision();
     ballPaddleCollision(playerOne);
     ballPaddleCollision(playerTwo);
@@ -221,5 +226,14 @@ function loop() {
     drawElements();
     requestAnimationFrame(loop);
 }
+
+// Toggle control mode for Player One using "C" key
+window.addEventListener("keydown", (e) => {
+    if (e.key === "c") {
+        isPlayerOneAI = !isPlayerOneAI;
+        setKeyState("d", false); // Reset AI keys
+        setKeyState("e", false); // Reset AI keys
+    }
+});
 
 loop();
