@@ -4,11 +4,11 @@
 
     'use strict';
 
-    function Component(props, context) {
+    function Router(props, context) {
         this.props = props;
         this.context = context;
     }
 
-    exports.Component = Component;
+    exports.Router = Router;
 
 })();

@@ -1,3 +1,7 @@
-import onion from "../modules/onion";
+import OnionDOM from "../modules/onion-dom";
 
-const root = document.getElementById('root');
+//const root = OnionDOM.createRoot(document.getElementById('root'));
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("loaded");
+})
