@@ -36,7 +36,7 @@ const playerTwo = {
     speed: 10,
 };
 
-const INITIAL_SPEED = 2;
+const INITIAL_SPEED = 5;
 let ballSpeed = INITIAL_SPEED;
 
 const ball = {
@@ -57,7 +57,7 @@ let keysPressed = {
     "ArrowDown": false,
 };
 
-const PADDLE_SPEED = 2.5;
+const PADDLE_SPEED = 7;
 let isPlayerOneAI = true; // Toggle this variable to switch between AI and player control for Player One
 
 window.addEventListener("keydown", (e) => {
