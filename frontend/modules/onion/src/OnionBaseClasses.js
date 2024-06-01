@@ -3,26 +3,10 @@ function Component(props, context) {
     this.context = context;
 }
 
-Component.prototype.onEnable()
-{}
+Component.prototype.onEnable = function(){};
 
-Component.prototype.onUpdate(prevProps, prevState)
-{}
+Component.prototype.onDisable = function(){};
 
-Component.prototype.onDisable()
-{}
+Component.prototype.render = function(){};
 
-Component.prototype.render()
-{
-    // return documnet.getHTML("./mainMenu.html");
-}
-
-Component.prototype.shouldComponentUpdate()
-{
-    return true;
-}
-
-Component.prototype.shouldComponentUpdate()
-{}
-
-exports.Component = Component;
+export {Component};

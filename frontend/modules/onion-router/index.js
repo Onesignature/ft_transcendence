@@ -1,3 +1,3 @@
-'use strict';
-
-module.exports = require('./cjs/onion-router.development.js');
+export  {
+    createRoot
+} from './src/OnionRouterClient.js'

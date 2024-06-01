@@ -1,3 +1,3 @@
 export {
     Component
-} from './src/ReactClient'
+} from './src/OnionClient.js'

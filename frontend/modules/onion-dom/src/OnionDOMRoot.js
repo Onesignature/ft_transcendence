@@ -1,11 +1,11 @@
 function OnionDOMRoot(element)
 {
     this._internalRoot = element;
+    this._prevComponent = null;
 }
 
 export function createRoot(element)
 {
-    console.log("CALLED!");
     return new OnionDOMRoot(element);
 }
 
@@ -16,5 +16,16 @@ OnionDOMRoot.prototype.render = function(component)
     {
         throw new Error('Cannot update an unmounted root.');
     }
-    root.innerHTML = component.render();
+    
+    if (this._prevComponent !== null)
+    {
+        this._prevComponent.onDisable();
+    }
+    let newComponent = new component();
+    newComponent.onEnable();
+    this._prevComponent = component;
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        root.innerHTML = await newComponent.render();
+    })
 }

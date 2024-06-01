@@ -1,4 +1,4 @@
-import {Component} from './ReactBaseClasses';
+import {Component} from './OnionBaseClasses.js';
 
 export {
     Component

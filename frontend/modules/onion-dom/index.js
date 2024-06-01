@@ -1,3 +1,3 @@
-export {
+export  {
     createRoot
-} from './src/OnionDOMClient'
+} from './src/OnionDOMClient.js'

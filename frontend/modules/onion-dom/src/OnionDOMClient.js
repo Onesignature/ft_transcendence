@@ -1,4 +1,4 @@
-import {createRoot} from './ReactDOMRoot';
+import {createRoot} from './OnionDOMRoot.js';
 
 export {
     createRoot
