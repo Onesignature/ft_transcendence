@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Gradient Color Animation</title>
+    <title>Pong Log In</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,15 +19,22 @@
         }
     </style>
 </head>
-<body class="d-flex justify-content-center flex-column-reverse align-items-center vh-100">
-    <!-- Main content will be loaded by LoginPage.js -->
-    <script src="LoginPage.js"></script>
-    <!-- Load LogoAnim.js and BaseButton.js after LoginPage.js -->
-    
-    <script src="LogoAnim.js"></script>
-    <script src="BaseButton.js"></script>
+<body class="d-flex justify-content-center flex-column align-items-center vh-100">
+    <div id="pong-logo-animation"></div>
+    <h1 style="font-size: 20pt; color: white;">Enjoy the Pong</h1>
+    <h2 style="font-size: 15pt; color: #FFD335; margin-top: 5px; margin-bottom: 20px;">Log in with 42 account</h2>
+    <button data-base-button data-font-size="20" data-text-color="white" data-stroke-color="white" data-hover-text-color="#0E0E0E" data-hover-background-color="#FFD335" data-onclick="handleButtonClick">Log In</button>
+  
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="BaseButton.js"></script>
+    <script src="LogoAnim.js"></script>
+    <script>
+      // Define the action for the button
+      function handleButtonClick() {
+        alert('Button Log In clicked!');
+      }
+    </script>
 </body>
 </html>

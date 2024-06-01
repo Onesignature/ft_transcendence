@@ -5,7 +5,7 @@ class BaseButton {
     this.text = text;
     this.options = Object.assign({}, BaseButton.defaultOptions, options);
     this.element = this.createButtonElement();
-    this.addStyles();
+    this.applyStyles();
   }
 
   createButtonElement() {
@@ -15,37 +15,40 @@ class BaseButton {
     return button;
   }
 
-  addStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-      .base-button {
-        outline: none;
-        background-color: transparent;
-        border: 2px solid ${this.options.strokeColor};
-        color: ${this.options.textColor};
-        padding: 2px 40px;
-        font-size: ${this.options.fontSize}pt;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-      }
+  applyStyles() {
+    this.element.style.outline = 'none';
+    this.element.style.backgroundColor = 'transparent';
+    this.element.style.border = `2px solid ${this.options.strokeColor}`;
+    this.element.style.color = `${this.options.textColor}`;
+    this.element.style.padding = '2px 40px';
+    this.element.style.margin = '10px';
+    this.element.style.fontSize = `${this.options.fontSize}pt`;
+    this.element.style.cursor = 'pointer';
+    this.element.style.transition = 'background-color 0.3s, color 0.3s, border-color 0.3s';
 
-      .base-button:hover {
-        background-color: ${this.options.hoverBackgroundColor};
-        color: ${this.options.hoverTextColor};
-        border-color: transparent;
-      }
+    this.element.addEventListener('mouseover', () => {
+      this.element.style.backgroundColor = this.options.hoverBackgroundColor;
+      this.element.style.color = this.options.hoverTextColor;
+      this.element.style.borderColor = 'transparent';
+    });
 
-      .base-button:active {
-        background-color: ${this.hexToRgba(this.options.hoverBackgroundColor, 0.3)};
-        color: ${this.options.hoverTextColor};
-        border-color: transparent;
-      }
+    this.element.addEventListener('mouseout', () => {
+      this.element.style.backgroundColor = 'transparent';
+      this.element.style.color = this.options.textColor;
+      this.element.style.borderColor = this.options.strokeColor;
+    });
 
-      .base-button:focus {
-        outline: none;
-      }
-    `;
-    document.head.appendChild(style);
+    this.element.addEventListener('mousedown', () => {
+      this.element.style.backgroundColor = this.hexToRgba(this.options.hoverBackgroundColor, 0.3);
+    });
+
+    this.element.addEventListener('mouseup', () => {
+      this.element.style.backgroundColor = this.options.hoverBackgroundColor;
+    });
+
+    this.element.addEventListener('focus', () => {
+      this.element.style.outline = 'none';
+    });
   }
 
   hexToRgba(hex, alpha) {

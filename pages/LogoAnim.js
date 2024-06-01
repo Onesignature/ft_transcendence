@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const logoContainer = document.getElementById('pong-logo-animation');
+    
     // Create SVG element
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("width", "574");
@@ -79,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     svg.appendChild(fillAnimationGroup);
-    document.body.appendChild(svg);
+    logoContainer.appendChild(svg);
 
     // SVG animations
     const line1 = fillAnimationGroup.querySelector('#line1');
