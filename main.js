@@ -17,6 +17,7 @@ document.body.style.backgroundColor = "black";
 
 let scoreOne = 0;
 let scoreTwo = 0;
+let isPlayerOneAI = true;
 
 const playerOne = {
     x: 10,
@@ -24,7 +25,6 @@ const playerOne = {
     width: 15,
     height: 80,
     color: '#ffd335',
-    speed: 10,
 };
 
 const playerTwo = {
@@ -33,11 +33,9 @@ const playerTwo = {
     width: 15,
     height: 80,
     color: '#ffd335',
-    speed: 10,
 };
 
-const INITIAL_SPEED = 5;
-let ballSpeed = INITIAL_SPEED;
+let ballSpeed = 7;
 
 const ball = {
     x: canvas.width / 2,
@@ -51,14 +49,11 @@ const ball = {
 let keysPressed = {
     "w": false,
     "s": false,
-    "d": false,
-    "e": false,
     "ArrowUp": false,
     "ArrowDown": false,
 };
 
-const PADDLE_SPEED = 7;
-let isPlayerOneAI = true; // Toggle this variable to switch between AI and player control for Player One
+const PADDLE_SPEED = 8;
 
 window.addEventListener("keydown", (e) => {
     keysPressed[e.key] = true;
@@ -72,46 +67,40 @@ function setKeyState(key, state) {
     keysPressed[key] = state;
 }
 
-const TOLERANCE = 2;
+const TOLERANCE = 5;
 
 function updateAIposition() {
-    setKeyState("d", playerOne.y > futureBallY + TOLERANCE);
-    setKeyState("e", playerOne.y < futureBallY - TOLERANCE);
+    setKeyState("w", playerOne.y > futureBallY + TOLERANCE);
+    setKeyState("s", playerOne.y < futureBallY - TOLERANCE);
 }
 
-let futureBallY;
-setInterval(() => {
-    futureBallY = Math.floor(ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40);
-    if ((ball.y < 40 || ball.y > 390) && ball.x < 280) {
-        futureBallY = Math.floor(-ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40);
+function PaddleMovement(up, down, player) {
+    if (keysPressed[up] && player.y - PADDLE_SPEED > 0) {
+        player.y -= PADDLE_SPEED;
     }
-}, 1000);
+    if (keysPressed[down] && player.y + player.height + PADDLE_SPEED < canvas.height) {
+        player.y += PADDLE_SPEED;
+    }
+}
 
 function updatePlayerPositions() {
     if (isPlayerOneAI) {
         updateAIposition();
-        if (keysPressed["d"] && playerOne.y - PADDLE_SPEED > 0) {
-            playerOne.y -= PADDLE_SPEED;
-        }
-        if (keysPressed["e"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
-            playerOne.y += PADDLE_SPEED;
-        }
-    } else {
-        if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
-            playerOne.y -= PADDLE_SPEED;
-        }
-        if (keysPressed["s"] && playerOne.y + playerOne.height + PADDLE_SPEED < canvas.height) {
-            playerOne.y += PADDLE_SPEED;
-        }
+        PaddleMovement("w", "s", playerOne);
     }
-
-    if (keysPressed["ArrowUp"] && playerTwo.y - PADDLE_SPEED > 0) {
-        playerTwo.y -= PADDLE_SPEED;
-    }
-    if (keysPressed["ArrowDown"] && playerTwo.y + playerTwo.height + PADDLE_SPEED < canvas.height) {
-        playerTwo.y += PADDLE_SPEED;
-    }
+    else
+        PaddleMovement("w", "s", playerOne);
+    PaddleMovement("ArrowUp", "ArrowDown", playerTwo);
 }
+
+let futureBallY;
+setInterval(() => {
+    futureBallY = ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40;
+    if ((ball.y < 40 || ball.y > 390) && ball.x < 280) {
+        futureBallY = -ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40;
+    }
+}, 1000);
+
 
 const playerLabelsDiv = document.createElement('div');
 playerLabelsDiv.style.position = 'absolute';
@@ -157,8 +146,6 @@ function ballWallCollision() {
     if (ball.y + ball.speedY > canvas.height - ball.radius || ball.y + ball.speedY < ball.radius) {
         ball.speedY = -ball.speedY;
         normalizeSpeed();
-        console.log("Ball y", ball.y);
-        console.log("ball x", ball.x);
     }
     if (ball.x + ball.speedX > canvas.width - ball.radius) {
         scoreOne++;
@@ -190,7 +177,6 @@ function ballPaddleCollision(player) {
 }
 
 function resetBall() {
-    ballSpeed = INITIAL_SPEED;
     if (scoreOne > scoreTwo) {
         ball.speedX = ballSpeed;
     } else {
@@ -227,12 +213,12 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
-// Toggle control mode for Player One using "C" key
+
 window.addEventListener("keydown", (e) => {
     if (e.key === "c") {
         isPlayerOneAI = !isPlayerOneAI;
-        setKeyState("d", false); // Reset AI keys
-        setKeyState("e", false); // Reset AI keys
+        setKeyState("w", false);
+        setKeyState("s", false);
     }
 });
 
