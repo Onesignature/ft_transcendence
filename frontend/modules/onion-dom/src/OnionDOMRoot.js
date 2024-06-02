@@ -1,7 +1,6 @@
 function OnionDOMRoot(element)
 {
     this._internalRoot = element;
-    this._prevComponent = null;
 }
 
 export function createRoot(element)
@@ -16,16 +15,42 @@ OnionDOMRoot.prototype.render = function(component)
     {
         throw new Error('Cannot update an unmounted root.');
     }
-    
-    if (this._prevComponent !== null)
-    {
-        this._prevComponent.onDisable();
-    }
-    let newComponent = new component();
-    newComponent.onEnable();
-    this._prevComponent = component;
+
+    const newComponent = new component();
 
     document.addEventListener("DOMContentLoaded", async () => {
-        root.innerHTML = await newComponent.render();
+        const classText = await newComponent.render();
+        const childComponent = createClass(classText);
+        
+        const anotherClassText = await childComponent.render();
+        const childChildComponent = createClass(anotherClassText);
+
+        root.innerHTML = await childChildComponent.render();
     })
+}
+
+function createDomTree()
+{
+
+}
+
+function generateId() {
+    return Math.random().toString(36).substr(2, 9);
+}
+
+function trimStartAndEnd(str) {
+    // Remove leading whitespace
+    str = str.replace(/^\s+/, '');
+    
+    // Remove trailing whitespace
+    str = str.replace(/\s+$/, '');
+    
+    return str;
+}
+
+function createClass(classText)
+{
+    const instanceId = generateId();
+    const component = new Function('return (' + trimStartAndEnd(classText) + ');')();
+    return new component({key: instanceId}, 'context');
 }
