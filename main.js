@@ -35,7 +35,7 @@ const playerTwo = {
     color: '#ffd335',
 };
 
-let ballSpeed = 7;
+let ballSpeed = 9;
 
 const ball = {
     x: canvas.width / 2,
@@ -53,7 +53,7 @@ let keysPressed = {
     "ArrowDown": false,
 };
 
-const PADDLE_SPEED = 8;
+const PADDLE_SPEED = 7;
 
 window.addEventListener("keydown", (e) => {
     keysPressed[e.key] = true;
@@ -68,6 +68,8 @@ function setKeyState(key, state) {
 }
 
 const TOLERANCE = 5;
+
+let futureBallY;
 
 function updateAIposition() {
     setKeyState("w", playerOne.y > futureBallY + TOLERANCE);
@@ -87,20 +89,26 @@ function updatePlayerPositions() {
     if (isPlayerOneAI) {
         updateAIposition();
         PaddleMovement("w", "s", playerOne);
-    }
-    else
+    } else {
         PaddleMovement("w", "s", playerOne);
+    }
     PaddleMovement("ArrowUp", "ArrowDown", playerTwo);
 }
 
-let futureBallY;
-setInterval(() => {
-    futureBallY = ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40;
-    if ((ball.y < 40 || ball.y > 390) && ball.x < 280) {
-        futureBallY = -ball.y + ball.speedY * ((playerOne.x - ball.x) / ball.speedX) - 40;
-    }
-}, 1000);
+let i = 0;
+function predictFutureBallY() {
+    const timeToReachPaddle = Math.abs((playerOne.x - ball.x) / ball.speedX);
+    futureBallY = ball.y + ball.speedY * timeToReachPaddle - 40;
 
+    if (futureBallY < ball.radius) {
+        futureBallY = ball.radius - (futureBallY - ball.radius) - 40;
+    } else if (futureBallY > canvas.height - ball.radius) {
+        futureBallY = 2 * (canvas.height - ball.radius) - futureBallY - 40;
+    }
+    i++;
+}
+
+setInterval(predictFutureBallY, 1000);
 
 const playerLabelsDiv = document.createElement('div');
 playerLabelsDiv.style.position = 'absolute';
@@ -212,7 +220,6 @@ function loop() {
     drawElements();
     requestAnimationFrame(loop);
 }
-
 
 window.addEventListener("keydown", (e) => {
     if (e.key === "c") {
