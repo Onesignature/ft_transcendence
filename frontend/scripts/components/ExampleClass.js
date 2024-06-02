@@ -10,7 +10,7 @@ export default class ExampleClass extends Component {
     render()
     {
         return String.raw`
-            <h1>Test</h1>
+            <h1>${this.props.key}</h1>
         `;
     }
 }

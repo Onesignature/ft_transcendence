@@ -34,9 +34,12 @@ function createDomTree()
 
 }
 
-function generateId() {
-    return Math.random().toString(36).substr(2, 9);
-}
+// Generate unique instance id
+let instanceId = 0;
+const generateId = () => {
+    instanceId += 1;
+    return `instance${instanceId}`;
+};
 
 function trimStartAndEnd(str) {
     // Remove leading whitespace
