@@ -86,17 +86,23 @@
             cursor: pointer;
             width: 20px;
             height: 20px;
-            accent-color: #FFD335; /* Set checkbox color */
+            accent-color: #FFD335;
+            background-color: transparent;
+            border: solid 2px #FFD335;
         }
         .setting img {
             width: 20px;
             height: 20px;
             margin-left: 10px;
             cursor: pointer;
-            transition: transform 0.3s; /* Smooth transition */
+            transition: border 0.3s; 
+            border: solid 2px transparent; /* Default state */
         }
         .setting img:hover {
             border: solid 2px #FFD335;
+        }
+        .setting img.selected {
+            border: solid 2px #FFD335; /* Selected state */
         }
     </style>
 </head>
@@ -109,22 +115,35 @@
             <h2>Settings</h2>
             <div class="setting">
                 <span>Two-Factor Authentication (2FA)</span>
-                <input type="checkbox" id="2fa">
+                <input type="checkbox" id="2fa" onchange="handle2FACheckboxChange(this)">
             </div>
             <div class="setting">
                 <span>Language</span>
-                <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="English" onclick="handleLanguageChange('en')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="French" onclick="handleLanguageChange('fr')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg" alt="Spanish" onclick="handleLanguageChange('es')">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="English" id="lang-en" onclick="handleLanguageChange('en')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="French" id="lang-fr" onclick="handleLanguageChange('fr')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg" alt="Spanish" id="lang-es" onclick="handleLanguageChange('es')">
             </div>
         </div>
     </div>
     <script>
+        let is2FAEnabled = false;
+        let selectedLanguage = null;
+
         function handleCloseButtonClick() {
             alert('Close button clicked!');
         }
 
+        function handle2FACheckboxChange(checkbox) {
+            is2FAEnabled = checkbox.checked;
+            alert('2FA ' + (is2FAEnabled ? 'enabled' : 'disabled'));
+        }
+
         function handleLanguageChange(language) {
+            if (selectedLanguage) {
+                document.getElementById('lang-' + selectedLanguage).classList.remove('selected');
+            }
+            selectedLanguage = language;
+            document.getElementById('lang-' + selectedLanguage).classList.add('selected');
             alert(language + ' selected!');
         }
     </script>
