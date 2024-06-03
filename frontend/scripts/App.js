@@ -1,5 +1,5 @@
-import {Component} from '../../modules/onion/index.js';
-import BaseButton from './components/BaseButton.js';
+import { Component } from '../modules/Onion/index.js';
+import Login from './pages/Login.js';
 
 export default class App extends Component
 {
@@ -27,7 +27,7 @@ export default class App extends Component
     render()
     {
         return String.raw`
-            ${BaseButton}
+            <div className="${Login.name}" />
         `;
     }
 

@@ -1,4 +1,5 @@
-import {Component} from '../../modules/onion/index.js';
+import { Component } from "../../modules/Onion/index.js";
+import BaseButton from "../components/BaseButton.js";
 
 export default class Login extends Component {
 
@@ -6,9 +7,11 @@ export default class Login extends Component {
     {
         return String.raw`
             <div>
-                <h1>Login</h1>
+                <div className="${BaseButton.name}" text="Play" muha="yao" />
+                <div className="${BaseButton.name}" text="Tournament" />
+                <div className="${BaseButton.name}" text="Settings" />
+                <div className="${BaseButton.name}" text="Logout" />
             </div>
         `;
     }
-
 }
