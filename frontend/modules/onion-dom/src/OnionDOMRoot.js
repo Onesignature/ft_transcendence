@@ -21,11 +21,17 @@ OnionDOMRoot.prototype.render = function(component)
     const rootComponent = new component();
 
     document.addEventListener("DOMContentLoaded", async () => {
-        const nodes = await createNodeList(rootComponent);
+        const nodeTree = await createNodeList(rootComponent);
+        await printNode(nodeTree);
+    });
+}
 
-        nodes.forEach(async (node) => {
-            const rawHTML = await node.render();
-            console.log(rawHTML);
-        });
+async function printNode(rootNode)
+{
+    const rawHTML = await rootNode.parent.render();
+    console.log(rawHTML);
+    
+    rootNode.children.forEach(async (parent) => {
+        printNode(parent);
     });
 }

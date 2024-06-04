@@ -9,4 +9,9 @@ Component.prototype.onDisable = function(){};
 
 Component.prototype.render = function(){};
 
+Component.prototype.getContext = function()
+{
+    return this.context;
+};
+
 export {Component};

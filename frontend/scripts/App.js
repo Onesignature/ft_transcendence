@@ -30,22 +30,4 @@ export default class App extends Component
             <div className="${Login.name}" />
         `;
     }
-
-    // render()
-    // {
-    //     return String.raw`
-    //         <div class="app">
-    //             <link rel="stylesheet" href="./styles/App.css">
-    //             <h1 class="heading">Welcome</h1>
-    //             <p style="color:red; font-size:12px">
-    //                 This is a simple example of ${this._textExample} using onion framework
-    //             </p>
-    //             <nav>
-    //                 <a href="/" data-link>Login</a>
-    //                 <a href="/home" data-link>Home</a>
-    //                 <div className="${BaseButton}" />
-    //             </nav>
-    //         </div>
-    //     `;
-    // }
 }

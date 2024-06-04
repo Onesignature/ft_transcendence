@@ -7,22 +7,25 @@ function OnionDOMNode()
 
 export async function createNodeList(root)
 {    
-    const components = [root];
+    const node = {
+        parent: root,
+        children: []
+    };
     const rawHTML = await root.render();
     const childComponents = componentParser(rawHTML);
 
     if (childComponents == null || childComponents.length == 0)
-        return components;
+        return node;
     
-    const classComponents = createClassComponents(childComponents);
+    const classComponents = createClassComponents(childComponents, root.getContext());
     
     await Promise.all(classComponents.map(async (instance) =>
     {
         let instanceComponents = await createNodeList(instance);
-        components.push(...instanceComponents);
+        node.children.push(instanceComponents);
     }));
-    
-    return components;
+
+    return node;
 }
 
 const componentParser = (rawHTML) =>
@@ -63,7 +66,7 @@ const generateId = () =>
     return instanceId += 1;
 };
 
-function createClassComponents(components)
+function createClassComponents(components, context)
 {
     const classComponents = [];
     
@@ -75,7 +78,7 @@ function createClassComponents(components)
             throw new Error(`Class ${className} not found, please make sure the class in registed in global-setup.js`);
         }
     
-        const instance = new ComponentClass({ instanceId: generateId(), ...props }, 'context');
+        const instance = new ComponentClass({ instanceId: generateId(), ...props }, context);
         classComponents.push(instance);
     });
 

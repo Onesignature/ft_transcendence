@@ -7,7 +7,7 @@ export default class Login extends Component {
     {
         return String.raw`
             <div>
-                <div className="${BaseButton.name}" text="Play" muha="yao" />
+                <div className="${BaseButton.name}" text="Play" />
                 <div className="${BaseButton.name}" text="Tournament" />
                 <div className="${BaseButton.name}" text="Settings" />
                 <div className="${BaseButton.name}" text="Logout" />

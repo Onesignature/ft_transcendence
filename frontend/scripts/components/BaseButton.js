@@ -11,7 +11,7 @@ export default class BaseButton extends Component {
     {
         return String.raw`
             <link rel="stylesheet" href="./styles/BaseButton.css">
-            <button class="base-button" >${this.props.text + (this.props.muha ? " " + this.props.muha : "")}</button>
+            <button class="base-button" >${this.props.text}</button>
         `;
     }
 }
