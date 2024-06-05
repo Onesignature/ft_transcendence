@@ -24,6 +24,8 @@ class BaseButton {
     this.element.style.margin = '10px';
     this.element.style.fontSize = `${this.options.fontSize}pt`;
     this.element.style.cursor = 'pointer';
+    this.element.style.fontWeight = '700';
+    this.element.style.fontFamily = 'Jost';
     this.element.style.transition = 'background-color 0.3s, color 0.3s, border-color 0.3s';
 
     this.element.addEventListener('mouseover', () => {
