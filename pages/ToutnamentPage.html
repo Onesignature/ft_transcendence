@@ -8,17 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100..900&family=Rubik:wght@300..900&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #0E0E0E; /* Set background to black */
+            background-color: #0E0E0E;
             color: white;
             font-family: 'Jost', sans-serif;
-            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
             text-align: center;
-            font-family: 'Jost', sans-serif;
             font-weight: 700;
+            overflow: hidden; /* Hide scrollbars */
         }
         .container {
             position: relative;
@@ -45,7 +45,8 @@
         }
         .header {
             font-size: 2em;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            font-weight: 700;
         }
         .sub-header {
             color: #FFD335;
@@ -55,18 +56,19 @@
         .match {
             display: flex;
             flex-direction: column;
-            width: 600px;
             margin: 10px auto;
-            justify-content: center;
             align-items: center;
+            width: 25%;
+            opacity: 0.5;
         }
         .match.current {
             opacity: 1;
         }
         .player {
+            overflow:hidden;
             border: 2px solid white;
             padding: 10px;
-            width: 45%;
+            width: 100%;
             font-size: 1.2em;
             height: 50px;
             display: flex;
@@ -79,12 +81,12 @@
             color: #FFD335;
         }
         .winner {
-            color: rgb(15, 235, 15);
+            color: rgb(82, 235, 82);
             border-color: rgb(15, 235, 15);
         }
         .loser {
-            color: red;
-            border-color: red;
+            color: #F55C4D;
+            border-color: #F55C4D;
         }
         .btn-start {
             outline: none;
@@ -93,8 +95,7 @@
             color: #FFD335;
             background-color: transparent;
             font-family: 'Jost', sans-serif;
-            font-weight: 700;
-            font-size: 20px;
+            font-size: 2em;
             width: 150px;
             height: 50px;
             display: inline-flex;
@@ -108,9 +109,37 @@
             background-color: #FFD335;
             color: #0E0E0E;
         }
-        .match-1-2{
+        .matches {
             display: flex;
-            justify-items: center;
+            justify-content: center;
+        }
+        .confetti {
+            position: fixed;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            background-color: #FFD335;
+            opacity: 0.8;
+            animation: confettiFall 3s linear infinite;
+        }
+        .confetti:nth-child(2n) {
+            background-color: #FF4A4A;
+        }
+        .confetti:nth-child(3n) {
+            background-color: #00E7FD;
+        }
+        .confetti:nth-child(4n) {
+            background-color: #7100FE;
+        }
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -118,27 +147,26 @@
     <div class="exit-button" onclick="handleExitButtonClick()">&#x2190;</div>
     <div class="container">
         <h1 class="header">TOURNAMENT</h1>
-        <div class="match-1-2">
-            
+        <div class="matches">
             <div class="match current" id="match1">
-            <h2 class="sub-header">MATCH 1</h2>
-            <div class="player" id="player1">muganiev</div>
-            <div class="player" id="player2">bsaeed</div>
+                <h2 class="sub-header">MATCH 1</h2>
+                <div class="player" id="player1">muganiev</div>
+                <div class="player" id="player2">bsaeed</div>
             </div>
             <div class="match" id="match2">
-            <h2 class="sub-header">MATCH 2</h2>
-            <div class="player" id="player3">fkhan</div>
-            <div class="player" id="player4">gchernys</div>
+                <h2 class="sub-header">MATCH 2</h2>
+                <div class="player" id="player3">fkhan</div>
+                <div class="player" id="player4">gchernys</div>
             </div>
         </div>
-        
-        <h2 class="sub-header">MATCH 3</h2>
         <div class="match" id="match3">
+            <h2 class="sub-header">MATCH 3</h2>
             <div class="player" id="player5"></div>
             <div class="player" id="player6"></div>
         </div>
-        <h2 class="sub-header">WINNER</h2>
-        <div class="match" id="winner">
+        <div class="match" id="match-winner">
+            <img style="width: 20%; margin-bottom: 10px;" src="../src/pictures/CrownIcon.svg" alt="Crown Icon">
+            <h2 class="sub-header">WINNER</h2>
             <div class="player" id="player7"></div>
         </div>
         <div class="btn-start" onclick="handleStartButtonClick()">START</div>
@@ -155,8 +183,45 @@
                 document.getElementById('player2').classList.add('loser');
                 document.getElementById('match1').classList.remove('current');
                 document.getElementById('match2').classList.add('current');
-                document.querySelector('.sub-header').innerText = 'MATCH 1';
+                
+                document.getElementById('player5').textContent = document.querySelector('.winner').textContent;
             }, 1000);
+
+            setTimeout(() => {
+                document.getElementById('player3').classList.add('winner');
+                document.getElementById('player4').classList.add('loser');
+                document.getElementById('match2').classList.remove('current');
+                document.getElementById('match3').classList.add('current');
+                
+                document.getElementById('player6').textContent = document.querySelector('#player3.winner').textContent;
+                
+                setTimeout(() => {
+                    document.getElementById('player5').classList.add('winner');
+                    document.getElementById('player6').classList.add('loser');
+                    document.getElementById('match3').classList.remove('current');
+                    document.getElementById('match-winner').classList.add('current');
+                    
+                    document.getElementById('player7').textContent = document.querySelector('#player5.winner').textContent;
+
+                    // Trigger confetti when the winner is determined
+                    createConfetti();
+                }, 1000);
+            }, 2000);
+        }
+
+        // Create random confetti
+        function createConfetti() {
+            const confettiCount = 150; // Increase number of confetti elements
+            const colors = ['#FFD335', '#FF4A4A', '#00E7FD', '#7100FE'];
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.animationDelay = `${Math.random() * 3}s`;
+                confetti.style.backgroundColor = colors[i % colors.length];
+                document.body.appendChild(confetti);
+            }
         }
     </script>
 </body>
