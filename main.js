@@ -65,20 +65,39 @@ window.addEventListener("keyup", (e) => {
     keysPressed[e.key] = false;
 });
 
-// Create additional canvas for player names and scores
-const canvasTop = document.createElement('canvas');
-const contextTop = canvasTop.getContext('2d');
+// Create divs for player names and scores
+const playerInfoDiv = document.createElement('div');
+playerInfoDiv.style.position = "absolute";
+playerInfoDiv.style.left = `${centerX}px`;
+playerInfoDiv.style.top = `${centerY - 60}px`; // Positioned above the main canvas
+playerInfoDiv.style.width = "650px";
+playerInfoDiv.style.height = "50px";
+playerInfoDiv.style.display = "flex";
+playerInfoDiv.style.justifyContent = "space-between";
+playerInfoDiv.style.alignItems = "center";
+playerInfoDiv.style.color = "#ffd335";
+playerInfoDiv.style.fontSize = "24px";
+playerInfoDiv.style.fontFamily = "Arial";
 
-// Set width, height, and styling for the new canvas
-canvasTop.width = 650;
-canvasTop.height = 50;
-canvasTop.style.position = "absolute";
-canvasTop.style.left = `${centerX}px`;
-canvasTop.style.top = `${centerY - 60}px`; // Positioned above the main canvas
-canvasTop.style.border = "none";
+const playerOneDiv = document.createElement('div');
+playerOneDiv.textContent = 'Player1';
+playerOneDiv.style.border = "2px solid #ffd335";
+playerOneDiv.style.padding = "5px";
 
-// Append the new canvas to the body of the document
-document.body.appendChild(canvasTop);
+const scoreDiv = document.createElement('div');
+scoreDiv.style.color = "#ffffff";
+scoreDiv.style.fontSize = "30px";
+
+const playerTwoDiv = document.createElement('div');
+playerTwoDiv.textContent = 'Player2';
+playerTwoDiv.style.border = "2px solid #ffd335";
+playerTwoDiv.style.padding = "5px";
+
+playerInfoDiv.appendChild(playerOneDiv);
+playerInfoDiv.appendChild(scoreDiv);
+playerInfoDiv.appendChild(playerTwoDiv);
+
+document.body.appendChild(playerInfoDiv);
 
 function updatePlayerPositions() {
     if (keysPressed["w"] && playerOne.y - PADDLE_SPEED > 0) {
@@ -96,34 +115,8 @@ function updatePlayerPositions() {
 }
 
 function displayScores() {
-    contextTop.clearRect(0, 0, canvasTop.width, canvasTop.height);
-    
-    // Set styles for player names
-    contextTop.fillStyle = '#ffd335';
-    contextTop.font = '24px Arial';  // Increased font size
-    
-    // Draw player names
-    const playerOneText = 'Player1';
-    const playerTwoText = 'Player2';
-    const playerOneTextWidth = contextTop.measureText(playerOneText).width;
-    const playerTwoTextWidth = contextTop.measureText(playerTwoText).width;
-
-    // Player One name
-    contextTop.fillText(playerOneText, 10, 35);  // Adjusted position
-    contextTop.strokeStyle = '#ffd335';
-    contextTop.lineWidth = 2;
-    contextTop.strokeRect(5, 10, playerOneTextWidth + 10, 30);  // Add a border
-
-    // Player Two name
-    contextTop.fillText(playerTwoText, canvasTop.width - playerTwoTextWidth - 15, 35);  // Adjusted position
-    contextTop.strokeRect(canvasTop.width - playerTwoTextWidth - 20, 10, playerTwoTextWidth + 10, 30);  // Add a border
-
-    // Score in white
-    contextTop.fillStyle = '#ffffff';
-    contextTop.font = '30px Arial';  // Larger font size for the score
-    contextTop.fillText(`${scoreOne} : ${scoreTwo}`, canvasTop.width / 2 - 35, 35);  // Adjusted position
+    scoreDiv.textContent = `${scoreOne} : ${scoreTwo}`;
 }
-
 
 function drawElement(element) {
     context.fillStyle = element.color;
