@@ -78,20 +78,24 @@ playerInfoDiv.style.alignItems = "center";
 playerInfoDiv.style.color = "#ffd335";
 playerInfoDiv.style.fontSize = "24px";
 playerInfoDiv.style.fontFamily = "Arial";
+playerInfoDiv.style.userSelect = "none";  // Make text unselectable
 
 const playerOneDiv = document.createElement('div');
 playerOneDiv.textContent = 'Player1';
 playerOneDiv.style.border = "2px solid #ffd335";
 playerOneDiv.style.padding = "5px";
+playerOneDiv.style.userSelect = "none";  // Make text unselectable
 
 const scoreDiv = document.createElement('div');
 scoreDiv.style.color = "#ffffff";
 scoreDiv.style.fontSize = "30px";
+scoreDiv.style.userSelect = "none";  // Make text unselectable
 
 const playerTwoDiv = document.createElement('div');
 playerTwoDiv.textContent = 'Player2';
 playerTwoDiv.style.border = "2px solid #ffd335";
 playerTwoDiv.style.padding = "5px";
+playerTwoDiv.style.userSelect = "none";  // Make text unselectable
 
 playerInfoDiv.appendChild(playerOneDiv);
 playerInfoDiv.appendChild(scoreDiv);
