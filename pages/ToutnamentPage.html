@@ -38,6 +38,9 @@
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
+            transform: rotate(-90deg);
+            font-size: 1.5em;
+            padding: 20px;
         }
         .exit-button:hover {
             background-color: #F55C4D;
@@ -65,7 +68,7 @@
             opacity: 1;
         }
         .player {
-            overflow:hidden;
+            overflow: hidden;
             border: 2px solid white;
             padding: 10px;
             width: 100%;
@@ -88,25 +91,34 @@
             color: #F55C4D;
             border-color: #F55C4D;
         }
-        .btn-start {
-            outline: none;
+        .btn-start, .btn-finish {
+            outline: none !important;
             border-radius: 0;
             border: 2px solid #FFD335;
             color: #FFD335;
             background-color: transparent;
             font-family: 'Jost', sans-serif;
             font-size: 2em;
-            width: 150px;
-            height: 50px;
             display: inline-flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
             margin-top: 40px;
+            padding: 2px 40px;
+            font-weight: 700;
+            white-space: nowrap;
         }
-        .btn-start:hover {
+        .btn-start:hover, .btn-finish:hover {
             background-color: #FFD335;
+            color: #0E0E0E;
+        }
+        .btn-finish {
+            border-color: #F55C4D;
+            color: #F55C4D;
+        }
+        .btn-finish:hover {
+            background-color: #F55C4D;
             color: #0E0E0E;
         }
         .matches {
@@ -144,7 +156,7 @@
     </style>
 </head>
 <body>
-    <div class="exit-button" onclick="handleExitButtonClick()">&#x2190;</div>
+    <div class="exit-button" onclick="handleExitButtonClick()">▲</div>
     <div class="container">
         <h1 class="header">TOURNAMENT</h1>
         <div class="matches">
@@ -169,32 +181,44 @@
             <h2 class="sub-header">WINNER</h2>
             <div class="player" id="player7"></div>
         </div>
-        <div class="btn-start" onclick="handleStartButtonClick()">START</div>
+        <button class="btn-start" id="StartButton" onclick="handleStartButtonClick()">START</button>
     </div>
     <script>
+        let currentMatch = 1;
+
         function handleExitButtonClick() {
             alert('Exit button clicked!');
         }
 
         function handleStartButtonClick() {
-            // Simulate match results
-            setTimeout(() => {
-                document.getElementById('player1').classList.add('winner');
-                document.getElementById('player2').classList.add('loser');
-                document.getElementById('match1').classList.remove('current');
-                document.getElementById('match2').classList.add('current');
-                
-                document.getElementById('player5').textContent = document.querySelector('.winner').textContent;
-            }, 1000);
+            const startButton = document.getElementById('StartButton');
 
-            setTimeout(() => {
-                document.getElementById('player3').classList.add('winner');
-                document.getElementById('player4').classList.add('loser');
-                document.getElementById('match2').classList.remove('current');
-                document.getElementById('match3').classList.add('current');
-                
-                document.getElementById('player6').textContent = document.querySelector('#player3.winner').textContent;
-                
+            if (currentMatch === 1) {
+                // Match 1 results
+                setTimeout(() => {
+                    document.getElementById('player1').classList.add('winner');
+                    document.getElementById('player2').classList.add('loser');
+                    document.getElementById('match1').classList.remove('current');
+                    document.getElementById('match2').classList.add('current');
+                    
+                    document.getElementById('player5').textContent = document.querySelector('.winner').textContent;
+                    startButton.textContent = 'CONTINUE';
+                    currentMatch++;
+                }, 1000);
+            } else if (currentMatch === 2) {
+                // Match 2 results
+                setTimeout(() => {
+                    document.getElementById('player3').classList.add('winner');
+                    document.getElementById('player4').classList.add('loser');
+                    document.getElementById('match2').classList.remove('current');
+                    document.getElementById('match3').classList.add('current');
+                    
+                    document.getElementById('player6').textContent = document.querySelector('#player3.winner').textContent;
+                    startButton.textContent = 'CONTINUE';
+                    currentMatch++;
+                }, 1000);
+            } else if (currentMatch === 3) {
+                // Match 3 results
                 setTimeout(() => {
                     document.getElementById('player5').classList.add('winner');
                     document.getElementById('player6').classList.add('loser');
@@ -205,8 +229,13 @@
 
                     // Trigger confetti when the winner is determined
                     createConfetti();
+
+                    startButton.textContent = 'FINISH';
+                    startButton.classList.remove('btn-start');
+                    startButton.classList.add('btn-finish');
+                    currentMatch++;
                 }, 1000);
-            }, 2000);
+            }
         }
 
         // Create random confetti
