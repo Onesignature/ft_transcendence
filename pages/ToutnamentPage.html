@@ -195,7 +195,6 @@
 
             if (currentMatch === 1) {
                 // Match 1 results
-                setTimeout(() => {
                     document.getElementById('player1').classList.add('winner');
                     document.getElementById('player2').classList.add('loser');
                     document.getElementById('match1').classList.remove('current');
@@ -204,10 +203,8 @@
                     document.getElementById('player5').textContent = document.querySelector('.winner').textContent;
                     startButton.textContent = 'CONTINUE';
                     currentMatch++;
-                }, 1000);
             } else if (currentMatch === 2) {
                 // Match 2 results
-                setTimeout(() => {
                     document.getElementById('player3').classList.add('winner');
                     document.getElementById('player4').classList.add('loser');
                     document.getElementById('match2').classList.remove('current');
@@ -216,10 +213,8 @@
                     document.getElementById('player6').textContent = document.querySelector('#player3.winner').textContent;
                     startButton.textContent = 'CONTINUE';
                     currentMatch++;
-                }, 1000);
             } else if (currentMatch === 3) {
                 // Match 3 results
-                setTimeout(() => {
                     document.getElementById('player5').classList.add('winner');
                     document.getElementById('player6').classList.add('loser');
                     document.getElementById('match3').classList.remove('current');
@@ -234,7 +229,6 @@
                     startButton.classList.remove('btn-start');
                     startButton.classList.add('btn-finish');
                     currentMatch++;
-                }, 1000);
             }
         }
 
