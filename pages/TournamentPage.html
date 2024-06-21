@@ -153,10 +153,72 @@
                 opacity: 0;
             }
         }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            color: white;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: black;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ffd335;
+            width: 300px;
+            text-align: center;
+            font-family: 'Jost', sans-serif;
+        }
+
+        .modal-button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+
+            font-family: 'Jost', sans-serif;
+            font-weight: 700;
+        }
+
+        .yes-button {
+            background-color: transparent;
+            border: 2px solid #ffd335;
+            transition: background-color 0.3s, color 0.3s;
+            color: #ffd335;
+        }
+        .yes-button:hover {
+            background-color: #ffd335;
+            color: #0E0E0E;
+        }
+
+        .no-button {
+            background-color: transparent;
+            border: 2px solid #F55C4D;
+            transition: background-color 0.3s, color 0.3s;
+            color: #F55C4D;
+        }
+        .no-button:hover {
+            background-color: #F55C4D;
+            color: #0E0E0E;
+        }
     </style>
 </head>
 <body>
-    <div class="exit-button" onclick="handleExitButtonClick()">▲</div>
+    <div id="exitModal" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to exit?</p>
+            <button class="modal-button yes-button" onclick="handleYesButtonClick()">Yes</button>
+            <button class="modal-button no-button" onclick="handleNoButtonClick()">No</button>
+        </div>
+    </div>
+    <div class="exit-button" onclick="showExitConfirmation()">▲</div>
     <div class="container">
         <h1 class="header">TOURNAMENT</h1>
         <div class="matches">
@@ -230,6 +292,21 @@
                     startButton.classList.add('btn-finish');
                     currentMatch++;
             }
+        }
+        // Modal functionality
+        function showExitConfirmation() {
+            document.getElementById('exitModal').style.display = 'flex';
+        }
+
+        function handleYesButtonClick() {
+            // Perform the desired action on "Yes"
+            alert('Exiting...');
+            // Example: Redirect to another page or close the game
+            // window.location.href = 'another_page.html';
+        }
+
+        function handleNoButtonClick() {
+            document.getElementById('exitModal').style.display = 'none';
         }
 
         // Create random confetti
