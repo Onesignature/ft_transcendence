@@ -4,4 +4,4 @@ import './global-setup.js';
 
 const root = createRoot(document.getElementById('root'));
 
-root.render(String.raw`<a className=${App.name} test="faraz"></a><p>TEXT</p>`);
+root.render(String.raw`<div className=${App.name}></div>`);

@@ -6,46 +6,22 @@ export default class App extends Component
     constructor(props, context)
     {
         super(props, context);
-        this._textExample = "test"; // Declare and initialize instance variable
     }
 
-    onEnable()
+    onMount()
     {
-        this._textExample = "SPA";
+        console.log('mounted');
     }
 
-    onDisable()
+    onUnmount()
     {
-        console.log('clean');
-    }
-
-    callbackFunc()
-    {
-        console.log("Player button clicked!");
+        console.log('unmounted');
     }
 
     render()
     {
         return String.raw`
-            <div classname=${Login.name} here=""/>
+            <div classname=${Login.name}></div>
         `;
     }
-
-    // render()
-    // {
-    //     return String.raw`
-    //         <div class="app">
-    //             <link rel="stylesheet" href="./styles/App.css">
-    //             <h1 class="heading">Welcome</h1>
-    //             <p style="color:red; font-size:12px">
-    //                 This is a simple example of ${this._textExample} using onion framework
-    //             </p>
-    //             <nav>
-    //                 <a href="/" data-link>Login</a>
-    //                 <a href="/home" data-link>Home</a>
-    //                 <div className="${BaseButton}" />
-    //             </nav>
-    //         </div>
-    //     `;
-    // }
 }

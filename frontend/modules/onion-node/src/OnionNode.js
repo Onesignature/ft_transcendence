@@ -54,15 +54,14 @@ export function createNodeFromDOMElement(element)
         pendingProps = element.attributes;
     
     let node = createNode(nodeTag, key, pendingProps);
+    node.type = type;
     if (nodeTag == ClassComponent)
     {
-        node.type = componentName;
         node.stateNode = createClassComponent(node, componentName);
-        node.elementType = type;
+        node.elementType = componentName;
     }
     else
     {
-        node.type = type;
         node.stateNode = element;
         node.elementType = node.stateNode.localName;
     }

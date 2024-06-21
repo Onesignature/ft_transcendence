@@ -1,5 +1,4 @@
 import { createRootNode } from "./OnionNodeRoot.js";
-import { renderOnNode } from "./OnionNodeRenderer.js";
 import { ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
 
 export function createContainer(containerInfo, tag)
