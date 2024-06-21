@@ -6,6 +6,7 @@ import requests
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
@@ -58,7 +59,7 @@ def oauth2_callback(request):
         user.save()
     
     login(request, user)
-    return redirect('/')
+    return JsonResponse({"test": "test"})
 
 def logout_view(request):
     logout(request)
