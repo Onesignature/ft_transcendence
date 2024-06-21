@@ -27,7 +27,7 @@ export default class App extends Component
     render()
     {
         return String.raw`
-            <div className="${Login.name}" />
+            <div classname=${Login.name} here=""/>
         `;
     }
 

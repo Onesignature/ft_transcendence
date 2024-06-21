@@ -1,4 +1,4 @@
-import {Component} from './OnionBaseClasses.js';
+import { Component } from './OnionComponent.js';
 
 export {
     Component
