@@ -29,4 +29,4 @@ Component.prototype.setState = function (partialState, callback)
     throw new Error('takes an object of state variables to update or a function which returns an object of state variables.');
 };
 
-export {Component};
+export { Component };

@@ -1,7 +1,7 @@
 import { isValidContainer } from "./OnionDOMContainer.js";
 import { createContainer, updateContainer } from "../../onion-node/src/OnionContainer.js";
 import { Root } from "../../onion-node/shared/OnionRootTags.js";
-import { markContainerAsRoot } from "./OnionDOMComponentTree.js";
+import { isContainerMarkedAsRoot, markContainerAsRoot, unmarkContainerAsRoot } from "./OnionDOMComponentTree.js";
 import { getNodeListFromHTML } from "./OnionDOMParser.js";
 
 function OnionDOMRoot(nodeRoot)
@@ -14,6 +14,8 @@ export function createRoot(container)
     if (!isValidContainer(container))
         throw new Error('Target container is not a DOM element.');
 
+    warnIfContainerMarkedAsRoot(container);
+
     const root = createContainer(container, Root);
     markContainerAsRoot(root.current, container);
 
@@ -23,9 +25,33 @@ export function createRoot(container)
 OnionDOMRoot.prototype.render = function(HTMLString)
 {
     const root = this._internalRoot;
-    if (root === null) {
+    if (root === null)
       throw new Error('Cannot update an unmounted root.');
-    }
+
     const children = getNodeListFromHTML(HTMLString);
     updateContainer(children, root);
+}
+
+OnionDOMRoot.prototype.unmount = function()
+{
+    const root = this._internalRoot;
+    if (root !== null)
+    {
+        this._internalRoot = null;
+        const container = root.containerInfo;
+        updateContainer(null, root);
+        unmarkContainerAsRoot(container);
+    }
+}
+
+function warnIfContainerMarkedAsRoot(container)
+{
+    if (isContainerMarkedAsRoot(container))
+    {
+        console.error(
+            'You are calling OnionDOMClient.createRoot() on a container that ' +
+            'has already been passed to createRoot() before. Instead, call ' +
+            'root.render() on the existing root instead if you want to update it.',
+        );
+    }
 }
