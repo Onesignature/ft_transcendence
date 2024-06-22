@@ -9,7 +9,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
-from oauthlib.oauth2 import AccessDeniedError
 
 # Enable insecure transport for development
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -30,6 +29,10 @@ def oauth_callback(request):
         error_description = request.GET.get('error_description', 'No description provided')
         return HttpResponse(f"Authorization denied: {error_description}", status=400)
 
+    # Check if 'oauth_state' is present in session
+    if 'oauth_state' not in request.session:
+        return HttpResponse("Session state not found. Please try the login process again.", status=400)
+
     try:
         oauth = OAuth2Session(settings.OAUTH2_CLIENT_ID, state=request.session['oauth_state'], redirect_uri=settings.OAUTH2_REDIRECT_URI)
         token = oauth.fetch_token(settings.OAUTH2_TOKEN_URL, client_secret=settings.OAUTH2_CLIENT_SECRET, authorization_response=request.build_absolute_uri())
@@ -48,9 +51,9 @@ def oauth_callback(request):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         })
-    except AccessDeniedError as e:
-        logger.error(f"Access denied: {e}")
-        return HttpResponse("Access denied by the user", status=400)
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        return HttpResponse(f"An error occurred: {e}", status=400)
 
 @api_view(['POST'])
 def create_jwt_token(request):
