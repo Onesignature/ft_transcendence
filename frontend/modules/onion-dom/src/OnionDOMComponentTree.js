@@ -12,7 +12,7 @@ export function getCurrentPropsFromNode(node)
 {
     return node[internalPropsKey] || null;
 }
-  
+
 export function updateNodeProps(node, props)
 {
     node[internalPropsKey] = props;
@@ -22,7 +22,7 @@ export function markContainerAsRoot(hostRoot, node)
 {
     node[internalContainerInstanceKey] = hostRoot;
 }
-  
+
 export function unmarkContainerAsRoot(node)
 {
     node[internalContainerInstanceKey] = null;

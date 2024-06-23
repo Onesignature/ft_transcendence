@@ -17,7 +17,23 @@ export function createClassComponent(node, className)
     let props = {instanceId: generateId()};
     
     const instance = new ComponentClass(props, context);
+    instance.children = getChildrenOuterHTML(node.children);
     instance._onionInternals = node;
     
     return instance;
+}
+
+export function mountClassComponent(node)
+{
+
+}
+
+export function unmountClassComponent(node)
+{
+    
+}
+
+function getChildrenOuterHTML(children)
+{
+    return Array.from(children, element => element.outerHTML);
 }

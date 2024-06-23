@@ -5,6 +5,7 @@ export function getNodeListFromHTML(htmlString)
 {
     const domElements = parseHtmlString(htmlString);
 
+    console.log(domElements);
     let nodeList = [];
     for (let index in domElements)
     {
@@ -26,7 +27,7 @@ function parseHtmlString(htmlString)
     {
         let element = bodyContent.firstChild;
         if (!isValidContainer(element))
-            console.warn(`Unsupport or invalid element, skipped rendering for: ${element}`);
+            console.error(`Unsupport or invalid element, skipped rendering for: ${element}`);
         else
             children.push(element);
         bodyContent.removeChild(element);

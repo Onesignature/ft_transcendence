@@ -11,12 +11,13 @@ function Node(tag, key, pendingProps)
     this.stateNode = null;
 
     this.parent = null;
-    this.child = null;
-    this.sibling = null;
+    this.children = null;
 
     this.pendingProps = pendingProps;
     this.memoizedProps = null;
     this.memoizedState = null;
+
+    this.rootContainer = null;
 }
 
 function createNode(tag, key, pendingProps)
@@ -54,16 +55,18 @@ export function createNodeFromDOMElement(element)
         pendingProps = element.attributes;
     
     let node = createNode(nodeTag, key, pendingProps);
-    node.type = type;
+    node.elementType = type;
+    node.children = element.childNodes;
+    node.parent = element.parentNode;
     if (nodeTag == ClassComponent)
     {
         node.stateNode = createClassComponent(node, componentName);
-        node.elementType = componentName;
+        node.type = componentName;
     }
     else
     {
         node.stateNode = element;
-        node.elementType = node.stateNode.localName;
+        node.type = node.stateNode.localName;
     }
     return node;
 }

@@ -11,6 +11,7 @@ export default class App extends Component
     onMount()
     {
         console.log('mounted');
+        this.setState({test: "for example"});
     }
 
     onUnmount()

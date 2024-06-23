@@ -1,8 +1,9 @@
 import { isValidContainer } from "./OnionDOMContainer.js";
-import { createContainer, updateContainer } from "../../onion-node/src/OnionContainer.js";
+import { createContainer, updateContainer } from "../../onion-node/src/OnionNodeContainer.js";
 import { Root } from "../../onion-node/shared/OnionRootTags.js";
 import { isContainerMarkedAsRoot, markContainerAsRoot, unmarkContainerAsRoot } from "./OnionDOMComponentTree.js";
 import { getNodeListFromHTML } from "./OnionDOMParser.js";
+import { listenToAllSupportedEvents, unlistenToAllSupportedEvents } from "../events/OnionDOMEventSystem.js";
 
 function OnionDOMRoot(nodeRoot)
 {
@@ -19,6 +20,8 @@ export function createRoot(container)
     const root = createContainer(container, Root);
     markContainerAsRoot(root.current, container);
 
+    listenToAllSupportedEvents();
+
     return new OnionDOMRoot(root);
 }
 
@@ -26,7 +29,7 @@ OnionDOMRoot.prototype.render = function(HTMLString)
 {
     const root = this._internalRoot;
     if (root === null)
-      throw new Error('Cannot update an unmounted root.');
+        throw new Error('Cannot update an unmounted root.');
 
     const children = getNodeListFromHTML(HTMLString);
     updateContainer(children, root);
@@ -41,6 +44,7 @@ OnionDOMRoot.prototype.unmount = function()
         const container = root.containerInfo;
         updateContainer(null, root);
         unmarkContainerAsRoot(container);
+        unlistenToAllSupportedEvents();
     }
 }
 
