@@ -71,7 +71,7 @@ Accessibility
   language: 'EN'
 }
 ```
-Response
+## Response
 ```
 {
   status: "OK"
