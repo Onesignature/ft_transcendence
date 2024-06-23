@@ -22,3 +22,68 @@ Devops
 Accessibility
 - Minor module: Expanding Browser Compatibility.
 - Minor module: Multiple language supports.
+
+
+# API CAlls
+
+`POST` /api/loginWithIntra
+## Request
+```
+{
+  code
+}
+```
+## Reponse
+```
+{
+  status
+  access-token
+}
+```
+
+`GET` /api/me
+## Header
+```
+{
+  access-token
+}
+```
+
+## Request
+```
+{
+}
+```
+
+## Response
+```
+{
+  status: ok
+  username,
+  is2faEnabled
+  language
+}
+```
+
+`POST` /api/save-settings
+## Header
+```
+{
+  access-token
+}
+```
+
+## Request
+```
+{
+  is2faEnabled
+  language
+}
+```
+
+Response
+```
+{
+  status: ok
+}
+```
