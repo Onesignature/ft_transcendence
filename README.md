@@ -57,7 +57,7 @@ Accessibility
 }
 ```
 
-`POST` /api/save-settings
+`POST` /api/save-prefs
 ## Header
 ```
 {
