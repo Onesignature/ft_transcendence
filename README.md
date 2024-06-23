@@ -68,7 +68,7 @@ Accessibility
 ```
 {
   is2faEnabled: true,
-  language: 'EN'
+  language: "EN"
 }
 ```
 ## Response
