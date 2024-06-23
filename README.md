@@ -24,7 +24,7 @@ Accessibility
 - Minor module: Multiple language supports.
 
 
-# API CAlls
+# API DOC
 
 `POST` /api/loginWithIntra
 ## Request
@@ -48,13 +48,6 @@ Accessibility
   access-token
 }
 ```
-
-## Request
-```
-{
-}
-```
-
 ## Response
 ```
 {
@@ -72,7 +65,6 @@ Accessibility
   access-token
 }
 ```
-
 ## Request
 ```
 {
@@ -80,7 +72,6 @@ Accessibility
   language
 }
 ```
-
 Response
 ```
 {
