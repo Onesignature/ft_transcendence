@@ -30,14 +30,14 @@ Accessibility
 ## Request
 ```
 {
-  code
+  code: "I43HBU94H939H439UFH32FD2F2"
 }
 ```
 ## Reponse
 ```
 {
-  status
-  access-token
+  status: "OK"
+  access-token: "VU3RVY832RFV8238F2IFJ3WIBFU33F3F"
 }
 ```
 
@@ -45,16 +45,16 @@ Accessibility
 ## Header
 ```
 {
-  access-token
+  access-token: "VU3RVY832RFV8238F2IFJ3WIBFU33F3F"
 }
 ```
 ## Response
 ```
 {
-  status: ok
-  username,
-  is2faEnabled
-  language
+  status: "OK",
+  username: "fkhan",
+  is2faEnabled: false,
+  language: "EN"
 }
 ```
 
@@ -62,19 +62,19 @@ Accessibility
 ## Header
 ```
 {
-  access-token
+  access-token: "VU3RVY832RFV8238F2IFJ3WIBFU33F3F"
 }
 ```
 ## Request
 ```
 {
-  is2faEnabled
-  language
+  is2faEnabled: true,
+  language: 'EN'
 }
 ```
 Response
 ```
 {
-  status: ok
+  status: "OK"
 }
 ```
