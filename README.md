@@ -51,7 +51,6 @@ Accessibility
 ## Response
 ```
 {
-  status: "OK",
   username: "fkhan",
   is2faEnabled: false,
   language: "EN"
