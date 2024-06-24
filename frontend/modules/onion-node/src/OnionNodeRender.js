@@ -101,7 +101,7 @@ function renderOnHostNode(node, container)
 
 function containsClassComponentInTree(node)
 {
-    let stateNode = node.stateNode;
+    let stateNode = node.stateNode ? node.stateNode : node;
     if (!stateNode.childNodes)
         return false;
 
@@ -110,7 +110,7 @@ function containsClassComponentInTree(node)
         let element = stateNode.childNodes[i];
         if (!isValidContainer(element))
             return false;
-        if (getComponentNameFromDOMElement(element) || containsClassComponent(element))
+        if (getComponentNameFromDOMElement(element) || containsClassComponentInTree(element))
             return true;
     }
     return false;
