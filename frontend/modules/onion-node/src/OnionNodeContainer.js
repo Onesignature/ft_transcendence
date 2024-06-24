@@ -1,5 +1,6 @@
 import { createRootNode } from "./OnionNodeRoot.js";
 import { updateOnNodes } from "./OnionNodeUpdates.js";
+import { renderOnRootNode } from "./OnionNodeRender.js";
 
 export function createContainer(containerInfo, tag)
 {
@@ -13,14 +14,6 @@ export function updateContainer(nodeList, container)
 
 function updateContainerImp(rootNode, nodeList, container)
 {
-    console.log(rootNode);
-    console.log(nodeList);
-
-    updateOnNodes(rootNode, nodeList, container);
-    renderRootNode(rootNode, container);
-}
-
-function renderRootNode(rootNode, container)
-{
-    
+    updateOnNodes(rootNode, nodeList);
+    renderOnRootNode(rootNode, container);
 }

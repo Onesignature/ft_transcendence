@@ -15,9 +15,9 @@ Component.prototype.shouldComponentUpdate = function(nextProps, nextState)
 
 Component.prototype.onPreUpdate = function(prevProps, prevState){};
 
-Component.prototype.onUpdate = function(prevProps, prevState){};
-
 Component.prototype.render = function(){};
+
+Component.prototype.onUpdate = function(prevProps, prevState){};
 
 //Unmount Phase
 Component.prototype.onUnmount = function(){};

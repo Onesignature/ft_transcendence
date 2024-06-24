@@ -1,50 +1,18 @@
-import { HostRoot, ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
+import { HostRoot } from "../shared/OnionNodeTags.js";
 
-export function updateOnNodes(rootNode, nodeList, container)
+export function updateOnNodes(rootNode, nodeList)
 {
-    rootNode.children = nodeList;
+    console.log(rootNode);
+    
+    rootNode.children = [];
     for (let i = 0; i < nodeList.length; i++)
     {
         let node = nodeList[i];
-        node.rootContainer = container;
-        updateOnNode(node);
+        node.parent = rootNode;
+        rootNode.children.push(node);
     }
-}
 
-export function updateOnNode(node)
-{
-    switch (node.tag)
-    {
-        case ClassComponent:
-            UpdateClassNode(node);
-            break;
-        case HostComponent:
-        default:
-            break;
-    }
-}
-
-function UpdateClassNode(node)
-{
-    detectUpdateOnUnmountedNode(node);
-
-    let pendingProps = node.pendingProps;
-    let newState = node.stateNode.state;
-    if (pendingProps || newState)
-    {
-        let skipUpdate = node.stateNode.shouldComponentUpdate(pendingProps, newState);
-        node.stateNode.props = pendingProps;
-        node.memoizedProps = pendingProps;
-        node.memoizedState = newState;
-        if (skipUpdate)
-            return;
-        node.pendingProps = null;
-    }
-}
-
-function isNodeMounted(sourceNode)
-{
-    return !!getRootForUpdatedNode(sourceNode);
+    return getRootForUpdatedNode(rootNode);
 }
 
 function getRootForUpdatedNode(sourceNode)
@@ -57,10 +25,4 @@ function getRootForUpdatedNode(sourceNode)
         parent = node.parent;
     }
     return node.tag === HostRoot ? node.stateNode : null;
-}
-
-function detectUpdateOnUnmountedNode(sourceNode)
-{
-    if (!sourceNode.rootContainer)
-        console.error("Can't perform a Onion state update on a component that hasn't mounted yet.");
 }

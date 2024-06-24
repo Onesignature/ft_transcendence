@@ -6,12 +6,49 @@ export default class App extends Component
     constructor(props, context)
     {
         super(props, context);
+        console.log('constructor');
     }
 
     onMount()
     {
         console.log('mounted');
-        this.setState({test: "for example"});
+    }
+
+    shouldComponentUpdate(nextProps, nextState)
+    {
+        console.log('-------- shouldComponentUpdate');
+        
+        console.log(`prevProps:`);
+        console.log(this.props);
+        console.log(`prevState:`);
+        console.log(this.state);
+        
+        console.log(`nextProps:`);
+        console.log(nextProps);
+        console.log(`nextState:`);
+        console.log(nextState);
+
+        return true;
+    };
+
+    onPreUpdate(prevProps, prevState)
+    {
+        console.log('-------- preUpdate');
+        
+        console.log(`prevProps:`);
+        console.log(prevProps);
+        console.log(`prevState:`);
+        console.log(prevState);
+
+        console.log(`currProps:`);
+        console.log(this.props);
+        console.log(`currState:`);
+        console.log(this.state);
+    }
+
+    onUpdate()
+    {
+        console.log('update');
     }
 
     onUnmount()

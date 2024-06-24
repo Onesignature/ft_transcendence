@@ -3,9 +3,9 @@ import { createNodeFromDOMElement } from "../../onion-node/src/OnionNode.js";
 
 export function getNodeListFromHTML(htmlString)
 {
-    const domElements = parseHtmlString(htmlString);
+    let cleanedHtml = removeWhitespaceBetweenTags(htmlString);
+    const domElements = parseHtmlString(cleanedHtml);
 
-    console.log(domElements);
     let nodeList = [];
     for (let index in domElements)
     {
@@ -14,6 +14,19 @@ export function getNodeListFromHTML(htmlString)
         nodeList.push(node);
     }
     return nodeList;
+}
+
+function removeWhitespaceBetweenTags(html) {
+    // Regular expression to match whitespace between HTML tags
+    const pattern = />\s+</g;
+    
+    // Replaces the whitespace between tags with a single "><"
+    let cleanedHtml = html.replace(pattern, '><');
+    
+    // Trim whitespace from the start and end of the string
+    cleanedHtml = cleanedHtml.trim();
+    
+    return cleanedHtml;
 }
 
 function parseHtmlString(htmlString)

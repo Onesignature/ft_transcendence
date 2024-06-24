@@ -5,7 +5,7 @@ const generateId = () =>
     return instanceId += 1;
 }
     
-export function createClassComponent(node, className)
+export function createClassComponent(node, className, children)
 {
     const ComponentClass = window[className];
     if (!ComponentClass)
@@ -13,24 +13,18 @@ export function createClassComponent(node, className)
         throw new Error(`Class ${className} not found, please make sure the class in registed in global-setup.js`);
     }
     
-    let context = {};
+    let context = null;
     let props = {instanceId: generateId()};
     
     const instance = new ComponentClass(props, context);
-    instance.children = getChildrenOuterHTML(node.children);
+    instance.children = getChildrenOuterHTML(children);
+
+    node.memoizedProps = instance.props;
+    node.memoizedState = instance.state;
+
     instance._onionInternals = node;
     
     return instance;
-}
-
-export function mountClassComponent(node)
-{
-
-}
-
-export function unmountClassComponent(node)
-{
-    
 }
 
 function getChildrenOuterHTML(children)

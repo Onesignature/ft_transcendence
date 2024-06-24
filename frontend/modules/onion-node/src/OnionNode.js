@@ -14,6 +14,7 @@ function Node(tag, key, pendingProps)
     this.children = null;
 
     this.pendingProps = pendingProps;
+    this.pendingState = null;
     this.memoizedProps = null;
     this.memoizedState = null;
 
@@ -56,11 +57,9 @@ export function createNodeFromDOMElement(element)
     
     let node = createNode(nodeTag, key, pendingProps);
     node.elementType = type;
-    node.children = element.childNodes;
-    node.parent = element.parentNode;
     if (nodeTag == ClassComponent)
     {
-        node.stateNode = createClassComponent(node, componentName);
+        node.stateNode = createClassComponent(node, componentName, element.childNodes);
         node.type = componentName;
     }
     else
