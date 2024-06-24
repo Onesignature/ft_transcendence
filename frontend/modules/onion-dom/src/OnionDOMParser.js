@@ -6,10 +6,15 @@ export function getNodeListFromHTML(htmlString)
     let cleanedHtml = removeWhitespaceBetweenTags(htmlString);
     const domElements = parseHtmlString(cleanedHtml);
 
+    return getNodeListFromDOMElements(domElements);
+}
+
+export function getNodeListFromDOMElements(elements)
+{
     let nodeList = [];
-    for (let index in domElements)
+    for (let i= 0; i < elements.length; i++)
     {
-        let domElement = domElements[index];
+        let domElement = elements[i];
         let node = createNodeFromDOMElement(domElement);
         nodeList.push(node);
     }
@@ -34,6 +39,22 @@ function parseHtmlString(htmlString)
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
     const bodyContent = doc.body;
+
+    // Find all link elements in the parsed document
+    const linkElements = doc.querySelectorAll('link[rel="stylesheet"]');
+
+    linkElements.forEach(link => {
+        const href = link.getAttribute('href');
+        
+        // Check if the stylesheet already exists in the current document
+        const isStylesheetAlreadyPresent = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+            .some(existingLink => existingLink.getAttribute('href') === href);
+        
+        // Append the link element if it doesn't already exist
+        if (!isStylesheetAlreadyPresent) {
+            document.head.appendChild(link.cloneNode(true));
+        }
+    });
 
     let children = [];
     while (bodyContent.firstChild)

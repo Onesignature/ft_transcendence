@@ -15,5 +15,5 @@ export function updateContainer(nodeList, container)
 function updateContainerImp(rootNode, nodeList, container)
 {
     updateOnNodes(rootNode, nodeList);
-    renderOnRootNode(rootNode, container);
+    renderOnRootNode(rootNode, container.containerInfo);
 }

@@ -39,7 +39,7 @@ export function createNodeFromDOMElement(element)
     let pendingProps = {};
     let componentName = null;
 
-    if (componentName = element.getAttribute(className))
+    if (componentName = getComponentNameFromDOMElement(element))
     {
         nodeTag = ClassComponent;
         let lowerCaseClassName = className.toLowerCase();
@@ -68,4 +68,9 @@ export function createNodeFromDOMElement(element)
         node.type = node.stateNode.localName;
     }
     return node;
+}
+
+export function getComponentNameFromDOMElement(element)
+{
+    return element.getAttribute(className);
 }

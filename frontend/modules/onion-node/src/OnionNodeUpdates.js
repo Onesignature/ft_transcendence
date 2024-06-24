@@ -2,7 +2,7 @@ import { HostRoot } from "../shared/OnionNodeTags.js";
 
 export function updateOnNodes(rootNode, nodeList)
 {
-    console.log(rootNode);
+    // console.log(rootNode);
     
     rootNode.children = [];
     for (let i = 0; i < nodeList.length; i++)

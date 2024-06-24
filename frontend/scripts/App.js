@@ -3,63 +3,63 @@ import Login from './pages/Login.js';
 
 export default class App extends Component
 {
-    constructor(props, context)
-    {
-        super(props, context);
-        console.log('constructor');
-    }
+    // constructor(props, context)
+    // {
+    //     super(props, context);
+    //     console.log('app constructor');
+    // }
 
-    onMount()
-    {
-        console.log('mounted');
-    }
+    // onMount()
+    // {
+    //     console.log('mounted');
+    // }
 
-    shouldComponentUpdate(nextProps, nextState)
-    {
-        console.log('-------- shouldComponentUpdate');
+    // shouldComponentUpdate(nextProps, nextState)
+    // {
+    //     console.log('-------- shouldComponentUpdate');
         
-        console.log(`prevProps:`);
-        console.log(this.props);
-        console.log(`prevState:`);
-        console.log(this.state);
+    //     console.log(`prevProps:`);
+    //     console.log(this.props);
+    //     console.log(`prevState:`);
+    //     console.log(this.state);
         
-        console.log(`nextProps:`);
-        console.log(nextProps);
-        console.log(`nextState:`);
-        console.log(nextState);
+    //     console.log(`nextProps:`);
+    //     console.log(nextProps);
+    //     console.log(`nextState:`);
+    //     console.log(nextState);
 
-        return true;
-    };
+    //     return true;
+    // };
 
-    onPreUpdate(prevProps, prevState)
-    {
-        console.log('-------- preUpdate');
+    // onPreUpdate(prevProps, prevState)
+    // {
+    //     console.log('-------- preUpdate');
         
-        console.log(`prevProps:`);
-        console.log(prevProps);
-        console.log(`prevState:`);
-        console.log(prevState);
+    //     console.log(`prevProps:`);
+    //     console.log(prevProps);
+    //     console.log(`prevState:`);
+    //     console.log(prevState);
 
-        console.log(`currProps:`);
-        console.log(this.props);
-        console.log(`currState:`);
-        console.log(this.state);
-    }
+    //     console.log(`currProps:`);
+    //     console.log(this.props);
+    //     console.log(`currState:`);
+    //     console.log(this.state);
+    // }
 
-    onUpdate()
-    {
-        console.log('update');
-    }
+    // onUpdate()
+    // {
+    //     console.log('update');
+    // }
 
-    onUnmount()
-    {
-        console.log('unmounted');
-    }
+    // onUnmount()
+    // {
+    //     console.log('unmounted');
+    // }
 
     render()
     {
         return String.raw`
-            <div classname=${Login.name}></div>
+            <div className=${Login.name}></div>
         `;
     }
 }
