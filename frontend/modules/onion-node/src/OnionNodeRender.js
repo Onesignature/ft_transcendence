@@ -56,12 +56,11 @@ function renderOnClassNode(node, container)
     {
         if (!stateNode.shouldComponentUpdate(pendingProps, pendingState))
             return;
-        
+
         node.memoizedProps = stateNode.props ? Object.assign({}, stateNode.props, pendingProps) : pendingProps;
         node.memoizedState = stateNode.state ? Object.assign({}, stateNode.state, pendingState) : pendingState;
     }
-    else
-        //TODO: Don't re-render if there are no changes
+    //TODO: else don't re-render if there are no changes
 
     node.pendingProps = null;
     node.pendingState = null;
@@ -83,7 +82,7 @@ function renderOnClassNode(node, container)
 }
 
 function renderOnHostNode(node, container)
-{
+{    
     if (containsClassComponentInTree(node))
     {
         const clonedNode = node.stateNode.cloneNode(false); // false means "do not clone children"
@@ -94,6 +93,7 @@ function renderOnHostNode(node, container)
     }
     else
     {
+        processSpecialProps(node);
         // Render the entire node tree if there are no class components in them
         container.appendChild(node.stateNode);
     }
@@ -114,4 +114,46 @@ function containsClassComponentInTree(node)
             return true;
     }
     return false;
+}
+
+function processSpecialProps(node)
+{
+    let props = node.pendingProps;
+    for (const key in props)
+    {
+        if (key.toLowerCase() === "onclick")
+        {
+            let funcName = props[key];
+            let boundFunction = resolveFunction(node, funcName);
+            if (!boundFunction)
+            {
+                console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
+                continue;
+            }
+            node.stateNode.onclick = boundFunction;
+            break;
+        }
+    }
+
+    node.memoizedProps = props;
+    node.pendingProps = null;
+}
+
+function resolveFunction(node, funcName)
+{
+    while (node)
+    {
+        let stateNode = node.stateNode;
+        if (!isValidSpecialPropsNode(node) && stateNode && typeof stateNode[funcName] === 'function')
+        {
+            return stateNode[funcName].bind(stateNode);
+        }
+        node = node.parent;
+    }
+    return null;
+}
+
+function isValidSpecialPropsNode(node)
+{
+    return !!(node.memoizedProps && node.memoizedProps.onclick)
 }

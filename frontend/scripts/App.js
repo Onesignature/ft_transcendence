@@ -59,7 +59,9 @@ export default class App extends Component
     render()
     {
         return String.raw`
-            <div className=${Login.name}></div>
+            <div class="d-flex justify-content-center flex-column align-items-center vh-100">
+                <div className=${Login.name}></div>
+            </div>
         `;
     }
 }

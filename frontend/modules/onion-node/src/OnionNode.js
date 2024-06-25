@@ -33,44 +33,49 @@ export function createHostRootNode()
 
 export function createNodeFromDOMElement(element)
 {
-    let nodeTag = HostComponent;
-    let type = element.nodeType;
     let key = element.key;
+    let elementType = element.nodeType;
+    let nodeTag = null;
+    let type = null;
     let pendingProps = {};
-    let componentName = null;
+    let stateNode = null;
 
-    if (componentName = getComponentNameFromDOMElement(element))
+    if (type = getComponentNameFromDOMElement(element))
     {
         nodeTag = ClassComponent;
-        let lowerCaseClassName = className.toLowerCase();
-        for (let attr of element.attributes)
-        {
-            let name = attr.name.toLowerCase();
-            if (name === "key")
-                key = attr.value;
-            else if (name != lowerCaseClassName)
-                pendingProps[attr.name] = attr.value;
-        }
+        let options = { children: element.childNodes };
+        stateNode = createClassComponent(type, options);
     }
     else
-        pendingProps = element.attributes;
+    {
+        nodeTag = HostComponent;
+        type = element.localName;
+        stateNode = element;
+    }
+    
+    for (let attr of element.attributes)
+    {
+        let name = attr.name.toLowerCase();
+        if (name === "key")
+            key = attr.value;
+        else if (attr.value != type)
+            pendingProps[attr.name] = attr.value;
+    }
     
     let node = createNode(nodeTag, key, pendingProps);
-    node.elementType = type;
-    if (nodeTag == ClassComponent)
-    {
-        node.stateNode = createClassComponent(node, componentName, element.childNodes);
-        node.type = componentName;
-    }
-    else
-    {
-        node.stateNode = element;
-        node.type = node.stateNode.localName;
-    }
+    
+    node.elementType = elementType;
+    node.type = type;
+    node.stateNode = stateNode;
+    node.memoizedProps = stateNode.props;
+    node.memoizedState = stateNode.state;
+    
+    stateNode._onionInternals = node;
+
     return node;
 }
 
 export function getComponentNameFromDOMElement(element)
 {
-    return element.getAttribute(className);
+    return element.getAttribute(className.toLowerCase());
 }

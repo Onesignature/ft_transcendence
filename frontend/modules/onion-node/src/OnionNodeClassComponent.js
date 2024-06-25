@@ -5,7 +5,7 @@ const generateId = () =>
     return instanceId += 1;
 }
     
-export function createClassComponent(node, className, children)
+export function createClassComponent(className, options)
 {
     const ComponentClass = window[className];
     if (!ComponentClass)
@@ -17,12 +17,7 @@ export function createClassComponent(node, className, children)
     let props = {instanceId: generateId()};
     
     const instance = new ComponentClass(props, context);
-    instance.children = getChildrenOuterHTML(children);
-
-    node.memoizedProps = instance.props;
-    node.memoizedState = instance.state;
-
-    instance._onionInternals = node;
+    instance.children = getChildrenOuterHTML(options.children);
     
     return instance;
 }
