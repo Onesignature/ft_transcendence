@@ -98,6 +98,7 @@ function renderOnHostNode(node, container)
     else
     {
         processSpecialProps(node);
+        console.log(node);
         // Render the entire node tree if there are no class components in them
         container.appendChild(node.stateNode);
     }
