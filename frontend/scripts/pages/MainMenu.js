@@ -21,14 +21,19 @@ export default class MainMenu extends Component
     {
         alert('Button Log out clicked!');
     }
-
     render()
     {
         return String.raw`
+            <link rel="stylesheet" href="./styles/MainMenu.css">
+            <div class="profile-container">
+                <img id="profile-picture" class="profile-picture" src="../src/pictures/DefaultProfilePicture.svg" alt="Profile Picture">
+                <div id="username" class="username">username</div>
+            </div>
             <div className=${PongLogo.name}></div>
-            <h1 style="font-size: 20pt; color: white; text-transform: uppercase; font-weight: 700;">Enjoy the Pong</h1>
-            <h2 style="font-size: 15pt; color: #FFD335; margin-top: 5px; margin-bottom: 20px; text-transform: uppercase; font-weight: 700;">Login with 42 account</h2>
-            <div style="font-size: 20pt" className=${BaseButton.name} text="Login" onclick=${this.handleClick.name}></div>
+            <div style="font-size: 25pt; border: 2px solid #FFD335; color: #FFD335;" className=${BaseButton.name} text="Play" onclick=${this.handleButtonClickPlay.name}></div>
+            <div style="font-size: 20pt" className=${BaseButton.name} text="Tournament" onclick=${this.handleButtonClickTournament.name}></div>
+            <div style="font-size: 20pt" className=${BaseButton.name} text="Settings" onclick=${this.handleButtonClickSettings.name}></div>
+            <div style="font-size: 20pt" className=${BaseButton.name} text="Logout" onclick=${this.handleButtonClickLogOut.name}></div>
         `;
     }
 }

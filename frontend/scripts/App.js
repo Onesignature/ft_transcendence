@@ -1,5 +1,6 @@
 import { Component } from '../modules/Onion/index.js';
 import Login from './pages/Login.js';
+import MainMenu from './pages/MainMenu.js';
 
 export default class App extends Component
 {
@@ -60,7 +61,7 @@ export default class App extends Component
     {
         return String.raw`
             <div class="d-flex justify-content-center flex-column align-items-center vh-100">
-                <div className=${Login.name}></div>
+                <div className=${MainMenu.name}></div>
             </div>
         `;
     }

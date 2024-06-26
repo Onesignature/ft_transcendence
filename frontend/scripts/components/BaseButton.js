@@ -7,7 +7,7 @@ export default class BaseButton extends Component
     {
         return String.raw`
             <link rel="stylesheet" href="./styles/BaseButton.css">
-            <button class="base-button" onclick=${this.props.onclick} >${this.props.text}</button>
+            <button style=${this.props.style} class="base-button" onclick=${this.props.onclick} >${this.props.text}</button>
         `;
     }
 }
