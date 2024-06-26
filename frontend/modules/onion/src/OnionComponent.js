@@ -34,7 +34,6 @@ Component.prototype.setState = function (partialState, callback)
     const onStateChangeEvent = new CustomEvent('component.stateChange', {
         detail: {
             instance: this,
-            props: this.props,
             state: Object.assign({}, this.state, partialState),
             callback: callback
         }
