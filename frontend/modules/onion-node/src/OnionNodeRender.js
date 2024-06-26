@@ -1,6 +1,6 @@
 import { getNodeListFromHTML, getNodeListFromDOMElements } from "../../onion-dom/src/OnionDOMParser.js";
 import { ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
-import { updateOnNodes } from "./OnionNodeUpdates.js";
+import { updateOnNodes, getRootForUpdatedNode } from "./OnionNodeUpdates.js";
 import { getComponentNameFromDOMElement } from "./OnionNode.js";
 import { isValidContainer } from "../../onion-dom/src/OnionDOMContainer.js";
 
@@ -35,19 +35,23 @@ export function renderOnNode(node, container)
 function renderOnClassNode(node, container)
 {
     let stateNode = node.stateNode;
-    let newMount = !node.rootContainer;
+    let newMount = !node.parentContainer;
 
     if (newMount)
     {
-        node.rootContainer = container;
+        node.parentContainer = container;
         stateNode.onMount();
     }
-    else if (node.rootContainer != container)
+    else if (node.parentContainer != container)
     {
         stateNode.onUnmount();
-        node.rootContainer = container;
+        node.parentContainer = container;
     }
-    // else its an update on a mounted component
+    else
+    {
+        console.log(container);
+        console.log("Called Update");
+    }
 
     let pendingProps = node.pendingProps;
     let pendingState = node.pendingState;
@@ -123,7 +127,7 @@ function processSpecialProps(node)
     {
         if (key.toLowerCase() === "onclick")
         {
-            let funcName = props[key];
+            let funcName = props[key].split('(')[0];
             let boundFunction = resolveFunction(node, funcName);
             if (!boundFunction)
             {
@@ -144,7 +148,8 @@ function resolveFunction(node, funcName)
     while (node)
     {
         let stateNode = node.stateNode;
-        if (!isValidSpecialPropsNode(node) && stateNode && typeof stateNode[funcName] === 'function')
+        if (!isValidSpecialPropsNode(node, funcName) &&
+            stateNode && typeof stateNode[funcName] === 'function')
         {
             return stateNode[funcName].bind(stateNode);
         }
@@ -153,7 +158,7 @@ function resolveFunction(node, funcName)
     return null;
 }
 
-function isValidSpecialPropsNode(node)
+function isValidSpecialPropsNode(node, funcName)
 {
-    return !!(node.memoizedProps && node.memoizedProps.onclick)
+    return !!(node.memoizedProps && node.memoizedProps.onclick === funcName)
 }

@@ -18,7 +18,7 @@ function Node(tag, key, pendingProps)
     this.memoizedProps = null;
     this.memoizedState = null;
 
-    this.rootContainer = null;
+    this.parentContainer = null;
 }
 
 function createNode(tag, key, pendingProps)

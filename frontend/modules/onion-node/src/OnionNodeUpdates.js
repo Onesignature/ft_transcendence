@@ -1,21 +1,19 @@
 import { HostRoot } from "../shared/OnionNodeTags.js";
 
-export function updateOnNodes(rootNode, nodeList)
-{
-    // console.log(rootNode);
-    
-    rootNode.children = [];
+export function updateOnNodes(node, nodeList)
+{    
+    node.children = [];
     for (let i = 0; i < nodeList.length; i++)
     {
-        let node = nodeList[i];
-        node.parent = rootNode;
-        rootNode.children.push(node);
+        let childNode = nodeList[i];
+        childNode.parent = node;
+        node.children.push(childNode);
     }
 
-    return getRootForUpdatedNode(rootNode);
+    return getRootForUpdatedNode(node);
 }
 
-function getRootForUpdatedNode(sourceNode)
+export function getRootForUpdatedNode(sourceNode)
 {
     let node = sourceNode;
     let parent = node.parent;

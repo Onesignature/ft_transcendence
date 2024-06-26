@@ -3,16 +3,16 @@ import Login from './pages/Login.js';
 
 export default class App extends Component
 {
-    // constructor(props, context)
-    // {
-    //     super(props, context);
-    //     console.log('app constructor');
-    // }
+    constructor(props, context)
+    {
+        super(props, context);
+        console.log('app constructor');
+    }
 
-    // onMount()
-    // {
-    //     console.log('mounted');
-    // }
+    onMount()
+    {
+        console.log('app mounted');
+    }
 
     // shouldComponentUpdate(nextProps, nextState)
     // {

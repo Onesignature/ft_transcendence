@@ -16,5 +16,5 @@ function onComponentStateChangeEvent(event)
     console.log("Event detail:", event.detail);
     
     let detail = event.detail;
-    rerender(detail.instance, detail.props, detail.state, detail.callback);
+    rerender(detail.instance, detail.state, detail.callback);
 }
