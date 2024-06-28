@@ -35,22 +35,17 @@ export function renderOnNode(node, container)
 function renderOnClassNode(node, container)
 {
     let stateNode = node.stateNode;
-    let newMount = !node.parentContainer;
 
-    if (newMount)
+    if (!node.parentContainer)
     {
         node.parentContainer = container;
         stateNode.onMount();
     }
     else if (node.parentContainer != container)
     {
-        stateNode.onUnmount();
-        node.parentContainer = container;
-    }
-    else
-    {
-        console.log(container);
-        console.log("Called Update");
+        console.error('Updating an already mounted node to another container, ' +
+            'need to cleanup the node first. This error is likely caused by a ' +
+            'bug in Onion. Please file an issue.');
     }
 
     let pendingProps = node.pendingProps;

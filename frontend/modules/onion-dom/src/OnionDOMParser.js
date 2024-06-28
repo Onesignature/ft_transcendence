@@ -34,7 +34,7 @@ function removeWhitespaceBetweenTags(html) {
     return cleanedHtml;
 }
 
-function parseHtmlString(htmlString)
+export function parseHtmlString(htmlString)
 {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');

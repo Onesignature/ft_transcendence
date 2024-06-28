@@ -19,6 +19,7 @@ function Node(tag, key, pendingProps)
     this.memoizedState = null;
 
     this.parentContainer = null;
+    this.outerHtml = null;
 }
 
 function createNode(tag, key, pendingProps)
@@ -67,6 +68,7 @@ export function createNodeFromDOMElement(element)
     node.elementType = elementType;
     node.type = type;
     node.stateNode = stateNode;
+    node.outerHtml = element.outerHTML;
     node.memoizedProps = stateNode.props;
     node.memoizedState = stateNode.state;
     
