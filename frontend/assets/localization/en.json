@@ -1,0 +1,9 @@
+{
+    "PLAY" : "Play",
+    "LOGIN" : "Login",
+    "TOURNAMENT" : "Tournament",
+    "SETTINGS" : "Settings",
+    "LOGOUT" : "Logout",
+    "MAIN_MENU": "Main Menu",
+    "VICTORY": "Victory"
+}
