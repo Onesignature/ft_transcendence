@@ -38,10 +38,10 @@ export default class Winner extends Component
             <link rel="stylesheet" href="./styles/Winner.css">
             <div className=${PongLogo.name}></div>
             <h2 style="font-size: 70pt; color: #FFD335;">${loc.getString('VICTORY')}</h2>
-            <img style="width: 4%; margin-bottom: 10px;" src="../src/pictures/CrownIcon.svg" alt="Crown Icon">
+            <img style="width: 4%; margin-bottom: 10px;" src="./assets/icons/CrownIcon.svg" alt="Crown Icon">
             
             <div class="winner-name" id="winner-name">bsaeed</div>
-            <div buttonstylepath="./styles/LogoutButton.css" buttonclass="logout-button" className=${BaseButton.name} text="${loc.getString('MAIN_MENU')}" onclick=${this.handleButtonClickMainMenu.name}></div>
+            <div buttonstylepath="./styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="${loc.getString('MAIN_MENU')}" onclick=${this.handleButtonClickMainMenu.name}></div>
             ${this.createConfetti()}
         `;
     }

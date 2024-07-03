@@ -5,5 +5,6 @@
     "SETTINGS" : "Settings",
     "LOGOUT" : "Logout",
     "MAIN_MENU": "Main Menu",
-    "VICTORY": "Victory"
+    "VICTORY": "Victory",
+    "DEFEATED": "Defeated"
 }

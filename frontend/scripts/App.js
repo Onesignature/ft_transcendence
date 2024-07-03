@@ -4,6 +4,9 @@ import Login from './pages/Login.js';
 import MainMenu from './pages/MainMenu.js';
 import PopUpTournament from './pages/PopUpTournament.js';
 import Winner from './pages/Winner.js';
+import Loser from './pages/Loser.js';
+import TournamentHistory from './pages/TournamentHistory.js';
+import PopUpConfirmation from './components/PopUpConfirmation.js';
 
 export default class App extends Component
 {
@@ -64,7 +67,7 @@ export default class App extends Component
     {
         return String.raw`
             <div class="d-flex justify-content-center flex-column align-items-center vh-100">
-                <div className=${Winner.name}></div>
+                <div className=${TournamentHistory.name}></div>
             </div>
         `;
     }

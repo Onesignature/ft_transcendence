@@ -30,7 +30,7 @@ export default class MainMenu extends Component
         return String.raw`
             <link rel="stylesheet" href="./styles/MainMenu.css">
             <div class="profile-container">
-                <img id="profile-picture" class="profile-picture" src="../src/pictures/DefaultProfilePicture.svg" alt="Profile Picture">
+                <img id="profile-picture" class="profile-picture" src="./assets/icons/DefaultProfilePicture.svg" alt="Profile Picture">
                 <div id="username" class="username">username</div>
             </div>
             <div className=${PongLogo.name}></div>
