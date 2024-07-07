@@ -125,7 +125,6 @@ function renderOnHostNode(node, container)
             let stateNode = node.stateNode;
 
             let pendingState = node.pendingState;
-            let pendingProps = node.pendingProps;
 
             if (pendingState)
             {
@@ -141,11 +140,6 @@ function renderOnHostNode(node, container)
                 }
                 node.memoizedState = stateNode.state ? Object.assign({}, stateNode.state, pendingState) : pendingState;
                 node.pendingState = null;
-            }
-            if (pendingProps)
-            {
-                node.memoizedProps = stateNode.props ? Object.assign({}, stateNode.props, pendingProps) : pendingProps;
-                node.pendingProps = null;
             }
         }
     }
