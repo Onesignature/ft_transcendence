@@ -1,28 +1,17 @@
-import { HostRoot, ClassComponent } from "../shared/OnionNodeTags.js";
-import { parseHtmlString } from "../../onion-dom/src/OnionDOMParser.js";
+import { HostRoot } from "../shared/OnionNodeTags.js";
 
 export function updateOnNodes(node, nodeList)
 {
+    // Nothing to update
+    if (!nodeList)
+        return;
+
     node.children = [];
     for (let i = 0; i < nodeList.length; i++)
     {
         let childNode = nodeList[i];
         childNode.parent = node;
         node.children.push(childNode);
-    }
-
-    return getRootForUpdatedNode(node);
-}
-
-export function updateOnNodes(node)
-{
-    if (node.tag != ClassComponent)
-        console.error("Cannot re-update on a node which is not a class component.");
-
-    for (let i = 0; i < node.children.length; i++)
-    {
-        let childNode = node.children[i];
-        diffCompareChild(childNode);
     }
 }
 
@@ -38,15 +27,71 @@ export function getRootForUpdatedNode(sourceNode)
     return node.tag === HostRoot ? node.stateNode : null;
 }
 
-function diffCompareChild(node)
+export function updateNodeFromNodeList(node, nodeList)
 {
-    let newHtml = node.stateNode.render();
-    let elements = parseHtmlString(newHtml);
-    for (let i = 0; i < elements.length; i++)
+    let newNodeList = [];
+    for (let i = 0; i < nodeList.length; i++)
     {
-        if (lNode.outerHtml === rNode.outerHtml)
+        let newNode = nodeList[i];
+        let newStateNode = newNode.stateNode;
+        let found = false;
+        for (let j = 0; j < node.children.length; j++)
         {
-            
+            let oldNode = node.children[j];
+            let oldStateNode = oldNode.stateNode;
+            // console.log("--------");
+            // console.log(`${newNode.tag}, ${newNode.tag === oldNode.tag}`);
+            // console.log(`${newNode.type}, ${newNode.type === oldNode.type}`);
+            // console.log(`${newNode.key}, ${newNode.key === oldNode.key}`);
+            // console.log(`${newStateNode.outerHTML}\n${oldStateNode.outerHTML}\nresult=${oldStateNode.outerHTML === newStateNode.outerHTML}`);
+            // console.log(oldNode);
+            // console.log("--------");
+            if (oldStateNode.outerHTML === newStateNode.outerHTML) // Exactly same, do nothing
+            {
+                found = true;
+                
+                node.children.splice(j, 1);
+                newNodeList.push(oldNode);
+                break;
+            }
+            else if (newNode.tag === oldNode.tag && newNode.type === oldNode.type && newNode.key === oldNode.key)
+            {
+                found = true;
+ 
+                let pendingProps = newNode.pendingProps;
+                oldNode.pendingProps = oldNode.pendingProps ? Object.assign({}, oldNode.pendingProps, pendingProps) : pendingProps;
+
+                let pendingState = Object.assign({}, newNode.pendingState, { __outerHTML: newNode.stateNode.outerHTML });
+                oldNode.pendingState = oldNode.pendingState ? Object.assign({}, oldNode.pendingState, pendingState) : pendingState;
+                
+                node.children.splice(j, 1);
+                newNodeList.push(oldNode);
+                break;
+            }
+
+        }
+        if (!found)
+        {
+            newNodeList.push(newNode);
         }
     }
+    return newNodeList;
+}
+
+export function updateNodeProps(node, pendingProps)
+{
+    if (!pendingProps)
+        return;
+    node.pendingProps = node.pendingProps ? Object.assign({}, pendingProps, node.pendingProps) : pendingProps;
+}
+
+export function updateNodeState(node, partialState)
+{
+    if (!partialState)
+        return;
+    if (typeof partialState === 'function')
+    {
+        partialState = partialState.call();
+    }
+    node.pendingState = node.pendingState ? Object.assign({}, partialState, node.pendingState) : partialState;
 }

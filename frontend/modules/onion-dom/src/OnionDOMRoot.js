@@ -25,14 +25,14 @@ export function createRoot(container)
     return new OnionDOMRoot(root);
 }
 
-OnionDOMRoot.prototype.render = function(HTMLString)
+OnionDOMRoot.prototype.render = function(HTMLString, callback)
 {
     const root = this._internalRoot;
     if (root === null)
         throw new Error('Cannot update an unmounted root.');
 
     const children = getNodeListFromHTML(HTMLString);
-    updateContainer(children, root);
+    updateContainer(children, root, callback);
 }
 
 OnionDOMRoot.prototype.unmount = function()
@@ -42,7 +42,7 @@ OnionDOMRoot.prototype.unmount = function()
     {
         this._internalRoot = null;
         const container = root.containerInfo;
-        updateContainer(null, root);
+        updateContainer(null, root, null);
         unmarkContainerAsRoot(container);
         unlistenToAllSupportedEvents();
     }

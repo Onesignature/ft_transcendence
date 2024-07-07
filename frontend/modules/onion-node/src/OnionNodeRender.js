@@ -1,28 +1,24 @@
 import { getNodeListFromHTML, getNodeListFromDOMElements } from "../../onion-dom/src/OnionDOMParser.js";
-import { ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
-import { updateOnNodes, getRootForUpdatedNode } from "./OnionNodeUpdates.js";
+import { HostRoot, ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
+import { updateOnNodes, updateNodeFromNodeList } from "./OnionNodeUpdates.js";
 import { getComponentNameFromDOMElement } from "./OnionNode.js";
 import { isValidContainer } from "../../onion-dom/src/OnionDOMContainer.js";
+import { resolveNodeFunction } from "./OnionNodeEventBind.js";
 
-export function renderOnRootNode(rootNode, container)
-{    
-    // Nothing to render
-    if (!rootNode.children)
-        return;
-
-    for (let i = 0; i < rootNode.children.length; i++)
-    {
-        let node = rootNode.children[i];
-        renderOnNode(node, container);
-    }
+export function render(node, container)
+{
+    renderImp(node, container);
 }
 
-export function renderOnNode(node, container)
+function renderImp(node, container)
 {
     switch (node.tag)
     {
+        case HostRoot:
+            renderOnChildNode(node, container);
+            break;
         case ClassComponent:
-            renderOnClassNode(node, container)
+            renderOnClassNode(node, container);
             break;
         case HostComponent:
             renderOnHostNode(node, container);
@@ -32,37 +28,50 @@ export function renderOnNode(node, container)
     }
 }
 
+function renderOnChildNode(node, container)
+{
+    // Nothing to render
+    if (!node.children)
+        return;
+
+    for (let i = 0; i < node.children.length; i++)
+    {
+        let childNode = node.children[i];
+        renderImp(childNode, container);
+    }
+}
+
 function renderOnClassNode(node, container)
 {
     let stateNode = node.stateNode;
-
-    if (!node.parentContainer)
-    {
-        node.parentContainer = container;
-        stateNode.onMount();
-    }
-    else if (node.parentContainer != container)
-    {
-        console.error('Updating an already mounted node to another container, ' +
-            'need to cleanup the node first. This error is likely caused by a ' +
-            'bug in Onion. Please file an issue.');
-    }
+    let newNodeMount = warnIsNodeNotMounted(node, container);
 
     let pendingProps = node.pendingProps;
     let pendingState = node.pendingState;
+
+    if (!newNodeMount && !stateNode.shouldComponentUpdate(pendingProps, pendingState))
+        return;
     
-    if (pendingProps || pendingState)
+    if (pendingProps)
     {
-        if (!stateNode.shouldComponentUpdate(pendingProps, pendingState))
-            return;
-
         node.memoizedProps = stateNode.props ? Object.assign({}, stateNode.props, pendingProps) : pendingProps;
-        node.memoizedState = stateNode.state ? Object.assign({}, stateNode.state, pendingState) : pendingState;
+        node.pendingProps = null;
     }
-    //TODO: else don't re-render if there are no changes
+    if (pendingState)
+    {
+        // Exract outerHTML from state
+        if (pendingState.__outerHTML)
+        {
+            stateNode.outerHTML = pendingState.__outerHTML;
+            delete pendingState.__outerHTML;
+        }
 
-    node.pendingProps = null;
-    node.pendingState = null;
+        node.memoizedState = stateNode.state ? Object.assign({}, stateNode.state, pendingState) : pendingState;
+        node.pendingState = null;
+    }
+    
+    if (!newNodeMount && !pendingProps && !pendingState)
+        return;
 
     let prevProps = stateNode.props;
     let prevState = stateNode.state;
@@ -70,32 +79,75 @@ function renderOnClassNode(node, container)
     stateNode.props = node.memoizedProps;
     stateNode.state = node.memoizedState;
     
-    stateNode.onPreUpdate(prevProps, prevState);
+    if (!newNodeMount)
+        stateNode.onPreUpdate(prevProps, prevState);
     
     let HTMLString = stateNode.render();
     let nodeList = getNodeListFromHTML(HTMLString);
-    updateOnNodes(node, nodeList);
-    renderOnRootNode(node, container);
 
-    stateNode.onUpdate(prevProps, prevState);
+    if (!newNodeMount)
+    {
+        nodeList = updateNodeFromNodeList(node, nodeList);
+        unmountOnChildNode(node, container);
+    }
+    
+    updateOnNodes(node, nodeList);
+    renderOnChildNode(node, container);
+
+    if (!newNodeMount)
+        stateNode.onUpdate(prevProps, prevState);
 }
 
 function renderOnHostNode(node, container)
 {    
+    let newNodeMount = warnIsNodeNotMounted(node, container);
     if (containsClassComponentInTree(node))
     {
-        const clonedNode = node.stateNode.cloneNode(false); // false means "do not clone children"
-        container.appendChild(clonedNode);
         let nodeList = getNodeListFromDOMElements(node.stateNode.childNodes);
+        
+        cloneNodeFromStateNode(node, false);
+        container.appendChild(node.stateNode);
+        
         updateOnNodes(node, nodeList);
-        renderOnRootNode(node, container.lastChild);
+        renderOnChildNode(node, node.stateNode);
     }
     else
     {
-        processSpecialProps(node);
-        console.log(node);
-        // Render the entire node tree if there are no class components in them
-        container.appendChild(node.stateNode);
+        if (newNodeMount)
+        {
+            processSpecialProps(node);
+            // Render the entire node tree if there are no class components in them
+            container.appendChild(node.stateNode);
+        }
+        else
+        {
+            //TODO: add support for special props
+            let stateNode = node.stateNode;
+
+            let pendingState = node.pendingState;
+            let pendingProps = node.pendingProps;
+
+            if (pendingState)
+            {
+                // Exract and update outerHTML from state
+                if (pendingState.__outerHTML)
+                {                    
+                    let newStateNode = createStateNodeFromOuterHTML(pendingState.__outerHTML);
+                    node.stateNode = newStateNode;
+                    delete pendingState.__outerHTML;
+                    
+                    processSpecialProps(node);
+                    container.replaceChild(newStateNode, stateNode);
+                }
+                node.memoizedState = stateNode.state ? Object.assign({}, stateNode.state, pendingState) : pendingState;
+                node.pendingState = null;
+            }
+            if (pendingProps)
+            {
+                node.memoizedProps = stateNode.props ? Object.assign({}, stateNode.props, pendingProps) : pendingProps;
+                node.pendingProps = null;
+            }
+        }
     }
 }
 
@@ -124,7 +176,7 @@ function processSpecialProps(node)
         if (key.toLowerCase() === "onclick")
         {
             let funcName = props[key].split('(')[0];
-            let boundFunction = resolveFunction(node, funcName);
+            let boundFunction = resolveNodeFunction(node, funcName);
             if (!boundFunction)
             {
                 console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
@@ -139,22 +191,77 @@ function processSpecialProps(node)
     node.pendingProps = null;
 }
 
-function resolveFunction(node, funcName)
+function unmountNode(node, container)
 {
-    while (node)
+    switch (node.tag)
     {
-        let stateNode = node.stateNode;
-        if (!isValidSpecialPropsNode(node, funcName) &&
-            stateNode && typeof stateNode[funcName] === 'function')
-        {
-            return stateNode[funcName].bind(stateNode);
-        }
-        node = node.parent;
+        case HostRoot:
+            unmountOnChildNode(node, container);
+            break;
+        case ClassComponent:
+            unmountOnClassNode(node, container);
+            break;
+        case HostComponent:
+            unmountOnHostNode(node, container);
+            break;
+        default:
+            break;
     }
-    return null;
 }
 
-function isValidSpecialPropsNode(node, funcName)
+function unmountOnChildNode(node, container)
 {
-    return !!(node.memoizedProps && node.memoizedProps.onclick === funcName)
+    if (!node.children)
+        return;
+
+    for (let i = 0; i < node.children.length; i++)
+    {
+        let childNode = node.children[i];
+        unmountNode(childNode, container);
+    }
+    delete node.children;
+}
+
+function unmountOnClassNode(node, container)
+{
+    unmountOnChildNode(node, container);
+    node.stateNode.onUnmount();
+    //TODO: remove any styles with it
+    delete node.stateNode;
+}
+
+function unmountOnHostNode(node, container)
+{
+    container.removeChild(node.stateNode);
+    delete node.stateNode;
+}
+
+function warnIsNodeNotMounted(node, container)
+{
+    let newNodeMount = !node.parentContainer;
+    if (newNodeMount)
+    {
+        node.parentContainer = container;
+    }
+    else if (node.parentContainer != container)
+    {
+        console.error('Updating an already mounted node to another container, ' +
+            'need to cleanup the node first. This error is likely caused by a ' +
+            'bug in Onion. Please file an issue.');
+    }
+    return newNodeMount;
+}
+
+function cloneNodeFromStateNode(node, allowChildren)
+{
+    const clonedNode = node.stateNode.cloneNode(allowChildren);
+    delete node.stateNode;
+    node.stateNode = clonedNode;
+}
+
+function createStateNodeFromOuterHTML(outerHTML)
+{
+    var tempContainer = document.createElement('div');
+    tempContainer.innerHTML = outerHTML;
+    return tempContainer.firstElementChild;
 }
