@@ -17,7 +17,7 @@ export function createClassComponent(node, className, props)
     props["instanceId"] = generateId();
     
     const instance = new ComponentClass(props, context);
-    instance._onionInternals = node;
+    instance.__onionInternals = node;
     
     return instance;
 }

@@ -1,7 +1,11 @@
 import { HostRoot } from "../shared/OnionNodeTags.js";
 
 export function updateOnNodes(node, nodeList)
-{    
+{
+    // Nothing to update
+    if (!nodeList)
+        return;
+
     node.children = [];
     for (let i = 0; i < nodeList.length; i++)
     {
@@ -9,8 +13,6 @@ export function updateOnNodes(node, nodeList)
         childNode.parent = node;
         node.children.push(childNode);
     }
-
-    return getRootForUpdatedNode(node);
 }
 
 export function getRootForUpdatedNode(sourceNode)
@@ -23,4 +25,73 @@ export function getRootForUpdatedNode(sourceNode)
         parent = node.parent;
     }
     return node.tag === HostRoot ? node.stateNode : null;
+}
+
+export function updateNodeFromNodeList(node, nodeList)
+{
+    let newNodeList = [];
+    for (let i = 0; i < nodeList.length; i++)
+    {
+        let newNode = nodeList[i];
+        let newStateNode = newNode.stateNode;
+        let found = false;
+        for (let j = 0; j < node.children.length; j++)
+        {
+            let oldNode = node.children[j];
+            let oldStateNode = oldNode.stateNode;
+            // console.log("--------");
+            // console.log(`${newNode.tag}, ${newNode.tag === oldNode.tag}`);
+            // console.log(`${newNode.type}, ${newNode.type === oldNode.type}`);
+            // console.log(`${newNode.key}, ${newNode.key === oldNode.key}`);
+            // console.log(`${newStateNode.outerHTML}\n${oldStateNode.outerHTML}\nresult=${oldStateNode.outerHTML === newStateNode.outerHTML}`);
+            // console.log(oldNode);
+            // console.log("--------");
+            if (oldStateNode.outerHTML === newStateNode.outerHTML) // Exactly same, do nothing
+            {
+                found = true;
+                
+                node.children.splice(j, 1);
+                newNodeList.push(oldNode);
+                break;
+            }
+            else if (newNode.tag === oldNode.tag && newNode.type === oldNode.type && newNode.key === oldNode.key)
+            {
+                found = true;
+ 
+                let pendingProps = newNode.pendingProps;
+                oldNode.pendingProps = oldNode.pendingProps ? Object.assign({}, oldNode.pendingProps, pendingProps) : pendingProps;
+
+                let pendingState = Object.assign({}, newNode.pendingState, { __outerHTML: newNode.stateNode.outerHTML });
+                oldNode.pendingState = oldNode.pendingState ? Object.assign({}, oldNode.pendingState, pendingState) : pendingState;
+                
+                node.children.splice(j, 1);
+                newNodeList.push(oldNode);
+                break;
+            }
+
+        }
+        if (!found)
+        {
+            newNodeList.push(newNode);
+        }
+    }
+    return newNodeList;
+}
+
+export function updateNodeProps(node, pendingProps)
+{
+    if (!pendingProps)
+        return;
+    node.pendingProps = node.pendingProps ? Object.assign({}, pendingProps, node.pendingProps) : pendingProps;
+}
+
+export function updateNodeState(node, partialState)
+{
+    if (!partialState)
+        return;
+    if (typeof partialState === 'function')
+    {
+        partialState = partialState.call();
+    }
+    node.pendingState = node.pendingState ? Object.assign({}, partialState, node.pendingState) : partialState;
 }

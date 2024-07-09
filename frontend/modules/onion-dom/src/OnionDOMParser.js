@@ -6,16 +6,16 @@ export function getNodeListFromHTML(htmlString)
     let cleanedHtml = removeWhitespaceBetweenTags(htmlString);
     const domElements = parseHtmlString(cleanedHtml);
 
-    return getNodeListFromDOMElements(domElements);
+    return getNodeListFromDOMElements(domElements, htmlString);
 }
 
-export function getNodeListFromDOMElements(elements)
+export function getNodeListFromDOMElements(elements, htmlString)
 {
     let nodeList = [];
     for (let i= 0; i < elements.length; i++)
     {
         let domElement = elements[i];
-        let node = createNodeFromDOMElement(domElement);
+        let node = createNodeFromDOMElement(domElement, htmlString);
         nodeList.push(node);
     }
     return nodeList;

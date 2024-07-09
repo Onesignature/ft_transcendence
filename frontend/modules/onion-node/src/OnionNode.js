@@ -1,5 +1,6 @@
 import { HostRoot, HostComponent, ClassComponent } from "../shared/OnionNodeTags.js";
 import { createClassComponent } from "./OnionNodeClassComponent.js";
+import { convertStringToType } from "../../shared/StringConverter.js";
 
 const className = "className";
 
@@ -31,7 +32,7 @@ export function createHostRootNode()
     return createNode(HostRoot, null, null);
 }
 
-export function createNodeFromDOMElement(element)
+export function createNodeFromDOMElement(element, htmlString)
 {
     let key = element.key;
     let elementType = element.nodeType;
@@ -43,7 +44,7 @@ export function createNodeFromDOMElement(element)
     if (type = getComponentNameFromDOMElement(element))
     {
         nodeTag = ClassComponent;
-        let options = { children: element.childNodes };
+        let options = { element: element, children: element.childNodes };
         stateNode = createClassComponent(type, options);
     }
     else
@@ -55,11 +56,12 @@ export function createNodeFromDOMElement(element)
     
     for (let attr of element.attributes)
     {
-        let name = attr.name.toLowerCase();
-        if (name === "key")
-            key = attr.value;
+        let name = findCaseSensitiveValue(htmlString, attr.name);
+        let value = convertStringToType(attr.value);
+        if (attr.name === "key")
+            key = value;
         else if (attr.value != type)
-            pendingProps[attr.name] = attr.value;
+            pendingProps[name] = value;
     }
     
     let node = createNode(nodeTag, key, pendingProps);
@@ -70,7 +72,7 @@ export function createNodeFromDOMElement(element)
     node.memoizedProps = stateNode.props;
     node.memoizedState = stateNode.state;
     
-    stateNode._onionInternals = node;
+    stateNode.__onionInternals = node;
 
     return node;
 }
@@ -78,4 +80,21 @@ export function createNodeFromDOMElement(element)
 export function getComponentNameFromDOMElement(element)
 {
     return element.getAttribute(className.toLowerCase());
+}
+
+function findCaseSensitiveValue(targetString, key)
+{
+    if (!targetString)
+        return key;
+
+    // Find the lowercase key in the target string
+    let index = targetString.toLowerCase().indexOf(key.toLowerCase());
+    
+    if (index === -1)
+        return key;
+    
+    // Extract the substring from the original target string
+    let caseSensitiveValue = targetString.substring(index, index + key.length);
+    
+    return caseSensitiveValue;
 }

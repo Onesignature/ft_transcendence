@@ -18,6 +18,7 @@ export function createClassComponent(className, options)
     
     const instance = new ComponentClass(props, context);
     instance.children = getChildrenOuterHTML(options.children);
+    instance.outerHTML = options.element.outerHTML;
     
     return instance;
 }

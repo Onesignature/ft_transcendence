@@ -1,6 +1,6 @@
 import { createRootNode } from "./OnionNodeRoot.js";
-import { updateOnNodes, getRootForUpdatedNode } from "./OnionNodeUpdates.js";
-import { renderOnRootNode } from "./OnionNodeRender.js";
+import { updateOnNodes, updateNodeProps, updateNodeState } from "./OnionNodeUpdates.js";
+import { render } from "./OnionNodeRender.js";
 
 let currentlyProcessingUpdate = false;
 
@@ -9,32 +9,35 @@ export function createContainer(containerInfo, tag)
     return createRootNode(containerInfo, tag);
 }
 
-export function updateContainer(nodeList, container)
+export function updateContainer(nodeList, container, callback)
 {
-	return updateContainerImp(container.current, nodeList, container);
+	updateContainerImp(container.current, nodeList, container, callback);
 }
 
-function updateContainerImp(rootNode, nodeList, container)
+export function updateNode(node, pendingProps, pendingState, callback)
+{
+    updateNodeProps(node, pendingProps);
+    updateNodeState(node, pendingState);
+	updateContainerImp(node, null, node.parentContainer, callback);
+}
+
+function updateContainerImp(rootNode, nodeList, container, callback)
 {
     if (currentlyProcessingUpdate)
         console.error("Cannot perform root node update because onion is busy rendering");
 
     currentlyProcessingUpdate = true;
-    let root = updateOnNodes(rootNode, nodeList);
-    if (root)
-        renderOnRootNode(root.current, container.containerInfo);
-    currentlyProcessingUpdate = false;
-}
 
-export function updateNodeOnContainer(node, container, callback)
-{
-    if (currentlyProcessingUpdate)
-        console.error("Cannot perform node update from this.setState because onion is busy rendering");
+    //TODO: Implement context using container param
 
-    currentlyProcessingUpdate = true;
-    let root = updateOnNodes(node, nodeList);
-    if (root)
-        renderOnRootNode(root, container.containerInfo);
+    if (container.containerInfo)
+        container = container.containerInfo;
+
+    updateOnNodes(rootNode, nodeList);
+    render(rootNode, container);
+    
     currentlyProcessingUpdate = false;
-    callback.call();
+
+    if (callback)
+        callback.call();
 }

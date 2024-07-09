@@ -10,7 +10,7 @@ export default class Login extends Component
         super(props, state);
         console.log('login constructor');
         this.state = {
-            isAuthenticated: false,
+            isLoading: false,
         };
     }
 
@@ -21,8 +21,11 @@ export default class Login extends Component
 
     handleClick()
     {
+        this.setState({isLoading: true});
         console.log("login clicked.");
-        this.setState({isAuthenticated: true}, this.onAuthenticated);
+        setTimeout(() => {
+            this.setState({isLoading: false});
+        }, 3000);
     }
 
     onAuthenticated()
@@ -36,8 +39,7 @@ export default class Login extends Component
             <div className=${PongLogo.name}></div>
             <h1 style="font-size: 20pt; color: white; text-transform: uppercase; font-weight: 700;">Enjoy the Pong</h1>
             <h2 style="font-size: 15pt; color: #FFD335; margin-top: 5px; margin-bottom: 20px; text-transform: uppercase; font-weight: 700;">Login with 42 account</h2>
-            <div style="font-size: 20pt" className=${BaseButton.name} text="Login" onclick=${this.handleClick.name}></div>
-            <a style="color: white" >isAuthenticated: ${this.state.isAuthenticated}</a>
+            <div style="font-size: 20pt" className=${BaseButton.name} text="Login" onClick="${this.handleClick.name}" isDisabled=${this.state.isLoading} isLoading=${this.state.isLoading}></div>            
         `;
     }
 }
