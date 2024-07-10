@@ -67,7 +67,7 @@ export default class App extends Component
     {
         return String.raw`
             <div class="d-flex justify-content-center flex-column align-items-center vh-100">
-                <div className=${TournamentHistory.name}></div>
+                <div className=${MainMenu.name}></div>
             </div>
         `;
     }

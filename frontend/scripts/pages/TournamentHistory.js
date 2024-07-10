@@ -23,6 +23,9 @@ export default class TournamentHistory extends Component
     {
         alert('Exiting...');
     }
+    handleStartButtonClick(){
+        alert('Starting...'); 
+    }
 
     render()
     {
@@ -62,7 +65,7 @@ export default class TournamentHistory extends Component
                 </div>
                 <button class="btn-start" id="StartButton" onclick="handleStartButtonClick()">START</button>
             </div>
-            ${this.state.showModal ? String.raw`<div id="exitModal" className="${PopUpConfirmation.name}" onCloseClick="${this.handleModalClose.name}" onDoneClick="${this.handleModalDone.name}"></div>` : ""}
+            ${this.state.showModal ? String.raw`<div id="exitModal" className="${PopUpConfirmation.name}" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}
         `;
     }
 }
