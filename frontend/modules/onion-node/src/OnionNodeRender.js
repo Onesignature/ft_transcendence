@@ -1,6 +1,6 @@
 import { getNodeListFromHTML, getNodeListFromDOMElements } from "../../onion-dom/src/OnionDOMParser.js";
 import { HostRoot, ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
-import { updateOnNodes, updateNodeFromNodeList } from "./OnionNodeUpdates.js";
+import { updateOnNodes, updateNodeFromNodeList, updateNodeContext } from "./OnionNodeUpdates.js";
 import { getComponentNameFromDOMElement } from "./OnionNode.js";
 import { isValidContainer } from "../../onion-dom/src/OnionDOMContainer.js";
 import { resolveNodeFunction } from "./OnionNodeEventBind.js";
@@ -43,11 +43,19 @@ function renderOnChildNode(node, container)
 
 function renderOnClassNode(node, container)
 {
-    let stateNode = node.stateNode;
+    let stateNode = node.stateNode;    
     let newNodeMount = warnIsNodeNotMounted(node, container);
-
+    let pendingContext = node.context;
     let pendingProps = node.pendingProps;
     let pendingState = node.pendingState;
+
+    if (pendingContext)
+    {
+        stateNode.context = stateNode.context ? Object.assign({}, stateNode.context, pendingContext) : pendingContext;
+    }
+
+    if (newNodeMount)
+        stateNode.onMount();
 
     if (!newNodeMount && !stateNode.shouldComponentUpdate(pendingProps, pendingState))
         return;
@@ -70,7 +78,8 @@ function renderOnClassNode(node, container)
         node.pendingState = null;
     }
     
-    if (!newNodeMount && !pendingProps && !pendingState)
+    // Don't render if there are no changes
+    if (!newNodeMount && !pendingProps && !pendingState && !pendingContext)
         return;
 
     let prevProps = stateNode.props;
@@ -90,7 +99,8 @@ function renderOnClassNode(node, container)
         nodeList = updateNodeFromNodeList(node, nodeList);
         unmountOnChildNode(node, container);
     }
-    
+
+    updateNodeContext(node, stateNode.context);
     updateOnNodes(node, nodeList);
     renderOnChildNode(node, container);
 
@@ -226,6 +236,7 @@ function unmountOnClassNode(node, container)
 
 function unmountOnHostNode(node, container)
 {
+    unmountOnChildNode(node, node.stateNode);
     container.removeChild(node.stateNode);
     delete node.stateNode;
 }

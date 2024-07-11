@@ -1,5 +1,5 @@
 import { createRootNode } from "./OnionNodeRoot.js";
-import { updateOnNodes, updateNodeProps, updateNodeState } from "./OnionNodeUpdates.js";
+import { updateOnNodes, updateNodeProps, updateNodeState, updateParentNodes } from "./OnionNodeUpdates.js";
 import { render } from "./OnionNodeRender.js";
 
 let currentlyProcessingUpdate = false;
@@ -14,13 +14,6 @@ export function updateContainer(nodeList, container, callback)
 	updateContainerImp(container.current, nodeList, container, callback);
 }
 
-export function updateNode(node, pendingProps, pendingState, callback)
-{
-    updateNodeProps(node, pendingProps);
-    updateNodeState(node, pendingState);
-	updateContainerImp(node, null, node.parentContainer, callback);
-}
-
 function updateContainerImp(rootNode, nodeList, container, callback)
 {
     if (currentlyProcessingUpdate)
@@ -30,12 +23,27 @@ function updateContainerImp(rootNode, nodeList, container, callback)
 
     //TODO: Implement context using container param
 
-    if (container.containerInfo)
-        container = container.containerInfo;
-
     updateOnNodes(rootNode, nodeList);
-    render(rootNode, container);
+    render(rootNode, container.containerInfo);
     
+    currentlyProcessingUpdate = false;
+
+    if (callback)
+        callback.call();
+}
+
+export function updateNode(node, pendingProps, pendingState, callback)
+{
+    if (currentlyProcessingUpdate)
+        console.error("Cannot perform node update because onion is busy rendering");
+
+    currentlyProcessingUpdate = true;
+
+    updateNodeProps(node, pendingProps);
+    updateNodeState(node, pendingState);
+    render(node, node.parentContainer);
+    //updateParentNodes(node);
+
     currentlyProcessingUpdate = false;
 
     if (callback)

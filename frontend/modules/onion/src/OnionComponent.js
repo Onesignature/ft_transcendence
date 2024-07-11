@@ -5,7 +5,10 @@ function Component(props, context)
 }
 
 //Mount Phase
-Component.prototype.onMount = function(){};
+Component.prototype.onMount = function()
+{
+    //console.log(`${this.__onionInternals.parent.type}.${this.__onionInternals.type} mounted`);
+};
 
 //Update Phase
 Component.prototype.shouldComponentUpdate = function(nextProps, nextState)
@@ -17,10 +20,16 @@ Component.prototype.onPreUpdate = function(prevProps, prevState){};
 
 Component.prototype.render = function(){};
 
-Component.prototype.onUpdate = function(prevProps, prevState){};
+Component.prototype.onUpdate = function(prevProps, prevState)
+{
+    //console.log(`${this.__onionInternals.parent.type}.${this.__onionInternals.type} updated`);
+};
 
 //Unmount Phase
-Component.prototype.onUnmount = function(){};
+Component.prototype.onUnmount = function()
+{
+    //console.log(`${this.__onionInternals.parent.type}.${this.__onionInternals.type} unmounted`);
+};
 
 //Hooks
 Component.prototype.setState = function (partialState, callback)
