@@ -13,7 +13,6 @@ import PopUpTournament from './pages/PopUpTournament.js';
 import PopUpConfirmation from './components/PopUpConfirmation.js';
 import App from './App.js';
 import PongLogo from './components/PongLogo.js';
-import Home from './pages/Home.js';
 
 window.App = App;
 window.BaseButton = BaseButton;
