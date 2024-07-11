@@ -1,7 +1,6 @@
 import { getNodeListFromHTML, getNodeListFromDOMElements } from "../../onion-dom/src/OnionDOMParser.js";
 import { HostRoot, ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
 import { updateOnNodes, updateNodeFromNodeList, updateNodeContext } from "./OnionNodeUpdates.js";
-import { isValidContainer } from "../../onion-dom/src/OnionDOMContainer.js";
 import { resolveNodeFunction } from "./OnionNodeEventBind.js";
 
 export function render(node, container)
@@ -163,20 +162,6 @@ function renderOnHostNode(node, container)
     
     updateOnNodes(node, nodeList);
     renderOnChildNode(node, node.stateNode);
-}
-
-function isValidStateNodeChild(stateNode)
-{
-    if (!stateNode.childNodes)
-        return false;
-
-    for (let i = 0; i < stateNode.childNodes.length; i++)
-    {
-        let element = stateNode.childNodes[i];
-        if (isValidContainer(element))
-            return true;
-    }
-    return false;
 }
 
 function processSpecialProps(node, props)
