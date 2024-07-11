@@ -1,7 +1,6 @@
 import { getNodeListFromHTML, getNodeListFromDOMElements } from "../../onion-dom/src/OnionDOMParser.js";
 import { HostRoot, ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
 import { updateOnNodes, updateNodeFromNodeList, updateNodeContext } from "./OnionNodeUpdates.js";
-import { getComponentNameFromDOMElement } from "./OnionNode.js";
 import { isValidContainer } from "../../onion-dom/src/OnionDOMContainer.js";
 import { resolveNodeFunction } from "./OnionNodeEventBind.js";
 
@@ -65,6 +64,7 @@ function renderOnClassNode(node, container)
         node.memoizedProps = stateNode.props ? Object.assign({}, stateNode.props, pendingProps) : pendingProps;
         node.pendingProps = null;
     }
+
     if (pendingState)
     {
         // Exract outerHTML from state
@@ -110,71 +110,77 @@ function renderOnClassNode(node, container)
 
 function renderOnHostNode(node, container)
 {    
+    let prevStateNode = node.stateNode;
     let newNodeMount = warnIsNodeNotMounted(node, container);
-    if (containsClassComponentInTree(node))
+    let pendingProps = node.pendingProps;
+    let pendingState = node.pendingState;
+    let newStateNode = null;
+    
+    if (pendingState)
     {
-        let nodeList = getNodeListFromDOMElements(node.stateNode.childNodes);
-        
-        cloneNodeFromStateNode(node, false);
-        container.appendChild(node.stateNode);
-        
-        updateOnNodes(node, nodeList);
-        renderOnChildNode(node, node.stateNode);
+        // Exract outerHTML from state
+        if (pendingState.__outerHTML)
+        {
+            newStateNode = createStateNodeFromOuterHTML(pendingState.__outerHTML);
+            node.stateNode = newStateNode;
+            delete pendingState.__outerHTML;
+        }
+
+        node.memoizedState = node.memoizedState ? Object.assign({}, node.memoizedState, pendingState) : pendingState;
+        node.pendingState = null;
     }
+
+    // Don't render if there are no changes
+    if (!newNodeMount && !pendingProps && !pendingState && !newStateNode)
+        return;
+
+    let nodeList = getNodeListFromDOMElements(node.stateNode.childNodes);
+    // Remove child nodes, will render it manually
+    cloneNodeFromStateNode(node, false);
+    
+    if (!newNodeMount)
+    {
+        nodeList = updateNodeFromNodeList(node, nodeList);
+        for (let i = 0; i < node.children.length; i++)
+        {
+            let childNode = node.children[i];
+            container.removeChild(childNode.stateNode);
+        }
+    }
+
+    if (pendingProps)
+    {
+        processSpecialProps(node, pendingProps);
+
+        node.memoizedProps = node.memoizedProps ? Object.assign({}, node.memoizedProps, pendingProps) : pendingProps;
+        node.pendingProps = null;
+    }
+    
+    if (newStateNode)
+        container.replaceChild(node.stateNode, prevStateNode);
     else
-    {
-        if (newNodeMount)
-        {
-            processSpecialProps(node);
-            // Render the entire node tree if there are no class components in them
-            container.appendChild(node.stateNode);
-        }
-        else
-        {
-            //TODO: add support for special props
-            let stateNode = node.stateNode;
-
-            let pendingState = node.pendingState;
-
-            if (pendingState)
-            {
-                // Exract and update outerHTML from state
-                if (pendingState.__outerHTML)
-                {                    
-                    let newStateNode = createStateNodeFromOuterHTML(pendingState.__outerHTML);
-                    node.stateNode = newStateNode;
-                    delete pendingState.__outerHTML;
-                    
-                    processSpecialProps(node);
-                    container.replaceChild(newStateNode, stateNode);
-                }
-                node.memoizedState = stateNode.state ? Object.assign({}, stateNode.state, pendingState) : pendingState;
-                node.pendingState = null;
-            }
-        }
-    }
+        container.appendChild(node.stateNode);
+    
+    updateOnNodes(node, nodeList);
+    renderOnChildNode(node, node.stateNode);
 }
 
-function containsClassComponentInTree(node)
+function isValidStateNodeChild(stateNode)
 {
-    let stateNode = node.stateNode ? node.stateNode : node;
     if (!stateNode.childNodes)
         return false;
 
     for (let i = 0; i < stateNode.childNodes.length; i++)
     {
         let element = stateNode.childNodes[i];
-        if (!isValidContainer(element))
-            return false;
-        if (getComponentNameFromDOMElement(element) || containsClassComponentInTree(element))
+        if (isValidContainer(element))
             return true;
     }
     return false;
 }
 
-function processSpecialProps(node)
+function processSpecialProps(node, props)
 {
-    let props = node.pendingProps;
     for (const key in props)
     {
         if (key.toLowerCase() === "onclick")
@@ -190,9 +196,6 @@ function processSpecialProps(node)
             break;
         }
     }
-
-    node.memoizedProps = props;
-    node.pendingProps = null;
 }
 
 function unmountNode(node, container)
@@ -260,7 +263,6 @@ function warnIsNodeNotMounted(node, container)
 function cloneNodeFromStateNode(node, allowChildren)
 {
     const clonedNode = node.stateNode.cloneNode(allowChildren);
-    delete node.stateNode;
     node.stateNode = clonedNode;
 }
 

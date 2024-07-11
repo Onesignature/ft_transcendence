@@ -1,4 +1,4 @@
-import { ELEMENT_NODE, COMMENT_NODE, DOCUMENT_NODE, DOCUMENT_FRAGMENT_NODE } from "../shared/HTMLNodeType.js";
+import { ELEMENT_NODE, DOCUMENT_NODE, DOCUMENT_FRAGMENT_NODE } from "../shared/HTMLNodeType.js";
 
 export function isValidContainer(node)
 {

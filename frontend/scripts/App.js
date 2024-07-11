@@ -1,5 +1,5 @@
 import { Component } from '../modules/Onion/index.js';
-import { Router, Routes, Route } from '../modules/onion-router/index.js';
+import { Router, Routes, Route, Link } from '../modules/onion-router/index.js';
 import Login from './pages/Login.js';
 import MainMenu from './pages/MainMenu.js';
 
@@ -13,7 +13,7 @@ export default class App extends Component
                     <div className=${Routes.name}>
                         <div className=${Route.name} exact path="/" component=${Login.name}></div>
                         <div className=${Route.name} path="/login" component=${Login.name}></div>
-                        <div className=${Route.name} path="/main-menu" component=${MainMenu.name}></div>
+                        <div className=${Route.name} path="/mainMenu" component=${MainMenu.name}></div>
                     </div>
                 </div>
             </div>

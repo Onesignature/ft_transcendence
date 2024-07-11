@@ -1,3 +1,5 @@
+import { TEXT_NODE } from "../../onion-dom/shared/HTMLNodeType.js";
+
 let instanceId = 0; // Generate unique instance id
 
 const generateId = () =>
@@ -19,6 +21,7 @@ export function createClassComponent(className, options)
     let props = {instanceId: generateId(), children: children};
     
     const instance = new ComponentClass(props, context);
+    instance.props = instance.props ? Object.assign({}, instance.props, props) : props;
     instance.outerHTML = options.element.outerHTML;
     
     return instance;
@@ -26,5 +29,7 @@ export function createClassComponent(className, options)
 
 function getChildrenOuterHTML(children)
 {
-    return Array.from(children, element => element.outerHTML);
+    return Array.from(children, element => 
+        element.nodeType === TEXT_NODE ? element.textContent : element.outerHTML
+    );
 }

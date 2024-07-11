@@ -25,7 +25,7 @@ export default class Login extends Component
     onAuthenticated()
     {
         console.log("authentication done!");
-        this.context.navigate("/main-menu");
+        this.context.navigate("/mainMenu");
     }
 
     render()

@@ -7,7 +7,7 @@ export function updateOnNodes(node, nodeList)
         return;
     if (node.children)
     {
-        console.error("Expected a clean node before calling updateOnNodes." +
+        console.error(`Expected a clean ${node.type} node before calling updateOnNodes.` +
             " This error is likely caused by a bug in Onion. Please file an issue.");
     }
 
