@@ -34,10 +34,10 @@ export default class MainMenu extends Component
                 <div id="username" class="username">username</div>
             </div>
             <div className=${PongLogo.name}></div>
-            <div buttonstylepath="./styles/PlayButton.css" buttonclass="play-button" className=${BaseButton.name} text="Play" onclick=${this.handleButtonClickPlay.name}></div>
-            <div style="font-size: 20pt" className=${BaseButton.name} text="Tournament" onclick=${this.handleButtonClickTournament.name}></div>
-            <div style="font-size: 20pt" className=${BaseButton.name} text="Settings" onclick=${this.handleButtonClickSettings.name}></div>
-            <div buttonstylepath="./styles/LogoutButton.css" buttonclass="logout-button" className=${BaseButton.name} text="Logout" onclick=${this.handleButtonClickLogOut.name}></div>
+            <div buttonStylePath="./styles/PlayButton.css" buttonClass="play-button" className=${BaseButton.name} text="Play" onClick=${this.handleButtonClickPlay.name}></div>
+            <div style="font-size: 20pt" className=${BaseButton.name} text="Tournament" onClick=${this.handleButtonClickTournament.name}></div>
+            <div style="font-size: 20pt" className=${BaseButton.name} text="Settings" onClick=${this.handleButtonClickSettings.name}></div>
+            <div buttonStylePath="./styles/LogoutButton.css" buttonClass="logout-button" className=${BaseButton.name} text="Logout" onClick=${this.handleButtonClickLogOut.name}></div>
         `;
     }
 }
