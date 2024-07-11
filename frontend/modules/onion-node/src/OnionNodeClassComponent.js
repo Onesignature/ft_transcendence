@@ -12,12 +12,13 @@ export function createClassComponent(className, options)
     {
         throw new Error(`Class ${className} not found, please make sure the class in registed in global-setup.js`);
     }
+
+    let children = getChildrenOuterHTML(options.children);
     
-    let context = null;
-    let props = {instanceId: generateId()};
+    let context = {};
+    let props = {instanceId: generateId(), children: children};
     
     const instance = new ComponentClass(props, context);
-    instance.children = getChildrenOuterHTML(options.children);
     instance.outerHTML = options.element.outerHTML;
     
     return instance;

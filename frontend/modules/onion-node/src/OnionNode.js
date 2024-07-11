@@ -19,6 +19,7 @@ function Node(tag, key, pendingProps)
     this.memoizedProps = null;
     this.memoizedState = null;
 
+    this.context = null;
     this.parentContainer = null;
 }
 
@@ -32,7 +33,7 @@ export function createHostRootNode()
     return createNode(HostRoot, null, null);
 }
 
-export function createNodeFromDOMElement(element, htmlString)
+export function createNodeFromDOMElement(element, caseSensitiveString)
 {
     let key = element.key;
     let elementType = element.nodeType;
@@ -56,7 +57,7 @@ export function createNodeFromDOMElement(element, htmlString)
     
     for (let attr of element.attributes)
     {
-        let name = findCaseSensitiveValue(htmlString, attr.name);
+        let name = findCaseSensitiveValue(caseSensitiveString, attr.name);
         let value = convertStringToType(attr.value);
         if (attr.name === "key")
             key = value;

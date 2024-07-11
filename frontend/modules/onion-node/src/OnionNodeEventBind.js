@@ -15,5 +15,14 @@ export function resolveNodeFunction(node, funcName)
 
 function isValidSpecialPropsNode(node, funcName)
 {
-    return !!(node.memoizedProps && node.memoizedProps.onClick === funcName)
+    if (!node.memoizedProps)
+        return false;
+    
+    const key = findKeyByValue(node.memoizedProps, funcName);
+    return !!(key && node.memoizedProps[key]);
+}
+
+function findKeyByValue(object, value)
+{
+    return Object.keys(object).find(key => object[key] === value);
 }

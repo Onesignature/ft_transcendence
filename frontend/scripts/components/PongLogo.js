@@ -8,7 +8,6 @@ export default class PongLogo extends Component
             <link rel="stylesheet" href="./styles/PongLogo.css">
             <div id="pong-logo-animation">
                 <svg width="574" height="205" viewBox="0 0 574 205" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Define the gradient directly in SVG -->
                     <defs>
                         <linearGradient id="gradient" x1="0%" y1="100%" x2="100%" y2="0%">
                             <stop offset="0%" style="stop-color:#FFD335;stop-opacity:1"></stop>
