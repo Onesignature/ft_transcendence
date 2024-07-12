@@ -1,4 +1,4 @@
-import { Component } from '../modules/Onion/index.js';
+import { Component } from '../modules/onion/index.js';
 import { Router, Routes, Route, Link } from '../modules/onion-router/index.js';
 import Login from './pages/Login.js';
 import MainMenu from './pages/MainMenu.js';

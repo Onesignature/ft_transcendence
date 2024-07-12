@@ -1,4 +1,4 @@
-import Onion, { Component } from "../../Onion/index.js";
+import Onion, { Component } from "../../onion/index.js";
 
 export default class Routes extends Component
 {

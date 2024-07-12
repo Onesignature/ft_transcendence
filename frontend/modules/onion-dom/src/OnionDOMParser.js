@@ -1,6 +1,6 @@
 import { isValidContainer } from "./OnionDOMContainer.js";
 import { createNodeFromDOMElement } from "../../onion-node/src/OnionNode.js";
-import { createElement } from "../../Onion/index.js";
+import { createElement } from "../../onion/index.js";
 import { TEXT_NODE, COMMENT_NODE } from "../shared/HTMLNodeType.js";
 
 export function getNodeListFromHTML(htmlString)

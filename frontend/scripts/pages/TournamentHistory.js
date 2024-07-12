@@ -1,4 +1,4 @@
-import { Component } from "../../modules/Onion/index.js";
+import { Component } from "../../modules/onion/index.js";
 import BackButton from "../components/BackButton.js";
 import BaseButton from "../components/BaseButton.js";
 import PongLogo from "../components/PongLogo.js";

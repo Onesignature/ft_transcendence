@@ -1,4 +1,4 @@
-import { Component } from "../../Onion/index.js";
+import { Component } from "../../onion/index.js";
 
 export default class Link extends Component
 {

@@ -1,4 +1,4 @@
-import { Component } from '../../modules/Onion/index.js';
+import { Component } from '../../modules/onion/index.js';
 
 export default class CloseButton extends Component
 {
