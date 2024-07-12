@@ -1,6 +1,7 @@
 import { HostRoot, HostComponent, ClassComponent } from "../shared/OnionNodeTags.js";
 import { createClassComponent } from "./OnionNodeClassComponent.js";
 import { convertStringToType } from "../../shared/StringConverter.js";
+import { TEXT_NODE } from "../../onion-dom/shared/HTMLNodeType.js";
 
 const className = "className";
 
@@ -55,14 +56,17 @@ export function createNodeFromDOMElement(element, caseSensitiveString)
         stateNode = element;
     }
     
-    for (let attr of element.attributes)
+    if (elementType != TEXT_NODE)
     {
-        let name = findCaseSensitiveValue(caseSensitiveString, attr.name);
-        let value = convertStringToType(attr.value);
-        if (attr.name === "key")
-            key = value;
-        else if (attr.value != type)
-            pendingProps[name] = value;
+        for (let attr of element.attributes)
+        {
+            let name = findCaseSensitiveValue(caseSensitiveString, attr.name);
+            let value = convertStringToType(attr.value);
+            if (attr.name === "key")
+                key = value;
+            else if (attr.value != type)
+                pendingProps[name] = value;
+        }
     }
     
     let node = createNode(nodeTag, key, pendingProps);
@@ -78,9 +82,9 @@ export function createNodeFromDOMElement(element, caseSensitiveString)
     return node;
 }
 
-export function getComponentNameFromDOMElement(element)
+function getComponentNameFromDOMElement(element)
 {
-    return element.getAttribute(className.toLowerCase());
+    return (element.nodeType != TEXT_NODE && element.getAttribute(className.toLowerCase()));
 }
 
 function findCaseSensitiveValue(targetString, key)

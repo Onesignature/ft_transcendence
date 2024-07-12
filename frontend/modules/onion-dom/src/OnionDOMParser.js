@@ -1,6 +1,7 @@
 import { isValidContainer } from "./OnionDOMContainer.js";
 import { createNodeFromDOMElement } from "../../onion-node/src/OnionNode.js";
 import { createElement } from "../../Onion/index.js";
+import { TEXT_NODE, COMMENT_NODE } from "../shared/HTMLNodeType.js";
 
 export function getNodeListFromHTML(htmlString)
 {
@@ -14,8 +15,11 @@ export function getNodeListFromDOMElements(elements, caseSensitiveString)
     for (let i= 0; i < elements.length; i++)
     {
         let domElement = elements[i];
-        let node = createNodeFromDOMElement(domElement, caseSensitiveString);
-        nodeList.push(node);
+        if (isValidDOMElement(domElement))
+        {
+            let node = createNodeFromDOMElement(domElement, caseSensitiveString);
+            nodeList.push(node);
+        }
     }
     return nodeList;
 }
@@ -68,9 +72,7 @@ function parseHtmlString(htmlString, addStylesheet)
     while (bodyContent.firstChild)
     {
         let element = bodyContent.firstChild;
-        if (!isValidContainer(element))
-            console.error(`Unsupport or invalid element, skipped rendering for: ${element}`);
-        else
+        if (isValidDOMElement(element))
         {
             let onionElement = createElement(element);
             children.push(onionElement);
@@ -78,4 +80,12 @@ function parseHtmlString(htmlString, addStylesheet)
         bodyContent.removeChild(element);
     }
     return children;
+}
+
+export function isValidDOMElement(node)
+{
+    return (node && (isValidContainer(node) ||
+        node.nodeType === TEXT_NODE ||
+        node.nodeType === COMMENT_NODE
+    ));
 }

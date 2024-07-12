@@ -2,6 +2,14 @@ import { Component } from "../../Onion/index.js";
 
 export default class Link extends Component
 {
+    constructor(props, context)
+    {
+        super(props, context);
+        this.props = {
+            style: ""
+        };
+    }
+
     handleClick(event)
     {
         event.preventDefault();
@@ -11,7 +19,7 @@ export default class Link extends Component
     render()
     {
         return String.raw`
-            <a href=${this.props.to} onClick=${this.handleClick}>
+            <a style="${this.props.style}" href=${this.props.to} onClick=${this.handleClick.name}>
                 ${this.props.children}
             </a>
         `;
