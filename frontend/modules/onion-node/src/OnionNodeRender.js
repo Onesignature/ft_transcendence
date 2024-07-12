@@ -47,6 +47,10 @@ function renderOnClassNode(node, container)
     let pendingProps = node.pendingProps;
     let pendingState = node.pendingState;
 
+    // Don't render if there are no changes
+    if (!newNodeMount && !pendingContext && !pendingProps && !pendingState)
+        return;
+
     if (pendingContext)
     {
         stateNode.context = stateNode.context ? Object.assign({}, stateNode.context, pendingContext) : pendingContext;
@@ -76,10 +80,6 @@ function renderOnClassNode(node, container)
         node.memoizedState = stateNode.state ? Object.assign({}, stateNode.state, pendingState) : pendingState;
         node.pendingState = null;
     }
-    
-    // Don't render if there are no changes
-    if (!newNodeMount && !pendingProps && !pendingState && !pendingContext)
-        return;
 
     let prevProps = stateNode.props;
     let prevState = stateNode.state;
@@ -114,6 +114,10 @@ function renderOnHostNode(node, container)
     let pendingProps = node.pendingProps;
     let pendingState = node.pendingState;
     let newStateNode = null;
+
+    // Don't render if there are no changes
+    if (!newNodeMount && !pendingProps && !pendingState)
+        return;
     
     if (pendingState)
     {
@@ -128,10 +132,6 @@ function renderOnHostNode(node, container)
         node.memoizedState = node.memoizedState ? Object.assign({}, node.memoizedState, pendingState) : pendingState;
         node.pendingState = null;
     }
-
-    // Don't render if there are no changes
-    if (!newNodeMount && !pendingProps && !pendingState && !newStateNode)
-        return;
 
     let nodeList = getNodeListFromDOMElements(node.stateNode.childNodes);
     // Remove child nodes, will render it manually
@@ -166,20 +166,18 @@ function renderOnHostNode(node, container)
 
 function processSpecialProps(node, props)
 {
-    for (const key in props)
+    let value;
+
+    if (value = props.onclick)
     {
-        if (key.toLowerCase() === "onclick")
+        let funcName = value.split('(')[0];
+        let boundFunction = resolveNodeFunction(node, funcName);
+        if (!boundFunction)
         {
-            let funcName = props[key].split('(')[0];
-            let boundFunction = resolveNodeFunction(node, funcName);
-            if (!boundFunction)
-            {
-                console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
-                continue;
-            }
-            node.stateNode.onclick = boundFunction;
-            break;
+            console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
+            return;
         }
+        node.stateNode.onclick = boundFunction;
     }
 }
 
