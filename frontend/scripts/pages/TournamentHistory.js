@@ -31,13 +31,6 @@ export default class TournamentHistory extends Component
     {
         return String.raw`
             <link rel="stylesheet" href="./styles/TournamentHistory.css">
-            <div id="exitModal" class="modal">
-                <div class="modal-content">
-                    <p>Are you sure you want to exit?</p>
-                    <button class="modal-button yes-button" onclick="handleYesButtonClick()">Yes</button>
-                    <button class="modal-button no-button" onclick="handleNoButtonClick()">No</button>
-                </div>
-            </div>
             <div className=${BackButton.name} text="▲" onclick=${this.showExitConfirmation.name}>▲</div>
             <div class="container">
                 <h1 class="header">TOURNAMENT</h1>
