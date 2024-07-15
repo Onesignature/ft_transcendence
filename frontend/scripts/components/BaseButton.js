@@ -22,7 +22,7 @@ export default class BaseButton extends Component
             : this.props.text;
         return String.raw`
             <link rel="stylesheet" href="${this.props.buttonStylePath}">
-            <button class="${this.props.buttonClass}" style="${this.props.style}" ${this.props.isDisabled ? "disabled" : ""} onclick="${this.props.onClick}">${buttonChildNode}</button>
+            <button class="${this.props.buttonClass}" style="${this.props.style}" ${this.props.isDisabled ? "disabled" : ""} onClick="${this.props.onClick}">${buttonChildNode}</button>
         `;
     }
 }

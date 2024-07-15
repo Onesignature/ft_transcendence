@@ -41,7 +41,7 @@ export default class Winner extends Component
             <img style="width: 4%; margin-bottom: 10px;" src="./assets/icons/CrownIcon.svg" alt="Crown Icon">
             
             <div class="winner-name" id="winner-name">bsaeed</div>
-            <div buttonstylepath="./styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="${loc.getString('MAIN_MENU')}" onclick=${this.handleButtonClickMainMenu.name}></div>
+            <div buttonstylepath="./styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="${loc.getString('MAIN_MENU')}" onClick=${this.handleButtonClickMainMenu.name}></div>
             ${this.createConfetti()}
         `;
     }

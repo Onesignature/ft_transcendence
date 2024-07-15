@@ -24,7 +24,7 @@ export default class PopUpSettings extends Component
             <link rel="stylesheet" href="./styles/PopUpSettings.css">
             <div class="window">
                 <div class="window-header">
-                <div className=${CloseButton.name} onclick=${this.handleCloseButtonClick.name}></div>
+                <div className=${CloseButton.name} onClick=${this.handleCloseButtonClick.name}></div>
                 </div>
                 <div class="window-content">
                     <h2>${loc.getString('SETTINGS')}</h2>

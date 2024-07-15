@@ -24,7 +24,7 @@ export default class Loser extends Component
             <img id="angry-bot" style="width: 4%; margin-bottom: 10px;" src="./assets/icons/Ai_icon_angry.svg" alt="Crown Icon">
             
             <div class="bot-name" id="winner-name">AI</div>
-            <div buttonstylepath="./styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="${loc.getString('MAIN_MENU')}" onclick=${this.handleButtonClickMainMenu.name}></div>
+            <div buttonstylepath="./styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="${loc.getString('MAIN_MENU')}" onClick=${this.handleButtonClickMainMenu.name}></div>
         `;
     }
 }

@@ -47,7 +47,7 @@ export default class TournamentHistory extends Component
     {
         return String.raw`
             <link rel="stylesheet" href="./styles/TournamentHistory.css">
-            <div className=${BackButton.name} text="▲" onclick=${this.showExitConfirmation.name}>▲</div>
+            <div className=${BackButton.name} text="▲" onClick=${this.showExitConfirmation.name}>▲</div>
             <div class="container">
                 <h1 class="header">${loc.getString('TOURNAMENT')}</h1>
                 <div class="matches">
@@ -72,7 +72,7 @@ export default class TournamentHistory extends Component
                     <h2 class="sub-header">${loc.getString('WINNER')}</h2>
                     <div class="player" id="player7"></div>
                 </div>
-                <button class="btn-start" id="StartButton" onclick="handleStartButtonClick()">${loc.getString('START')} </button>
+                <button class="btn-start" id="StartButton" onClick="handleStartButtonClick()">${loc.getString('START')} </button>
             </div>
             ${this.createConfetti()}
             ${this.state.showModal ? String.raw`<div id="exitModal" className="${PopUpConfirmation.name}" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}

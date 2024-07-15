@@ -5,28 +5,28 @@ import { resolveNodeFunction } from "./OnionNodeEventBind.js";
 
 export function render(node, container)
 {
-    renderImp(node, container);
+    renderImp(node, container, null);
 }
 
-function renderImp(node, container)
+function renderImp(node, container, renderHTML)
 {
     switch (node.tag)
     {
         case HostRoot:
-            renderOnChildNode(node, container);
+            renderOnChildNode(node, container, renderHTML);
             break;
         case ClassComponent:
             renderOnClassNode(node, container);
             break;
         case HostComponent:
-            renderOnHostNode(node, container);
+            renderOnHostNode(node, container, renderHTML);
             break;
         default:
             break;
     }
 }
 
-function renderOnChildNode(node, container)
+function renderOnChildNode(node, container, renderHTML)
 {
     // Nothing to render
     if (!node.children)
@@ -35,7 +35,7 @@ function renderOnChildNode(node, container)
     for (let i = 0; i < node.children.length; i++)
     {
         let childNode = node.children[i];
-        renderImp(childNode, container);
+        renderImp(childNode, container, renderHTML);
     }
 }
 
@@ -90,8 +90,8 @@ function renderOnClassNode(node, container)
     if (!newNodeMount)
         stateNode.onPreUpdate(prevProps, prevState);
     
-    let HTMLString = stateNode.render();
-    let nodeList = getNodeListFromHTML(HTMLString);
+    let renderHTML = stateNode.render();
+    let nodeList = getNodeListFromHTML(renderHTML);
 
     if (!newNodeMount)
     {
@@ -101,13 +101,13 @@ function renderOnClassNode(node, container)
 
     updateNodeContext(node, stateNode.context);
     updateOnNodes(node, nodeList);
-    renderOnChildNode(node, container);
+    renderOnChildNode(node, container, renderHTML);
 
     if (!newNodeMount)
         stateNode.onUpdate(prevProps, prevState);
 }
 
-function renderOnHostNode(node, container)
+function renderOnHostNode(node, container, renderHTML)
 {    
     let prevStateNode = node.stateNode;
     let newNodeMount = warnIsNodeNotMounted(node, container);
@@ -133,7 +133,7 @@ function renderOnHostNode(node, container)
         node.pendingState = null;
     }
 
-    let nodeList = getNodeListFromDOMElements(node.stateNode.childNodes);
+    let nodeList = getNodeListFromDOMElements(node.stateNode.childNodes, renderHTML);
     // Remove child nodes, will render it manually
     cloneNodeFromStateNode(node, false);
     
@@ -161,14 +161,14 @@ function renderOnHostNode(node, container)
         container.appendChild(node.stateNode);
     
     updateOnNodes(node, nodeList);
-    renderOnChildNode(node, node.stateNode);
+    renderOnChildNode(node, node.stateNode, renderHTML);
 }
 
 function processSpecialProps(node, props)
 {
     let value;
 
-    if (value = props.onclick)
+    if (value = props.onClick)
     {
         let funcName = value.split('(')[0];
         let boundFunction = resolveNodeFunction(node, funcName);

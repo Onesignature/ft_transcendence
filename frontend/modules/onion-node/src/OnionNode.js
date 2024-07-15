@@ -1,7 +1,7 @@
 import { HostRoot, HostComponent, ClassComponent } from "../shared/OnionNodeTags.js";
 import { createClassComponent } from "./OnionNodeClassComponent.js";
 import { convertStringToType } from "../../shared/StringConverter.js";
-import { TEXT_NODE } from "../../onion-dom/shared/HTMLNodeType.js";
+import { COMMENT_NODE, TEXT_NODE } from "../../onion-dom/shared/HTMLNodeType.js";
 
 const className = "className";
 
@@ -56,7 +56,7 @@ export function createNodeFromDOMElement(element, caseSensitiveString)
         stateNode = element;
     }
     
-    if (elementType != TEXT_NODE)
+    if (elementType != TEXT_NODE && elementType != COMMENT_NODE)
     {
         for (let attr of element.attributes)
         {

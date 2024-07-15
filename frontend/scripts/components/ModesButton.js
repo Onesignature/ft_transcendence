@@ -6,7 +6,7 @@ export default class ModesButton extends Component
     {
         return String.raw`
             <link rel="stylesheet" href="./styles/ModesButton.css">
-            <div class="modes-button" onclick=${this.props.onclick}>${this.props.text}</div>
+            <div class="modes-button" onClick=${this.props.onClick}>${this.props.text}</div>
         `;
     }
 }

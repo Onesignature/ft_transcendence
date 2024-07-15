@@ -24,12 +24,12 @@ export default class PopUpModes extends Component
             <link rel="stylesheet" href="./styles/PopUpModes.css">
             <div class="window">
                 <div class="window-header">
-                    <div className=${CloseButton.name} onclick=${this.handleCloseButtonClick.name}></div>
+                    <div className=${CloseButton.name} onClick=${this.handleCloseButtonClick.name}></div>
                 </div>        
                 <div class="window-content">
                     <h2>${loc.getString('MODE')}</h2>
-                    <div className=${ModesButton.name} text="PvP" onclick=${this.handlePvPButtonClick.name}></div>
-                    <div className=${ModesButton.name} text="AI" onclick=${this.handlePvPButtonClick.name}></div>
+                    <div className=${ModesButton.name} text="PvP" onClick=${this.handlePvPButtonClick.name}></div>
+                    <div className=${ModesButton.name} text="AI" onClick=${this.handlePvPButtonClick.name}></div>
                 </div>
             </div>
         `;
