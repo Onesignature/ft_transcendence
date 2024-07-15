@@ -1,10 +1,27 @@
 {
-    "PLAY" : "Play",
     "LOGIN" : "Login",
+
+    "ENTER_OTP":"Enter OTP",
+
+    "PLAY" : "Play",
     "TOURNAMENT" : "Tournament",
     "SETTINGS" : "Settings",
     "LOGOUT" : "Logout",
     "MAIN_MENU": "Main Menu",
+    "START" : "Start",
+
+    "2FA": "Two-Factor Authentication (2FA)",
+    "LANGUAGE": "Language",
+
+    "SEND_AGAIN": "Send again",
+    "CONFIRM": "Confirm",
+    
+    "WINNER": "Winner",
     "VICTORY": "Victory",
-    "DEFEATED": "Defeated"
+    "DEFEATED": "Defeated",
+
+    "MODE": "Choose the mode",
+
+    "ALIAS_NAME": "Choose alias name",
+    "MATCH": "Match"
 }

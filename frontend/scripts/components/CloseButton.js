@@ -6,7 +6,7 @@ export default class CloseButton extends Component
     {
         return String.raw`
             <link rel="stylesheet" href="./styles/CloseButton.css">
-            <div class="close-button" onclick=${this.props.onclick}></div>
+            <div class="close-button" onclick=${this.props.onСlick}></div>
         `;
     }
 }

@@ -1,6 +1,7 @@
 import { Component } from "../../modules/onion/index.js";
 import BaseButton from "../components/BaseButton.js";
 import PongLogo from "../components/PongLogo.js";
+import { LocalizationManager as loc } from "../../modules/localization/index.js";
 
 export default class Home extends Component
 {

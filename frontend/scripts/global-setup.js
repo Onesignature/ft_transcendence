@@ -11,8 +11,10 @@ import Loser from './pages/Loser.js';
 import PopUpModes from './pages/PopUpModes.js';
 import PopUpTournament from './pages/PopUpTournament.js';
 import PopUpConfirmation from './components/PopUpConfirmation.js';
+import PopUpSettings from './pages/PopUpSettings.js';
 import App from './App.js';
 import PongLogo from './components/PongLogo.js';
+
 
 window.App = App;
 window.BaseButton = BaseButton;
@@ -28,4 +30,5 @@ window.Loser = Loser;
 window.PopUpModes = PopUpModes;
 window.PopUpTournament = PopUpTournament;
 window.PopUpConfirmation = PopUpConfirmation;
+window.PopUpSettings = PopUpSettings;
 window.PongLogo = PongLogo;

@@ -1,6 +1,7 @@
 import { Component } from "../../modules/onion/index.js";
 import BaseButton from "../components/BaseButton.js";
 import PongLogo from "../components/PongLogo.js";
+import { LocalizationManager as loc } from "../../modules/localization/index.js";
 
 export default class MainMenu extends Component
 {
@@ -34,10 +35,10 @@ export default class MainMenu extends Component
                 <div id="username" class="username">username</div>
             </div>
             <div className=${PongLogo.name}></div>
-            <div buttonStylePath="./styles/PlayButton.css" buttonClass="play-button" className=${BaseButton.name} text="Play" onClick=${this.handleButtonClickPlay.name}></div>
-            <div style="font-size: 20pt" className=${BaseButton.name} text="Tournament" onClick=${this.handleButtonClickTournament.name}></div>
-            <div style="font-size: 20pt" className=${BaseButton.name} text="Settings" onClick=${this.handleButtonClickSettings.name}></div>
-            <div buttonStylePath="./styles/LogoutButton.css" buttonClass="logout-button" className=${BaseButton.name} text="Logout" onClick=${this.handleButtonClickLogOut.name}></div>
+            <div buttonStylePath="./styles/PlayButton.css" buttonClass="play-button" className=${BaseButton.name} text="${loc.getString('PLAY')}" onClick=${this.handleButtonClickPlay.name}></div>
+            <div style="font-size: 20pt" className=${BaseButton.name} text="${loc.getString('TOURNAMENT')}" onClick=${this.handleButtonClickTournament.name}></div>
+            <div style="font-size: 20pt" className=${BaseButton.name} text="${loc.getString('SETTINGS')}" onClick=${this.handleButtonClickSettings.name}></div>
+            <div buttonStylePath="./styles/LogoutButton.css" buttonClass="logout-button" className=${BaseButton.name} text="${loc.getString('LOGOUT')}" onClick=${this.handleButtonClickLogOut.name}></div>
         `;
     }
 }

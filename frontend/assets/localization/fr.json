@@ -1,9 +1,23 @@
 {
-    "PLAY": "Jouer",
-    "LOGIN": "Connexion",
-    "TOURNAMENT": "Tournoi",
-    "SETTINGS": "Paramètres",
-    "LOGOUT": "Déconnexion",
+    "LOGIN" : "Connexion",
+
+    "ENTER_OTP":"Entrez le code OTP",
+
+    "PLAY" : "Jouer",
+    "TOURNAMENT" : "Tournoi",
+    "SETTINGS" : "Paramètres",
+    "LOGOUT" : "Déconnexion",
     "MAIN_MENU": "Menu Principal",
-    "VICTORY": "Victoire"
+    "START" : "Démarrer",
+
+    
+
+    "WINNER": "Gagnant",
+    "VICTORY": "Victoire",
+    "DEFEATED": "Défait",
+
+    "MODE": "Choisissez le mode",
+
+    "ALIAS_NAME": "Choisissez un nom d'alias",
+    "MATCH": "Match"
 }
