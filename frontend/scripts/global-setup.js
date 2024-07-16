@@ -14,6 +14,7 @@ import PopUpConfirmation from './components/PopUpConfirmation.js';
 import PopUpSettings from './pages/PopUpSettings.js';
 import App from './App.js';
 import PongLogo from './components/PongLogo.js';
+import ProtectedRoute from './components/ProtectedRoute.js';
 
 
 window.App = App;
@@ -32,3 +33,4 @@ window.PopUpTournament = PopUpTournament;
 window.PopUpConfirmation = PopUpConfirmation;
 window.PopUpSettings = PopUpSettings;
 window.PongLogo = PongLogo;
+window.ProtectedRoute = ProtectedRoute;

@@ -56,9 +56,6 @@ function renderOnClassNode(node, container)
         stateNode.context = stateNode.context ? Object.assign({}, stateNode.context, pendingContext) : pendingContext;
     }
 
-    if (newNodeMount)
-        stateNode.onMount();
-
     if (!newNodeMount && !stateNode.shouldComponentUpdate(pendingProps, pendingState))
         return;
     
@@ -86,6 +83,9 @@ function renderOnClassNode(node, container)
     
     stateNode.props = node.memoizedProps;
     stateNode.state = node.memoizedState;
+
+    if (newNodeMount)
+        stateNode.onMount();
     
     if (!newNodeMount)
         stateNode.onPreUpdate(prevProps, prevState);

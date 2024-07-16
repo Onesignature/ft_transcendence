@@ -49,3 +49,8 @@ export function updateNode(node, pendingProps, pendingState, callback)
     if (callback)
         callback.call();
 }
+
+export function isCurrentlyProcessingUpdate()
+{
+    return currentlyProcessingUpdate;
+}

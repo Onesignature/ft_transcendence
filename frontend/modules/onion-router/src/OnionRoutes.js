@@ -4,6 +4,9 @@ export default class Routes extends Component
 {
     renderChild(location)
     {
+        if (!location)
+            return "";
+
         let element, match;
 
         Onion.Children.forEach(this.props.children, (child) => {

@@ -16,7 +16,6 @@ export default class Login extends Component
 
     handleClick()
     {
-        console.log("login clicked");
         this.setState({isLoading: true});
         setTimeout(() => {
             this.onAuthenticated();
@@ -25,8 +24,7 @@ export default class Login extends Component
 
     onAuthenticated()
     {
-        console.log("authentication done!");
-        this.context.navigate("/mainMenu");
+        this.context.navigate("/home");
     }
 
     render()

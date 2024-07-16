@@ -5,6 +5,9 @@ import { TEXT_NODE, COMMENT_NODE } from "../shared/HTMLNodeType.js";
 
 export function getNodeListFromHTML(htmlString)
 {
+    if (!htmlString)
+        return null;
+    
     const domElements = getElementsFromHTML(htmlString, true);
     return getNodeListFromDOMElements(domElements, htmlString);
 }

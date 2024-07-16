@@ -4,5 +4,6 @@ export  {
     Router,
     Routes,
     Route,
-    Link
+    Link,
+    Redirect
 } from './src/OnionRouterClient.js'
