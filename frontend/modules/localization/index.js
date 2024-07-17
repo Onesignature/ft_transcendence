@@ -1,3 +1,3 @@
-export {
-    LocalizationManager
-} from './src/LocalizationManager.js'
+import { LocalizationManager } from './src/LocalizationManager.js'
+
+export default LocalizationManager;

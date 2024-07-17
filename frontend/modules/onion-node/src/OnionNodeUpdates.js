@@ -84,11 +84,6 @@ export function updateNodeFromNodeList(node, nodeList)
     return newNodeList;
 }
 
-export function updateParentNodes(childNode)
-{
-
-}
-
 export function updateNodeProps(node, pendingProps)
 {
     if (!pendingProps)
@@ -104,7 +99,7 @@ export function updateNodeState(node, partialState)
 
     if (typeof partialState === 'function')
     {
-        partialState = partialState.call();
+        partialState = partialState.call(node.memoizedState);
     }
     node.pendingState = node.pendingState ? Object.assign({}, partialState, node.pendingState) : partialState;
 }

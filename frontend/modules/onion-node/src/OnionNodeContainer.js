@@ -1,5 +1,5 @@
 import { createRootNode } from "./OnionNodeRoot.js";
-import { updateOnNodes, updateNodeProps, updateNodeState, updateParentNodes } from "./OnionNodeUpdates.js";
+import { updateOnNodes, updateNodeProps, updateNodeState } from "./OnionNodeUpdates.js";
 import { render } from "./OnionNodeRender.js";
 
 let currentlyProcessingUpdate = false;
@@ -21,8 +21,6 @@ function updateContainerImp(rootNode, nodeList, container, callback)
 
     currentlyProcessingUpdate = true;
 
-    //TODO: Implement context using container param
-
     updateOnNodes(rootNode, nodeList);
     render(rootNode, container.containerInfo);
     
@@ -42,7 +40,6 @@ export function updateNode(node, pendingProps, pendingState, callback)
     updateNodeProps(node, pendingProps);
     updateNodeState(node, pendingState);
     render(node, node.parentContainer);
-    //updateParentNodes(node);
 
     currentlyProcessingUpdate = false;
 

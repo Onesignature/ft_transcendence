@@ -17,6 +17,7 @@ export class LocalizationManager
         {
             console.error('Error loading translations:', error);
         }
+        return null;
     }
 
     static async setLanguage(language)

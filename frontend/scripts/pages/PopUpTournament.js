@@ -1,7 +1,6 @@
 import { Component } from "../../modules/onion/index.js";
 import BaseButton from "../components/BaseButton.js";
 import CloseButton from "../components/CloseButton.js";
-import { LocalizationManager as loc } from "../../modules/localization/index.js";
 
 export default class PopUpTournament extends Component
 {
@@ -26,7 +25,7 @@ export default class PopUpTournament extends Component
                     <div className=${CloseButton.name} onClick=${this.handleCloseButtonClick.name}></div>
                 </div>        
                 <div class="window-content">
-                    <h2>${loc.getString('ALIAS_NAME')}</h2>
+                    <h2>${this.context.localizeText('ALIAS_NAME')}</h2>
                     <div>
                         <input type="text" class="alias-input" placeholder="Player1" id="player1">
                         <input type="text" class="alias-input" placeholder="Player2" id="player2">

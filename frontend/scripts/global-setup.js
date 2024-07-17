@@ -1,3 +1,5 @@
+import App from './App.js';
+import LanguageProvider from './components/LanguageProvider.js';
 import BaseButton from './components/BaseButton.js';
 import ModesButton from "./components/ModesButton.js";
 import CloseButton from './components/CloseButton.js';
@@ -12,12 +14,11 @@ import PopUpModes from './pages/PopUpModes.js';
 import PopUpTournament from './pages/PopUpTournament.js';
 import PopUpConfirmation from './components/PopUpConfirmation.js';
 import PopUpSettings from './pages/PopUpSettings.js';
-import App from './App.js';
 import PongLogo from './components/PongLogo.js';
 import ProtectedRoute from './components/ProtectedRoute.js';
 
-
 window.App = App;
+window.LanguageProvider = LanguageProvider;
 window.BaseButton = BaseButton;
 window.ModesButton = ModesButton;
 window.CloseButton = CloseButton;

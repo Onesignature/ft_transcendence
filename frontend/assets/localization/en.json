@@ -1,5 +1,7 @@
 {
-    "LOGIN" : "Login",
+    "LOGIN_TITLE": "Enjoy the Pong",
+    "LOGIN_SUBTITLE": "Login with 42 account",
+    "LOGIN_BUTTON": "Login",
 
     "ENTER_OTP":"Enter OTP",
 

@@ -32,7 +32,7 @@ export default class ProtectedRoute extends Component
         
         // TODO: do backend implementation above
         setTimeout(() => {
-            this.setState({ isAuthenticated: false, isLoading: false });
+            this.setState({ isAuthenticated: true, isLoading: false });
         }, 1000);
     }
 

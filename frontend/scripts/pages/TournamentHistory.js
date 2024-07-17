@@ -1,7 +1,6 @@
 import { Component } from "../../modules/onion/index.js";
 import BackButton from "../components/BackButton.js";
 import PopUpConfirmation from "../components/PopUpConfirmation.js";
-import { LocalizationManager as loc } from "../../modules/localization/index.js";
 
 export default class TournamentHistory extends Component
 {
@@ -49,30 +48,30 @@ export default class TournamentHistory extends Component
             <link rel="stylesheet" href="./styles/TournamentHistory.css">
             <div className=${BackButton.name} text="▲" onClick=${this.showExitConfirmation.name}>▲</div>
             <div class="container">
-                <h1 class="header">${loc.getString('TOURNAMENT')}</h1>
+                <h1 class="header">${this.context.localizeText('TOURNAMENT')}</h1>
                 <div class="matches">
                     <div class="match current" id="match1">
-                        <h2 class="sub-header">${loc.getString('MATCH')} 1</h2>
+                        <h2 class="sub-header">${this.context.localizeText('MATCH')} 1</h2>
                         <div class="player" id="player1">muganiev</div>
                         <div class="player" id="player2">bsaeed</div>
                     </div>
                     <div class="match" id="match2">
-                        <h2 class="sub-header">${loc.getString('MATCH')} 2</h2>
+                        <h2 class="sub-header">${this.context.localizeText('MATCH')} 2</h2>
                         <div class="player" id="player3">fkhan</div>
                         <div class="player" id="player4">gchernys</div>
                     </div>
                 </div>
                 <div class="match" id="match3">
-                    <h2 class="sub-header">${loc.getString('MATCH')} 3</h2>
+                    <h2 class="sub-header">${this.context.localizeText('MATCH')} 3</h2>
                     <div class="player" id="player5"></div>
                     <div class="player" id="player6"></div>
                 </div>
                 <div class="match" id="match-winner">
                     <img style="width: 20%; margin-bottom: 10px;" src="./assets/icons/CrownIcon.svg" alt="Crown Icon">
-                    <h2 class="sub-header">${loc.getString('WINNER')}</h2>
+                    <h2 class="sub-header">${this.context.localizeText('WINNER')}</h2>
                     <div class="player" id="player7"></div>
                 </div>
-                <button class="btn-start" id="StartButton" onClick="handleStartButtonClick()">${loc.getString('START')} </button>
+                <button class="btn-start" id="StartButton" onClick="handleStartButtonClick()">${this.context.localizeText('START')}</button>
             </div>
             ${this.createConfetti()}
             ${this.state.showModal ? String.raw`<div id="exitModal" className="${PopUpConfirmation.name}" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}

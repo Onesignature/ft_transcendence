@@ -6,6 +6,7 @@ body {
     height: 100vh;
     margin: 0;
 }
+
 .window {
     background-color: #0E0E0E;
     border: 2px solid #FFD335;
@@ -13,6 +14,7 @@ body {
     padding: 70px;
     position: relative;
 }
+
 .window-header {
     background-color: #FFD335;
     height: 40px;
@@ -25,6 +27,7 @@ body {
     left: 0;
     right: 0;
 }
+
 .window-header .close-button {
     background-color: #0E0E0E;
     border: solid 2px #F55C4D;
@@ -37,29 +40,35 @@ body {
     padding-bottom: 2px;
     transition: background-color 0.3s, color 0.3s; /* Add transition for smooth effect */
 }
+
 .window-header .close-button:after {
     content: '×';
     color: #F55C4D;
     font-size: 30px;
     transition: color 0.3s; /* Add transition for smooth effect */
 }
+
 .window-header .close-button:hover {
     background-color: #F55C4D;
 }
+
 .window-header .close-button:hover:after {
     content: '×';
     color: #0E0E0E;
 }
+
 .window-content {
     text-align: center;
     margin-top: 40px;
 }
+
 .window-content h2 {
     color: white;
     font-family: 'Jost', sans-serif;
     font-weight: 700;
     margin-bottom: 40px;
 }
+
 .setting {
     margin-bottom: 20px;
     display: flex;
@@ -70,6 +79,7 @@ body {
     font-weight: 700;
     font-size: 20px;
 }
+
 .setting input[type="checkbox"] {
     margin-left: 10px;
     cursor: pointer;
@@ -78,6 +88,7 @@ body {
     accent-color: #FFD335;
     border: solid 2px #FFD335;
 }
+
 .setting img {
     width: 20px;
     height: 20px;
@@ -86,9 +97,11 @@ body {
     transition: border 0.3s; 
     border: solid 2px transparent; /* Default state */
 }
+
 .setting img:hover {
     border: solid 2px #FFD335;
 }
+
 .setting img.selected {
     border: solid 2px #FFD335; /* Selected state */
 }
