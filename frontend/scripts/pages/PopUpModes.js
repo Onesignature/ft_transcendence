@@ -11,7 +11,7 @@ export default class PopUpModes extends Component
 
     handlePvPButtonClick() 
     {
-        alert('Button PvP clicked!');
+        this.context.navigate('/game/pvp');
     }
 
     handleCloseButtonClick()

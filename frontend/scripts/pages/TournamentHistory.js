@@ -10,18 +10,21 @@ export default class TournamentHistory extends Component
         this.state = { showModal: false };
     }
 
-    showExitConfirmation() {
+    handleModalOpen() {
         this.setState({showModal: true});
     }
 
     handleModalClose() {
         this.setState({showModal: false});
     }
+
     handleModalDone()
     {
-        alert('Exiting...');
+        this.context.navigate("/mainMenu");
     }
-    handleStartButtonClick(){
+
+    handleStartButtonClick()
+    {
         alert('Starting...'); 
     }
 
@@ -46,7 +49,7 @@ export default class TournamentHistory extends Component
     {
         return String.raw`
             <link rel="stylesheet" href="./styles/TournamentHistory.css">
-            <div className=${BackButton.name} text="▲" onClick=${this.showExitConfirmation.name}>▲</div>
+            <div className=${BackButton.name} text="▲" onClick=${this.handleModalOpen.name}>▲</div>
             <div class="container">
                 <h1 class="header">${this.context.localizeText('TOURNAMENT')}</h1>
                 <div class="matches">
@@ -74,7 +77,7 @@ export default class TournamentHistory extends Component
                 <button class="btn-start" id="StartButton" onClick="handleStartButtonClick()">${this.context.localizeText('START')}</button>
             </div>
             ${this.createConfetti()}
-            ${this.state.showModal ? String.raw`<div id="exitModal" className="${PopUpConfirmation.name}" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}
+            ${this.state.showModal ? String.raw`<div className="${PopUpConfirmation.name}" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}
         `;
     }
 }

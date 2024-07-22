@@ -16,6 +16,9 @@ import PopUpConfirmation from './components/PopUpConfirmation.js';
 import PopUpSettings from './pages/PopUpSettings.js';
 import PongLogo from './components/PongLogo.js';
 import ProtectedRoute from './components/ProtectedRoute.js';
+import PongGamePage from './pages/PongGamePage.js';
+import PlayerInfo from './components/PlayerInfo.js';
+import PongGameBoard from './components/PongGameboard.js';
 
 window.App = App;
 window.LanguageProvider = LanguageProvider;
@@ -35,3 +38,6 @@ window.PopUpConfirmation = PopUpConfirmation;
 window.PopUpSettings = PopUpSettings;
 window.PongLogo = PongLogo;
 window.ProtectedRoute = ProtectedRoute;
+window.PongGamePage = PongGamePage;
+window.PlayerInfo = PlayerInfo;
+window.PongGameBoard = PongGameBoard;

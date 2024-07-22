@@ -3,7 +3,9 @@ import {
     createContext,
     isValidElement,
     createElement,
-    Children
+    Children,
+    createRef,
+    objectToProps
 } from './src/OnionClient.js'
 
 const Onion = {
@@ -11,7 +13,9 @@ const Onion = {
     createContext,
     isValidElement,
     createElement,
-    Children
+    Children,
+    createRef,
+    objectToProps
 };
 
 export {
@@ -19,7 +23,9 @@ export {
     createContext,
     isValidElement,
     createElement,
-    Children
+    Children,
+    createRef,
+    objectToProps
 }
 
 export default Onion;

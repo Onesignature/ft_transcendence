@@ -46,7 +46,7 @@ export default class ProtectedRoute extends Component
         if (this.state.isAuthenticated)
         {
             return String.raw`
-                <div className=${Route.name} ${this.props.exact ? "exact": ""} path=${this.props.path} component=${this.props.component}></div>
+                <div className=${Route.name} ${this.props.exact ? "exact": ""} path=${this.props.path} component=${this.props.component} componentProps=${this.props.componentProps}></div>
             `;
         }
 

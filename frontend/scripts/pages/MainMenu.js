@@ -12,7 +12,7 @@ export default class MainMenu extends Component
     
     handleButtonClickTournament() 
     {
-        alert('Button Tournament clicked!');
+        this.context.navigate("/tournament");
     }
 
     handleButtonClickSettings() 

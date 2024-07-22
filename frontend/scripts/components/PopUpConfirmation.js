@@ -6,7 +6,7 @@ export default class PopUpConfirmation extends Component
     {
         return String.raw`
             <link rel="stylesheet" href="./styles/PopUpConfirmation.css">
-            <div id="exitModal" class="modal">
+            <div class="modal">
                 <div class="modal-content">
                     <p>Are you sure you want to exit?</p>
                     <button class="modal-button yes-button" onClick="${this.props.onClickDone}">Yes</button>
