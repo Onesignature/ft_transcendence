@@ -5,7 +5,7 @@ export default class PongLogo extends Component
     render()
     {
         return String.raw`
-            <link rel="stylesheet" href="./styles/PongLogo.css">
+            <link rel="stylesheet" href="/styles/PongLogo.css">
             <div id="pong-logo-animation">
                 <svg width="574" height="205" viewBox="0 0 574 205" xmlns="http://www.w3.org/2000/svg">
                     <defs>

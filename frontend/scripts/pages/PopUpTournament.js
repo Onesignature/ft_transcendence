@@ -19,7 +19,7 @@ export default class PopUpTournament extends Component
     render()
     {
         return String.raw`
-            <link rel="stylesheet" href="./styles/PopUpTournament.css">
+            <link rel="stylesheet" href="/styles/PopUpTournament.css">
             <div class="window">
                 <div class="window-header">
                     <div className=${CloseButton.name} onClick=${this.handleCloseButtonClick.name}></div>
@@ -34,7 +34,7 @@ export default class PopUpTournament extends Component
                         <input type="text" class="alias-input" placeholder="Player3" id="player3">
                         <input type="text" class="alias-input" placeholder="Player4" id="player4">
                     </div>
-                    <div buttonstylepath="./styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="Start" onClick=${this.handleButtonStart.name}></div>
+                    <div buttonstylepath="/styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="Start" onClick=${this.handleButtonStart.name}></div>
                 </div>
             </div>
         `;

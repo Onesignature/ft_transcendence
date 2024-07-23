@@ -34,13 +34,13 @@ export default class Winner extends Component
     render()
     {   
         return String.raw`
-            <link rel="stylesheet" href="./styles/Winner.css">
+            <link rel="stylesheet" href="/styles/Winner.css">
             <div className=${PongLogo.name}></div>
             <h2 style="font-size: 70pt; color: #FFD335;">${this.context.localizeText('VICTORY')}</h2>
             <img style="width: 4%; margin-bottom: 10px;" src="./assets/icons/CrownIcon.svg" alt="Crown Icon">
             
             <div class="winner-name" id="winner-name">bsaeed</div>
-            <div buttonstylepath="./styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="${this.context.localizeText('MAIN_MENU')}" onClick=${this.handleButtonClickMainMenu.name}></div>
+            <div buttonstylepath="/styles/BaseButton.css" buttonclass="base-button" className=${BaseButton.name} text="${this.context.localizeText('MAIN_MENU')}" onClick=${this.handleButtonClickMainMenu.name}></div>
             ${this.createConfetti()}
         `;
     }

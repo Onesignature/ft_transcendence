@@ -16,12 +16,17 @@ export default class PongGameBoard extends Component
             "ArrowUp": false,
             "ArrowDown": false,
         };
+
+        this.loop = this.loop.bind(this);
+        this.adjustPaddlePositions = this.adjustPaddlePositions.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
     }
 
     onMount()
     {
         this.canvas = this.canvasRef.current;
-        this.context = this.canvas.getContext("2d");
+        this.canvasContext = this.canvas.getContext("2d");
         
         this.initializeGame();
         
@@ -57,7 +62,7 @@ export default class PongGameBoard extends Component
             speed: 10,
         };
 
-        this.INITIAL_SPEED = 4;
+        this.INITIAL_SPEED = 8;
         this.ballSpeed = this.INITIAL_SPEED;
 
         this.ball = {
@@ -110,15 +115,15 @@ export default class PongGameBoard extends Component
 
     drawElement(element)
     {
-        this.context.fillStyle = element.color;
+        this.canvasContext.fillStyle = element.color;
         if (element === this.ball)
         {
-            this.context.beginPath();
-            this.context.arc(element.x, element.y, element.radius, 0, Math.PI * 2);
-            this.context.fill();
+            this.canvasContext.beginPath();
+            this.canvasContext.arc(element.x, element.y, element.radius, 0, Math.PI * 2);
+            this.canvasContext.fill();
         }
         else
-            this.context.fillRect(element.x, element.y, element.width, element.height);
+            this.canvasContext.fillRect(element.x, element.y, element.width, element.height);
     }
 
     normalizeSpeed()
@@ -196,7 +201,7 @@ export default class PongGameBoard extends Component
 
     drawElements()
     {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawElement(this.playerOne);
         this.drawElement(this.playerTwo);
         this.drawElement(this.ball);
@@ -205,7 +210,7 @@ export default class PongGameBoard extends Component
 
     displayScores()
     {
-        this.props.updateScore(this.state.scoreOne, this.state.scoreTwo);
+        //this.props.updateScore(this.state.scoreOne, this.state.scoreTwo);
     }
 
     loop()
@@ -227,8 +232,8 @@ export default class PongGameBoard extends Component
     render()
     {
         return String.raw`
-            <link rel="stylesheet" href="./styles/PongGameBoard.css">
-            <canvas id="pongGame" ref=${this.canvasRef} width="900" height="600"></canvas>
+            <link rel="stylesheet" href="/styles/PongGameBoard.css">
+            <canvas id="pongGame" ref="canvasRef" width="900" height="600"></canvas>
         `;
     }
 }

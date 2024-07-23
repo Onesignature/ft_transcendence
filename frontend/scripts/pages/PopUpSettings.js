@@ -32,7 +32,7 @@ export default class PopUpSettings extends Component
     render()
     {
         return String.raw`
-            <link rel="stylesheet" href="./styles/PopUpSettings.css">
+            <link rel="stylesheet" href="/styles/PopUpSettings.css">
             <div class="window">
                 <div class="window-header">
                     <div className=${CloseButton.name} onClick=${this.handleCloseButtonClick.name}></div>

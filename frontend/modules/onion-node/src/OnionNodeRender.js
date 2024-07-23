@@ -1,7 +1,8 @@
 import { getNodeListFromHTML, getNodeListFromDOMElements } from "../../onion-dom/src/OnionDOMParser.js";
 import { HostRoot, ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
 import { updateOnNodes, updateNodeFromNodeList, updateNodeContext } from "./OnionNodeUpdates.js";
-import { resolveNodeFunction } from "./OnionNodeEventBind.js";
+import { resolveClassNodeFunction, resolveHostNodeFunction } from "./OnionNodeFunctionBind.js";
+import { resolveNodeRef } from "./OnionNodeRef.js";
 
 export function render(node, container)
 {
@@ -61,6 +62,8 @@ function renderOnClassNode(node, container)
     
     if (pendingProps)
     {
+        //processSpecialClassProps(node, pendingProps);
+        
         node.memoizedProps = stateNode.props ? Object.assign({}, stateNode.props, pendingProps) : pendingProps;
         node.pendingProps = null;
     }
@@ -83,9 +86,6 @@ function renderOnClassNode(node, container)
     
     stateNode.props = node.memoizedProps;
     stateNode.state = node.memoizedState;
-
-    if (newNodeMount)
-        stateNode.onMount();
     
     if (!newNodeMount)
         stateNode.onPreUpdate(prevProps, prevState);
@@ -102,6 +102,9 @@ function renderOnClassNode(node, container)
     updateNodeContext(node, stateNode.context);
     updateOnNodes(node, nodeList);
     renderOnChildNode(node, container, renderHTML);
+
+    if (newNodeMount)
+        stateNode.onMount();
 
     if (!newNodeMount)
         stateNode.onUpdate(prevProps, prevState);
@@ -149,7 +152,7 @@ function renderOnHostNode(node, container, renderHTML)
 
     if (pendingProps)
     {
-        processSpecialProps(node, pendingProps);
+        processSpecialHostProps(node, pendingProps);
 
         node.memoizedProps = node.memoizedProps ? Object.assign({}, node.memoizedProps, pendingProps) : pendingProps;
         node.pendingProps = null;
@@ -164,20 +167,49 @@ function renderOnHostNode(node, container, renderHTML)
     renderOnChildNode(node, node.stateNode, renderHTML);
 }
 
-function processSpecialProps(node, props)
+function processSpecialClassProps(node, props)
+{
+    for (let key in props)
+    {
+        if (props[key].startWith('onClick'))
+        {
+            let value = props[key];
+            let funcName = value.split('(')[0];
+            let boundFunction = resolveClassNodeFunction(node, funcName);
+            if (!boundFunction)
+            {
+                console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
+                return;
+            }
+            props[key] = boundFunction;
+        }
+    }
+}
+
+function processSpecialHostProps(node, props)
 {
     let value;
 
     if (value = props.onClick)
     {
         let funcName = value.split('(')[0];
-        let boundFunction = resolveNodeFunction(node, funcName);
+        let boundFunction = resolveHostNodeFunction(node, funcName);
         if (!boundFunction)
         {
             console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
             return;
         }
         node.stateNode.onclick = boundFunction;
+    }
+    if (value = props.ref)
+    {
+        let refObject = resolveNodeRef(node, value);
+        if (!refObject)
+        {
+            console.error(`Passed ref ${value} on ${node.type} component, but the parent nodes does not have this property defined.`);
+            return;
+        }
+        refObject.current = node.stateNode;
     }
 }
 

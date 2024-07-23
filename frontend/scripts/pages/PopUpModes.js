@@ -22,7 +22,7 @@ export default class PopUpModes extends Component
     render()
     {
         return String.raw`
-            <link rel="stylesheet" href="./styles/PopUpModes.css">
+            <link rel="stylesheet" href="/styles/PopUpModes.css">
             <div class="window">
                 <div class="window-header">
                     <div className=${CloseButton.name} onClick=${this.handleCloseButtonClick.name}></div>

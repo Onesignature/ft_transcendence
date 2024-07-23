@@ -6,7 +6,7 @@ export default class BaseButton extends Component
     {
         super(props, context);
         this.props = {
-            buttonStylePath: "./styles/BaseButton.css",
+            buttonStylePath: "/styles/BaseButton.css",
             buttonClass: "base-button",
             isDisabled: false,
             isLoading: false
