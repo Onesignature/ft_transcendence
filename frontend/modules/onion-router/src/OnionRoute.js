@@ -9,7 +9,7 @@ export default class Route extends Component
         const match = exact ? location === path : location.startsWith(path);
         const newProps = this.props.componentProps ? Object.assign({}, this.props.componentProps, partialProps) : partialProps;
 
-        return match ? String.raw`<div className=${component} ${Onion.objectToProps(newProps)}></div>` : "";
+        return match ? String.raw`<div className="${component}" ${Onion.objectToProps(newProps)}></div>` : "";
     }
 
     render()

@@ -1,5 +1,8 @@
 export function resolveNodeFunction(node, funcName)
 {
+    let unboundFuncName = funcName.split('bound ')[1];
+    funcName = unboundFuncName ? unboundFuncName : funcName; 
+
     while (node)
     {
         let stateNode = node.stateNode;
@@ -9,13 +12,9 @@ export function resolveNodeFunction(node, funcName)
         //     if (boundFunction)
         //         return boundFunction;
         // }
-        if (stateNode)
+        if (stateNode && typeof stateNode[funcName] === 'function')
         {
-            let unboundFuncName = funcName.split('bound ')[1];
-            funcName = unboundFuncName ? unboundFuncName : funcName; 
-
-            if (typeof stateNode[funcName] === 'function')
-                return stateNode[funcName].bind(stateNode);
+            return stateNode[funcName].bind(stateNode);
         }
         node = node.parent;
     }

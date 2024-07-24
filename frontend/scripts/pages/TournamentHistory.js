@@ -49,7 +49,7 @@ export default class TournamentHistory extends Component
     {
         return String.raw`
             <link rel="stylesheet" href="/styles/TournamentHistory.css">
-            <div className=${BackButton.name} text="▲" onClick=${this.handleModalOpen.name}>▲</div>
+            <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>
             <div class="container">
                 <h1 class="header">${this.context.localizeText('TOURNAMENT')}</h1>
                 <div class="matches">

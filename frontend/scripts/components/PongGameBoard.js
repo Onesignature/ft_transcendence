@@ -7,8 +7,8 @@ export default class PongGameBoard extends Component
         super(props, context);
         this.canvasRef = createRef();
         this.state = {
-            scoreOne: this.props.scoreOne,
-            scoreTwo: this.props.scoreTwo
+            scoreOne: 0,
+            scoreTwo: 0
         };
         this.keysPressed = {
             "w": false,
@@ -142,13 +142,13 @@ export default class PongGameBoard extends Component
         }
         if (this.ball.x + this.ball.speedX > this.canvas.width - this.ball.radius)
         {
-            this.setState((prevState) => ({ scoreOne: prevState.scoreOne + 1 }));
             this.resetBall();
+            this.setState({ scoreOne: (this.state.scoreOne + 1) });
         }
         else if (this.ball.x - this.ball.speedX < this.ball.radius)
         {
-            this.setState((prevState) => ({ scoreTwo: prevState.scoreTwo + 1 }));
             this.resetBall();
+            this.setState({ scoreTwo: (this.state.scoreTwo + 1) });
         }
     }
 
@@ -210,7 +210,7 @@ export default class PongGameBoard extends Component
 
     displayScores()
     {
-        this.props.updateScore(this.state.scoreOne, this.state.scoreTwo);
+        this.props.onClickUpdateScore(this.state.scoreOne, this.state.scoreTwo);
     }
 
     loop()

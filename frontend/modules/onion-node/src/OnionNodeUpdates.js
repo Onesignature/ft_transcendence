@@ -99,6 +99,7 @@ export function updateNodeState(node, partialState)
 
     if (typeof partialState === 'function')
     {
+        partialState = partialState.bind(node.stateNode);
         partialState = partialState.call(node.memoizedState);
     }
     node.pendingState = node.pendingState ? Object.assign({}, partialState, node.pendingState) : partialState;

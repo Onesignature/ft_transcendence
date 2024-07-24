@@ -5,5 +5,5 @@ import App from "./App.js";
 const root = createRoot(document.getElementById('root'));
 
 root.render(String.raw`
-    <div className=${App.name}></div>
+    <div className="${App.name}"></div>
 `);

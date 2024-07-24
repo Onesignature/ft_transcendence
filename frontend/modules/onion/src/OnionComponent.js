@@ -37,13 +37,10 @@ Component.prototype.setState = function (partialState, callback)
     if (typeof partialState !== 'object' && typeof partialState !== 'function' && partialState != null)
         throw new Error('takes an object of state variables to update or a function which returns an object of state variables.');
 
-    // if (!this.__onionInternals.parent)
-    //     throw new Error(`updating state on an unmounted component: ${this.__onionInternals.elementType}`);
-    
     const onStateChangeEvent = new CustomEvent('component.stateChange', {
         detail: {
             instance: this,
-            state: Object.assign({}, this.state, partialState),
+            state: partialState,
             callback: callback
         }
     });

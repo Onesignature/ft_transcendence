@@ -6,7 +6,7 @@ export default class BackButton extends Component
     {   
         return String.raw`
             <link rel="stylesheet" href="/styles/BackButton.css">
-            <div class="back-button" onClick=${this.props.onClick.name}>${this.props.text}</div>
+            <div class="back-button" onClick="${this.props.onClick.name}">${this.props.text}</div>
         `;
     }
 }

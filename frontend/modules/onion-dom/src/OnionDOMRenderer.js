@@ -12,11 +12,13 @@ async function processRerender(instance, partialState, callback)
     let node = instance.__onionInternals;
 
     // Wait until isCurrentlyProcessingUpdate() is false
-    while (isCurrentlyProcessingUpdate()) {
+    while (isCurrentlyProcessingUpdate())
+    {
         await new Promise(resolve => setTimeout(resolve, 50));
     }
 
-    if (!isMounted(node)) {
+    if (!isMounted(node))
+    {
         console.error(`Cannot perform state update on an unmounted component ${instance.name}. ` +
             'Please make sure that the component is mounted before calling this.setState');
         return;

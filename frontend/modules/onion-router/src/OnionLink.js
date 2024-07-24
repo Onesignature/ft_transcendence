@@ -19,7 +19,7 @@ export default class Link extends Component
     render()
     {
         return String.raw`
-            <a style="${this.props.style}" href=${this.props.to} onClick=${this.handleClick.name}>
+            <a style="${this.props.style}" href="${this.props.to}" onClick="${this.handleClick.name}">
                 ${this.props.children}
             </a>
         `;

@@ -12,8 +12,8 @@ export function unlistenToAllSupportedEvents()
 
 function onComponentStateChangeEvent(event)
 {
-    // console.log("On component state change event triggered!");
-    // console.log("Event detail:", event.detail);
+    console.log("On component state change event triggered!");
+    console.log("Event detail:", event.detail);
     
     let detail = event.detail;
     rerender(detail.instance, detail.state, detail.callback);

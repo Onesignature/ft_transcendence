@@ -32,45 +32,45 @@ export default class App extends Component
         alert("Doubled clicked!");
     }
 
-    render()
-    {
-        return String.raw`
-            <div class="d-flex justify-content-center flex-column align-items-center vh-100">
-                <div className=${LanguageProvider.name}>
-                    <div className=${Router.name}>
-                        <div>
-                            <button onClick=${this.handleClicSimple.name}>Simple Button</button>
-                            <div className=${BaseButton.name} text="Nested Button" onClick=${this.handleClicNested.name}></div>
-                            <div className=${ModesButton.name} text="PvP" onClick=${this.handleClickDoubled.name}></div>
-                        </div>
-                        <div className=${Routes.name}>
-                            <div className=${Route.name} path="/playMode" component=${PopUpModes.name}></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
     // render()
     // {
     //     return String.raw`
     //         <div class="d-flex justify-content-center flex-column align-items-center vh-100">
-    //             <div className=${LanguageProvider.name}>
-    //                 <div className=${Router.name}>
-    //                     <div className=${Routes.name}>
-    //                         <div className=${Route.name} path="/login" component=${Login.name}></div>
-    //                         <div className=${ProtectedRoute.name} path="/2fa" component=${TwoFactorAuth.name}></div>
-    //                         <div className=${ProtectedRoute.name} path="/home" component=${MainMenu.name}></div>
-    //                         <div className=${ProtectedRoute.name} path="/playMode" component=${PopUpModes.name}></div>
-    //                         <div className=${ProtectedRoute.name} path="/game/pvp" component=${PongGamePage.name}></div>
-    //                         <div className=${ProtectedRoute.name} path="/settings" component=${PopUpSettings.name}></div>
-    //                         <div className=${ProtectedRoute.name} path="/tournament" component=${TournamentHistory.name}></div>
-    //                         <div className=${ProtectedRoute.name} path="/" component=${MainMenu.name}></div>
+    //             <div className="${LanguageProvider.name}">
+    //                 <div className="${Router.name}">
+    //                     <div>
+    //                         <button onClick="${this.handleClicSimple.name}">Simple Button</button>
+    //                         <div className="${BaseButton.name}" text="Nested Button" onClick="${this.handleClicNested.name}"></div>
+    //                         <div className="${TestComponent.name}"></div>
+    //                     </div>
+    //                     <div className="${Routes.name}">
+    //                         <div className="${Route.name}" path="/playMode" component="${PopUpModes.name}"></div>
     //                     </div>
     //                 </div>
     //             </div>
     //         </div>
     //     `;
     // }
+
+    render()
+    {
+        return String.raw`
+            <div class="d-flex justify-content-center flex-column align-items-center vh-100">
+                <div className="${LanguageProvider.name}">
+                    <div className="${Router.name}">
+                        <div className="${Routes.name}">
+                            <div className="${Route.name}" path="/login" component="${Login.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/2fa" component="${TwoFactorAuth.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/home" component="${MainMenu.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/playMode" component="${PopUpModes.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/game/pvp" component="${PongGamePage.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/settings" component="${PopUpSettings.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/tournament" component="${TournamentHistory.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/" component="${MainMenu.name}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 }
