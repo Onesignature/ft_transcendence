@@ -1,4 +1,4 @@
-import Onion, { Component, createRef } from '../../modules/onion/index.js';
+import { Component, createRef } from '../../modules/onion/index.js';
 
 export default class PongGameBoard extends Component
 {
@@ -142,13 +142,13 @@ export default class PongGameBoard extends Component
         }
         if (this.ball.x + this.ball.speedX > this.canvas.width - this.ball.radius)
         {
-            this.resetBall();
             this.setState({ scoreOne: (this.state.scoreOne + 1) });
+            this.resetBall();
         }
         else if (this.ball.x - this.ball.speedX < this.ball.radius)
         {
-            this.resetBall();
             this.setState({ scoreTwo: (this.state.scoreTwo + 1) });
+            this.resetBall();
         }
     }
 
