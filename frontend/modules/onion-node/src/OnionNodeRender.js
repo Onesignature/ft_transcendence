@@ -169,7 +169,6 @@ function renderOnHostNode(node, container, renderHTML)
 
 function processSpecialClassProps(node, props)
 {
-    console.log(props);
     for (const key in props)
     {
         if (key.startsWith('onClick'))

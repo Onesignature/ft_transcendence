@@ -1,7 +1,7 @@
 import { Component } from './OnionComponent.js';
 import { createContext } from './OnionContext.js';
 import { createElement, isValidElement } from './OnionElement.js';
-import { forEach, map, count, toArray } from './OnionChildren.js';
+import { forEach, map, count, toArray, combine } from './OnionChildren.js';
 import { createRef } from './OnionReference.js';
 import { objectToProps } from './OnionProps.js';
 
@@ -10,6 +10,7 @@ const Children = {
     forEach,
     count,
     toArray,
+    combine
 };
 
 export {

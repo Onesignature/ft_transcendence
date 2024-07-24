@@ -46,7 +46,7 @@ export function createNodeFromDOMElement(element, caseSensitiveString)
     if (type = getComponentNameFromDOMElement(element))
     {
         nodeTag = ClassComponent;
-        let options = { element: element, children: element.childNodes };
+        let options = { element: element, children: element.childNodes, htmlString: caseSensitiveString };
         stateNode = createClassComponent(type, options);
     }
     else

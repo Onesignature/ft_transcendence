@@ -210,7 +210,7 @@ export default class PongGameBoard extends Component
 
     displayScores()
     {
-        //this.props.updateScore(this.state.scoreOne, this.state.scoreTwo);
+        this.props.updateScore(this.state.scoreOne, this.state.scoreTwo);
     }
 
     loop()

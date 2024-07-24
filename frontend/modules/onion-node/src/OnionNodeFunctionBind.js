@@ -3,20 +3,19 @@ export function resolveNodeFunction(node, funcName)
     while (node)
     {
         let stateNode = node.stateNode;
-        if (node.memoizedProps)
-        {
-            let boundFunction = getFuncFromProps(node.memoizedProps, funcName);
-            if (boundFunction)
-                return boundFunction;
-        }
+        // if (node.memoizedProps)
+        // {
+        //     let boundFunction = getFuncFromProps(node.memoizedProps, funcName);
+        //     if (boundFunction)
+        //         return boundFunction;
+        // }
         if (stateNode)
         {
+            let unboundFuncName = funcName.split('bound ')[1];
+            funcName = unboundFuncName ? unboundFuncName : funcName; 
+
             if (typeof stateNode[funcName] === 'function')
                 return stateNode[funcName].bind(stateNode);
-            
-            let unboundFuncName = funcName.split('bound ')[1];
-            if (typeof stateNode[unboundFuncName] === 'function')
-                return stateNode[unboundFuncName].bind(stateNode);
         }
         node = node.parent;
     }
@@ -26,7 +25,7 @@ export function resolveNodeFunction(node, funcName)
 function getFuncFromProps(object, funcName)
 {
     let unboundFuncName = funcName.split('bound ')[1];
-    const boundFuncName = unboundFuncName ? unboundFuncName : `bound ${funcName}`;
+    const boundFuncName = unboundFuncName ? funcName : `bound ${funcName}`;
 
     for (let key in object)
     {

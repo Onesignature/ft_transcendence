@@ -19,6 +19,7 @@ import ProtectedRoute from './components/ProtectedRoute.js';
 import PongGamePage from './pages/PongGamePage.js';
 import PlayerInfo from './components/PlayerInfo.js';
 import PongGameBoard from './components/PongGameboard.js';
+import TestComponent from './components/TestComponent.js';
 
 window.App = App;
 window.LanguageProvider = LanguageProvider;
@@ -41,3 +42,4 @@ window.ProtectedRoute = ProtectedRoute;
 window.PongGamePage = PongGamePage;
 window.PlayerInfo = PlayerInfo;
 window.PongGameBoard = PongGameBoard;
+window.TestComponent = TestComponent;

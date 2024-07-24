@@ -1,4 +1,4 @@
-import { Component } from "../../onion/index.js";
+import Onion, { Component } from "../../onion/index.js";
 
 export default class Router extends Component
 {
@@ -42,7 +42,7 @@ export default class Router extends Component
         this.context.navigate = this.navigate;
         
         return String.raw`
-            ${this.props.children}
+            ${Onion.Children.combine(this.props.children)}
         `;
     }
 }

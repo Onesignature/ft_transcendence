@@ -15,7 +15,6 @@ export default class BaseButton extends Component
 
     render()
     {
-        console.log(this.props);
         let buttonChildNode = this.props.isLoading ?
             String.raw`
                 <span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>

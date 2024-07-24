@@ -29,7 +29,7 @@ function countChildren(children)
         n++;
     });
     return n;
-  }
+}
 
 function mapChildren(children, func, context)
 {
@@ -49,9 +49,15 @@ function toArray(children)
     return mapChildren(children, child => child) || [];
 }
 
+function combine(children)
+{
+    return children.join('');
+}
+
 export {
     forEachChildren as forEach,
     mapChildren as map,
     countChildren as count,
-    toArray
+    toArray,
+    combine
 }
