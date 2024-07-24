@@ -1,7 +1,7 @@
 import { getNodeListFromHTML, getNodeListFromDOMElements } from "../../onion-dom/src/OnionDOMParser.js";
 import { HostRoot, ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
 import { updateOnNodes, updateNodeFromNodeList, updateNodeContext } from "./OnionNodeUpdates.js";
-import { resolveClassNodeFunction, resolveHostNodeFunction } from "./OnionNodeFunctionBind.js";
+import { resolveNodeFunction } from "./OnionNodeFunctionBind.js";
 import { resolveNodeRef } from "./OnionNodeRef.js";
 
 export function render(node, container)
@@ -62,7 +62,7 @@ function renderOnClassNode(node, container)
     
     if (pendingProps)
     {
-        //processSpecialClassProps(node, pendingProps);
+        processSpecialClassProps(node, pendingProps);
         
         node.memoizedProps = stateNode.props ? Object.assign({}, stateNode.props, pendingProps) : pendingProps;
         node.pendingProps = null;
@@ -169,16 +169,17 @@ function renderOnHostNode(node, container, renderHTML)
 
 function processSpecialClassProps(node, props)
 {
-    for (let key in props)
+    console.log(props);
+    for (const key in props)
     {
-        if (props[key].startWith('onClick'))
+        if (key.startsWith('onClick'))
         {
             let value = props[key];
             let funcName = value.split('(')[0];
-            let boundFunction = resolveClassNodeFunction(node, funcName);
+            let boundFunction = resolveNodeFunction(node, funcName);
             if (!boundFunction)
             {
-                console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
+                console.error(`1 Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
                 return;
             }
             props[key] = boundFunction;
@@ -193,7 +194,7 @@ function processSpecialHostProps(node, props)
     if (value = props.onClick)
     {
         let funcName = value.split('(')[0];
-        let boundFunction = resolveHostNodeFunction(node, funcName);
+        let boundFunction = resolveNodeFunction(node, funcName);
         if (!boundFunction)
         {
             console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);

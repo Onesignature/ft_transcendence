@@ -15,6 +15,7 @@ export default class BaseButton extends Component
 
     render()
     {
+        console.log(this.props);
         let buttonChildNode = this.props.isLoading ?
             String.raw`
                 <span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>
@@ -22,7 +23,7 @@ export default class BaseButton extends Component
             : this.props.text;
         return String.raw`
             <link rel="stylesheet" href="${this.props.buttonStylePath}">
-            <button class="${this.props.buttonClass}" style="${this.props.style}" ${this.props.isDisabled ? "disabled" : ""} onClick="${this.props.onClick}">${buttonChildNode}</button>
+            <button class="${this.props.buttonClass}" style="${this.props.style}" ${this.props.isDisabled ? "disabled" : ""} onClick="${this.props.onClick.name}">${buttonChildNode}</button>
         `;
     }
 }

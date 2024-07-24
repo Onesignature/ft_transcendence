@@ -1,31 +1,41 @@
-import { isValidSpecialPropsNode } from "./OnionNodeProps.js";
-
-export function resolveClassNodeFunction(node, funcName)
+export function resolveNodeFunction(node, funcName)
 {
     while (node)
     {
         let stateNode = node.stateNode;
-        if (!isValidSpecialPropsNode(node, funcName) &&
-            stateNode && typeof stateNode[funcName] === 'function')
+        if (node.memoizedProps)
         {
-            return stateNode[funcName].bind(stateNode);
+            let boundFunction = getFuncFromProps(node.memoizedProps, funcName);
+            if (boundFunction)
+                return boundFunction;
+        }
+        if (stateNode)
+        {
+            if (typeof stateNode[funcName] === 'function')
+                return stateNode[funcName].bind(stateNode);
+            
+            let unboundFuncName = funcName.split('bound ')[1];
+            if (typeof stateNode[unboundFuncName] === 'function')
+                return stateNode[unboundFuncName].bind(stateNode);
         }
         node = node.parent;
     }
     return null;
 }
 
-export function resolveHostNodeFunction(node, funcName)
+function getFuncFromProps(object, funcName)
 {
-    while (node)
+    let unboundFuncName = funcName.split('bound ')[1];
+    const boundFuncName = unboundFuncName ? unboundFuncName : `bound ${funcName}`;
+
+    for (let key in object)
     {
-        let stateNode = node.stateNode;
-        if (!isValidSpecialPropsNode(node, funcName) &&
-            stateNode && typeof stateNode[funcName] === 'function')
+        if (Object.prototype.hasOwnProperty.call(object, key) &&
+            typeof object[key] === 'function' &&
+            object[key].name === boundFuncName)
         {
-            return stateNode[funcName].bind(stateNode);
+            return object[key];
         }
-        node = node.parent;
     }
     return null;
 }

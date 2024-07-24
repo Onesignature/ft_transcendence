@@ -1,4 +1,4 @@
-export function isValidSpecialPropsNode(node, propName)
+export function isValidNamePropsNode(node, propName)
 {
     if (!node.memoizedProps)
         return false;

@@ -1,11 +1,11 @@
-import { isValidSpecialPropsNode } from "./OnionNodeProps.js";
+import { isValidNamePropsNode } from "./OnionNodeProps.js";
 
 export function resolveNodeRef(node, refName)
 {
     while (node)
     {
         let stateNode = node.stateNode;
-        if (!isValidSpecialPropsNode(node, refName) &&
+        if (!isValidNamePropsNode(node, refName) &&
             stateNode && Object.prototype.hasOwnProperty.call(stateNode, refName))
         {
             return stateNode[refName];
