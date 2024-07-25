@@ -19,7 +19,11 @@ export default class PongGamePage extends Component
     updateScore(scoreOne, scoreTwo)
     {
         if (this.state.scoreOne != scoreOne || this.state.scoreTwo != scoreTwo)
+        {
+            // console.log(`old value: ${this.state.scoreOne} : ${this.state.scoreTwo}`);
+            // console.log(`new value: ${scoreOne} : ${scoreTwo}`);
             this.setState({ scoreOne, scoreTwo });
+        }
     }
 
     handleModalOpen()
@@ -40,6 +44,9 @@ export default class PongGamePage extends Component
     render()
     {
         const { scoreOne, scoreTwo, showModal } = this.state;
+
+        // console.log(`scoreOne: ${scoreOne}`);
+        // console.log(`scoreTwo: ${scoreTwo}`);
 
         return String.raw`
             <link rel="stylesheet" href="/styles/PongGamePage.css">

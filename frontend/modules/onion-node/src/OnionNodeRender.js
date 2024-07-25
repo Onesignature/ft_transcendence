@@ -120,7 +120,9 @@ function renderOnHostNode(node, container, renderHTML)
 
     // Don't render if there are no changes
     if (!newNodeMount && !pendingProps && !pendingState)
+    {
         return;
+    }
     
     if (pendingState)
     {
@@ -178,7 +180,7 @@ function processSpecialClassProps(node, props)
             let boundFunction = resolveNodeFunction(node, funcName);
             if (!boundFunction)
             {
-                console.error(`1 Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
+                console.error(`Passed function ${funcName} on ${node.type} component, but the parent nodes does not have this function implemented.`);
                 return;
             }
             props[key] = boundFunction;

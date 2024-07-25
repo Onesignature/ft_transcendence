@@ -63,7 +63,7 @@ export function updateNodeFromNodeList(node, nodeList)
             else if (newNode.tag == ClassComponent && newNode.tag === oldNode.tag && newNode.type === oldNode.type && newNode.key === oldNode.key)
             {
                 found = true;
- 
+
                 let pendingProps = newNode.pendingProps;
                 oldNode.pendingProps = oldNode.pendingProps ? Object.assign({}, oldNode.pendingProps, pendingProps) : pendingProps;
 
