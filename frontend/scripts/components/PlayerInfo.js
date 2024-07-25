@@ -4,12 +4,13 @@ export default class PlayerInfo extends Component
 {
     render()
     {
+        console.log(this.props);
         return String.raw`
             <link rel="stylesheet" href="/styles/PlayerInfo.css">
             <div id="playerInfo">
-                <div id="playerOne" class="playerName">${this.props.playerOne}</div>
+                <div>${this.props.playerOne}</div>
                 <div id="score">${this.props.scoreOne} : ${this.props.scoreTwo}</div>
-                <div id="playerTwo" class="playerName">${this.props.playerTwo}</div>
+                <div>${this.props.playerTwo}</div>
             </div>
         `;
     }
