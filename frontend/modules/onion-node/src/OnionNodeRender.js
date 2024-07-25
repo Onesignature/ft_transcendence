@@ -91,6 +91,7 @@ function renderOnClassNode(node, container)
         stateNode.onPreUpdate(prevProps, prevState);
     
     let renderHTML = stateNode.render();
+    console.log(renderHTML);
     let nodeList = getNodeListFromHTML(renderHTML);
 
     if (!newNodeMount)

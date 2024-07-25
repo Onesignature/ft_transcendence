@@ -17,12 +17,12 @@ import ModesButton from './components/ModesButton.js';
 
 export default class App extends Component
 {
-    handleClicSimple()
+    handleClickSimple()
     {
         alert("Simple clicked!");
     }
 
-    handleClicNested()
+    handleClickNested()
     {
         alert("Nested clicked!");
     }
@@ -39,8 +39,8 @@ export default class App extends Component
     //             <div className="${LanguageProvider.name}">
     //                 <div className="${Router.name}">
     //                     <div>
-    //                         <button onClick="${this.handleClicSimple.name}">Simple Button</button>
-    //                         <div className="${BaseButton.name}" text="Nested Button" onClick="${this.handleClicNested.name}"></div>
+    //                         <button onClick="${this.handleClickSimple.name}">Simple Button</button>
+    //                         <div className="${BaseButton.name}" text="Nested Button" onClick="${this.handleClickNested.name}"></div>
     //                         <div className="${TestComponent.name}"></div>
     //                     </div>
     //                     <div className="${Routes.name}">

@@ -7,7 +7,7 @@ export default class Router extends Component
         super(props, context);
         this.state = {
             location: window.location.pathname,
-            props: null
+            props: {}
         };
         this.navigate = this.navigate.bind(this);
     }
@@ -32,7 +32,7 @@ export default class Router extends Component
     navigate(path, props)
     {
         window.history.pushState({}, '', path);
-        this.setState({ location: path, props });
+        this.setState({ location: path, props: props ? props : {} });
     }
 
     render()

@@ -1,39 +1,47 @@
 export function resolveNodeFunction(node, funcName)
 {
-    let unboundFuncName = funcName.split('bound ')[1];
-    funcName = unboundFuncName ? unboundFuncName : funcName; 
+    if (!funcName)
+        return null;
 
     while (node)
     {
-        let stateNode = node.stateNode;
-        // if (node.memoizedProps)
-        // {
-        //     let boundFunction = getFuncFromProps(node.memoizedProps, funcName);
-        //     if (boundFunction)
-        //         return boundFunction;
-        // }
-        if (stateNode && typeof stateNode[funcName] === 'function')
+        // Check in memoizedProps
+        let props = node.memoizedProps;
+        for (let key in props)
         {
-            return stateNode[funcName].bind(stateNode);
+            if (Object.prototype.hasOwnProperty.call(props, key))
+            {
+                const propValue = props[key];
+                if (typeof propValue === 'function' && propValue.name === funcName)
+                {
+                    return propValue;
+                }
+                if (typeof propValue === 'string' && propValue === funcName)
+                {
+                    // Recursively check the parent node
+                    return resolveNodeFunction(node.parent, funcName);
+                }
+            }
+        }
+        // Check in stateNode
+        let stateNode = node.stateNode;
+        if(stateNode)
+        {
+            // Ensure consistent handling of "bound " prefix
+            const originalFuncName = funcName.replace(/^bound /, '');
+            const boundFuncName = `bound ${originalFuncName}`;
+        
+            if (typeof stateNode[boundFuncName] === 'function')
+            {
+                return stateNode[boundFuncName];
+            }
+            if (typeof stateNode[originalFuncName] === 'function')
+            {
+                stateNode[boundFuncName] = stateNode[originalFuncName].bind(stateNode);
+                return stateNode[boundFuncName];
+            }
         }
         node = node.parent;
-    }
-    return null;
-}
-
-function getFuncFromProps(object, funcName)
-{
-    let unboundFuncName = funcName.split('bound ')[1];
-    const boundFuncName = unboundFuncName ? funcName : `bound ${funcName}`;
-
-    for (let key in object)
-    {
-        if (Object.prototype.hasOwnProperty.call(object, key) &&
-            typeof object[key] === 'function' &&
-            object[key].name === boundFuncName)
-        {
-            return object[key];
-        }
     }
     return null;
 }

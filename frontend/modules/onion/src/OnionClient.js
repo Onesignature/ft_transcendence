@@ -3,7 +3,7 @@ import { createContext } from './OnionContext.js';
 import { createElement, isValidElement } from './OnionElement.js';
 import { forEach, map, count, toArray, combine } from './OnionChildren.js';
 import { createRef } from './OnionReference.js';
-import { objectToProps } from './OnionProps.js';
+import { objectToProps, propsToObject } from './OnionProps.js';
 
 const Children = {
     map,
@@ -20,5 +20,6 @@ export {
     createElement,
     isValidElement,
     createRef,
-    objectToProps
+    objectToProps,
+    propsToObject
 }

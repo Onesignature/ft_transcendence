@@ -5,7 +5,8 @@ import {
     createElement,
     Children,
     createRef,
-    objectToProps
+    objectToProps,
+    propsToObject
 } from './src/OnionClient.js'
 
 const Onion = {
@@ -15,7 +16,8 @@ const Onion = {
     createElement,
     Children,
     createRef,
-    objectToProps
+    objectToProps,
+    propsToObject
 };
 
 export {
@@ -25,7 +27,8 @@ export {
     createElement,
     Children,
     createRef,
-    objectToProps
+    objectToProps,
+    propsToObject
 }
 
 export default Onion;

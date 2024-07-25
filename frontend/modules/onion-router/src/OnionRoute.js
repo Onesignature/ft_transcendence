@@ -7,9 +7,16 @@ export default class Route extends Component
         const { path, component } = this.props;
         const exact = !!(this.props.exact != undefined && this.props.exact != null);
         const match = exact ? location === path : location.startsWith(path);
-        const newProps = this.props.componentProps ? Object.assign({}, this.props.componentProps, partialProps) : partialProps;
 
-        return match ? String.raw`<div className="${component}" ${Onion.objectToProps(newProps)}></div>` : "";
+        if (match)
+        {
+            const passedProps = Onion.propsToObject(this.props.componentProps);
+            const mergedProps = Object.assign({}, passedProps || {}, partialProps || {});
+            const newProps = Onion.objectToProps(mergedProps);
+
+            return String.raw`<div className="${component}" ${newProps}></div>`;
+        }
+        return "";
     }
 
     render()

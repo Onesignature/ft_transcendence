@@ -51,7 +51,7 @@ export default class PongGamePage extends Component
         return String.raw`
             <link rel="stylesheet" href="/styles/PongGamePage.css">
             <div class="gameContainer">
-                <div className="${PlayerInfo.name}" playerOne="Player 1" playerTwo="Player 2" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
+                <div className="${PlayerInfo.name}" playerOne="Player 1" playerTwo="Player2" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
                 <div className="${PongGameBoard.name}" onClickUpdateScore="${this.updateScore.name}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
             </div>
         `;
