@@ -36,7 +36,7 @@ export default class PongGameBoard extends Component
     onUnmount()
     {
         this.running = false;
-        
+
         window.removeEventListener("resize", this.adjustPaddlePositions);
         window.removeEventListener("keydown", this.handleKeyDown);
         window.removeEventListener("keyup", this.handleKeyUp);
@@ -145,13 +145,11 @@ export default class PongGameBoard extends Component
         }
         if (this.ball.x + this.ball.speedX > this.canvas.width - this.ball.radius)
         {
-            console.log("collided right");
             this.scoreOne += 1;
             this.resetBall();
         }
         else if (this.ball.x - this.ball.speedX < this.ball.radius)
         {
-            console.log("collided left");
             this.scoreTwo += 1;
             this.resetBall();
         }
@@ -215,7 +213,6 @@ export default class PongGameBoard extends Component
 
     displayScores()
     {
-        // console.log(`${this.state.scoreOne} : ${this.state.scoreTwo}`);
         this.props.onClickUpdateScore(this.scoreOne, this.scoreTwo);
     }
 

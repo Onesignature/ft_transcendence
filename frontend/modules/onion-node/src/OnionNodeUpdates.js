@@ -65,10 +65,10 @@ export function updateNodeFromNodeList(node, nodeList)
                 found = true;
 
                 let pendingProps = newNode.pendingProps;
-                oldNode.pendingProps = oldNode.pendingProps ? Object.assign({}, oldNode.pendingProps, pendingProps) : pendingProps;
+                oldNode.pendingProps = Object.assign({}, oldNode.pendingProps || {}, pendingProps || {});
 
                 let pendingState = Object.assign({}, newNode.pendingState, { __outerHTML: newNode.stateNode.outerHTML });
-                oldNode.pendingState = oldNode.pendingState ? Object.assign({}, oldNode.pendingState, pendingState) : pendingState;
+                oldNode.pendingState = Object.assign({}, oldNode.pendingState || {}, pendingState || {});
                 
                 node.children.splice(j, 1);
                 newNodeList.push(oldNode);
@@ -89,7 +89,7 @@ export function updateNodeProps(node, pendingProps)
     if (!pendingProps)
         return;
 
-    node.pendingProps = node.pendingProps ? Object.assign({}, pendingProps, node.pendingProps) : pendingProps;
+    node.pendingProps = Object.assign({}, pendingProps || {}, node.pendingProps || {});
 }
 
 export function updateNodeState(node, partialState)
@@ -101,7 +101,7 @@ export function updateNodeState(node, partialState)
     {
         partialState = partialState.call(node.memoizedState);
     }
-    node.pendingState = node.pendingState ? Object.assign({}, partialState, node.pendingState) : partialState;
+    node.pendingState = Object.assign({}, partialState || {}, node.pendingState || {});
 }
 
 export function updateNodeContext(node, partialContext)
@@ -113,5 +113,5 @@ export function updateNodeContext(node, partialContext)
     {
         console.error("Context can only be of an object type.");
     }
-    node.context = node.context ? Object.assign({}, node.context, partialContext) : partialContext;
+    node.context = Object.assign({}, node.context || {}, partialContext || {});
 }

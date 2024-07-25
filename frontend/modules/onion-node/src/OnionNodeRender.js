@@ -54,7 +54,7 @@ function renderOnClassNode(node, container)
 
     if (pendingContext)
     {
-        stateNode.context = stateNode.context ? Object.assign({}, stateNode.context, pendingContext) : pendingContext;
+        stateNode.context = Object.assign({}, stateNode.context || {}, pendingContext || {});
     }
 
     if (!newNodeMount && !stateNode.shouldComponentUpdate(pendingProps, pendingState))
@@ -64,7 +64,7 @@ function renderOnClassNode(node, container)
     {
         processSpecialClassProps(node, pendingProps);
         
-        node.memoizedProps = stateNode.props ? Object.assign({}, stateNode.props, pendingProps) : pendingProps;
+        node.memoizedProps = Object.assign({}, stateNode.props || {}, pendingProps || {});
         node.pendingProps = null;
     }
 
@@ -77,7 +77,7 @@ function renderOnClassNode(node, container)
             delete pendingState.__outerHTML;
         }
 
-        node.memoizedState = stateNode.state ? Object.assign({}, stateNode.state, pendingState) : pendingState;
+        node.memoizedState = Object.assign({}, stateNode.state || {}, pendingState || {});
         node.pendingState = null;
     }
 
@@ -91,7 +91,6 @@ function renderOnClassNode(node, container)
         stateNode.onPreUpdate(prevProps, prevState);
     
     let renderHTML = stateNode.render();
-    console.log(renderHTML);
     let nodeList = getNodeListFromHTML(renderHTML);
 
     if (!newNodeMount)
@@ -121,9 +120,7 @@ function renderOnHostNode(node, container, renderHTML)
 
     // Don't render if there are no changes
     if (!newNodeMount && !pendingProps && !pendingState)
-    {
         return;
-    }
     
     if (pendingState)
     {
@@ -135,7 +132,7 @@ function renderOnHostNode(node, container, renderHTML)
             delete pendingState.__outerHTML;
         }
 
-        node.memoizedState = node.memoizedState ? Object.assign({}, node.memoizedState, pendingState) : pendingState;
+        node.memoizedState = Object.assign({}, node.memoizedState || {}, pendingState || {});
         node.pendingState = null;
     }
 
@@ -157,7 +154,7 @@ function renderOnHostNode(node, container, renderHTML)
     {
         processSpecialHostProps(node, pendingProps);
 
-        node.memoizedProps = node.memoizedProps ? Object.assign({}, node.memoizedProps, pendingProps) : pendingProps;
+        node.memoizedProps = Object.assign({}, node.memoizedProps || {}, pendingProps || {});
         node.pendingProps = null;
     }
     

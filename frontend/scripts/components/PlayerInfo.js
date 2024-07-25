@@ -4,7 +4,6 @@ export default class PlayerInfo extends Component
 {
     render()
     {
-        console.log(this.props);
         return String.raw`
             <link rel="stylesheet" href="/styles/PlayerInfo.css">
             <div id="playerInfo">

@@ -22,7 +22,7 @@ export function createClassComponent(className, options)
     let props = {instanceId: generateId(), children: children};
     
     const instance = new ComponentClass(props, context);
-    instance.props = instance.props ? Object.assign({}, instance.props, props) : props;
+    instance.props = Object.assign({}, instance.props || {}, props || {});
     instance.outerHTML = options.element.outerHTML;
     
     return instance;

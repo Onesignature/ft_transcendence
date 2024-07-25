@@ -1,11 +1,24 @@
 export function convertStringToType(value)
 {
-	if (!isNaN(value))
-		return parseFloat(value);
-	else if (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')
-		return value.toLowerCase() === 'true';
-	else if (!isNaN(Date.parse(value)))
-		return new Date(value);
-	else
-		return value;
+    // Trim the value to avoid issues with leading/trailing spaces
+    let trimValue = value.trim();
+
+    // Check if the value is a number
+    if (!isNaN(trimValue) && value !== '')
+	{
+        return parseFloat(trimValue);
+    }
+    
+    // Check if the value is a boolean
+    if (trimValue.toLowerCase() === 'true')
+	{
+        return true;
+    }
+	if (trimValue.toLowerCase() === 'false')
+	{
+        return false;
+    }
+    
+    // If none of the above, return the original value as a string
+	return value;
 }
