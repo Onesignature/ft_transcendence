@@ -4,19 +4,19 @@ import ModesButton from "../components/ModesButton.js";
 
 export default class PopUpModes extends Component
 {
-    handleAiButtonClick() 
+    handleAIButtonClick() 
     {
-        alert('Button Ai clicked!');
+        this.context.navigate('/game-ai');
     }
 
     handlePvPButtonClick() 
     {
-        this.context.navigate('/game/pvp');
+        this.context.navigate('/game-pvp');
     }
 
     handleCloseButtonClick()
     {
-        this.context.navigate('/home');
+        this.context.navigate('/main-menu');
     }
 
     render()
@@ -30,7 +30,7 @@ export default class PopUpModes extends Component
                 <div class="window-content">
                     <h2>${this.context.localizeText('MODE')}</h2>
                     <div className="${ModesButton.name}" text="PvP" onClick="${this.handlePvPButtonClick.name}"></div>
-                    <div className="${ModesButton.name}" text="AI" onClick="${this.handlePvPButtonClick.name}"></div>
+                    <div className="${ModesButton.name}" text="AI" onClick="${this.handleAIButtonClick.name}"></div>
                 </div>
             </div>
         `;

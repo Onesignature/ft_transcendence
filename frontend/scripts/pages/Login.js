@@ -23,7 +23,7 @@ export default class Login extends Component
 
     onAuthenticated()
     {
-        this.context.navigate("/home");
+        this.context.navigate("/main-menu");
     }
 
     render()

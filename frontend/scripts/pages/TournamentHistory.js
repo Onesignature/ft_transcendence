@@ -77,7 +77,7 @@ export default class TournamentHistory extends Component
                 <button class="btn-start" id="StartButton" onClick="${this.handleStartButtonClick.name}">${this.context.localizeText('START')}</button>
             </div>
             ${this.createConfetti()}
-            ${this.state.showModal ? String.raw`<div className="${PopUpConfirmation.name}" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}
+            ${this.state.showModal ? String.raw`<div className="${PopUpConfirmation.name}" message="Are you sure you want to exit?" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}
         `;
     }
 }

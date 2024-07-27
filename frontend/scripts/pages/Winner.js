@@ -4,13 +4,9 @@ import PongLogo from "../components/PongLogo.js";
 
 export default class Winner extends Component
 {
-    constructor() {
-        super();
-    }
-
     handleButtonClickMainMenu() 
     {
-        alert('Button Main Menu clicked!');
+        this.context.navigate('/main-menu');
     }
 
     createConfetti()
@@ -30,7 +26,6 @@ export default class Winner extends Component
         return confettiHTML;
     }
     
-    
     render()
     {   
         return String.raw`
@@ -38,8 +33,8 @@ export default class Winner extends Component
             <div className="${PongLogo.name}"></div>
             <h2 style="font-size: 70pt; color: #FFD335;">${this.context.localizeText('VICTORY')}</h2>
             <img style="width: 4%; margin-bottom: 10px;" src="./assets/icons/CrownIcon.svg" alt="Crown Icon">
-            
-            <div class="winner-name" id="winner-name">bsaeed</div>
+
+            <div class="winner-name" id="winner-name">${this.props.winnerName}</div>
             <div buttonstylepath="/styles/BaseButton.css" buttonclass="base-button" className="${BaseButton.name}" text="${this.context.localizeText('MAIN_MENU')}" onClick="${this.handleButtonClickMainMenu.name}"></div>
             ${this.createConfetti()}
         `;

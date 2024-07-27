@@ -3,9 +3,8 @@ import BackButton from "../components/BackButton.js";
 import PlayerInfo from "../components/PlayerInfo.js";
 import PongGameBoard from "../components/PongGameboard.js";
 import PopUpConfirmation from "../components/PopUpConfirmation.js";
-import Winner from "./Winner.js";
 
-export default class PongGamePage extends Component
+export default class PongAIGamePage extends Component
 {
     constructor(props, context)
     {
@@ -15,9 +14,6 @@ export default class PongGamePage extends Component
             scoreTwo: 0,
             showModal: false
         };
-        this.maxScore = 5;
-        this.playerOneName = "Player 1";
-        this.playerTwoName = "Player 2";
     }
 
     updateScore(scoreOne, scoreTwo)
@@ -47,19 +43,11 @@ export default class PongGamePage extends Component
     {
         const { scoreOne, scoreTwo, showModal } = this.state;
 
-        if (scoreOne >= this.maxScore || scoreTwo >= this.maxScore)
-        {
-            const winnerName = scoreOne >= this.maxScore ? this.playerOneName : this.playerTwoName;
-            return String.raw`
-                <div className="${Winner.name}" winnerName="${winnerName}"></div>
-            `;
-        }
-
         return String.raw`
             <link rel="stylesheet" href="/styles/PongGamePage.css">
             <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>
             <div class="gameContainer">
-                <div className="${PlayerInfo.name}" playerOne="${this.playerOneName}" playerTwo="${this.playerTwoName}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
+                <div className="${PlayerInfo.name}" playerOne="Player 1" playerTwo="Player 2" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
                 <div className="${PongGameBoard.name}" pause="${showModal}" onClickUpdateScore="${this.updateScore.name}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
             </div>
             ${showModal ? String.raw`<div className="${PopUpConfirmation.name}" message="Are you sure you want to exit?" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}

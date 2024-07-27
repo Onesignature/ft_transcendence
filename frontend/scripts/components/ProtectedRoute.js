@@ -42,14 +42,12 @@ export default class ProtectedRoute extends Component
         {
             return String.raw`<span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>`;
         }
-
         if (this.state.isAuthenticated)
         {
             return String.raw`
                 <div className="${Route.name}" ${this.props.exact ? "exact": ""} path="${this.props.path}" component="${this.props.component}" componentProps="${this.props.componentProps}"></div>
             `;
         }
-
         return String.raw`
             <div className="${Redirect.name}" to="/login"></div>
         `;
