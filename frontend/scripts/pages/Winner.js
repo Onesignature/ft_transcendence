@@ -34,7 +34,7 @@ export default class Winner extends Component
             <h2 style="font-size: 70pt; color: #FFD335;">${this.context.localizeText('VICTORY')}</h2>
             <img style="width: 4%; margin-bottom: 10px;" src="./assets/icons/CrownIcon.svg" alt="Crown Icon">
 
-            <div class="winner-name" id="winner-name">${this.props.winnerName}</div>
+            <div class="winner-name" id="winner-name">${this.props.name}</div>
             <div buttonstylepath="/styles/BaseButton.css" buttonclass="base-button" className="${BaseButton.name}" text="${this.context.localizeText('MAIN_MENU')}" onClick="${this.handleButtonClickMainMenu.name}"></div>
             ${this.createConfetti()}
         `;

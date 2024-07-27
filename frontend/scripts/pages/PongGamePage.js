@@ -51,10 +51,9 @@ export default class PongGamePage extends Component
         {
             const winnerName = scoreOne >= this.maxScore ? this.playerOneName : this.playerTwoName;
             return String.raw`
-                <div className="${Winner.name}" winnerName="${winnerName}"></div>
+                <div className="${Winner.name}" name="${winnerName}"></div>
             `;
         }
-
         return String.raw`
             <link rel="stylesheet" href="/styles/PongGamePage.css">
             <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>

@@ -12,6 +12,7 @@ import PopUpModes from './pages/PopUpModes.js';
 import TournamentHistory from './pages/TournamentHistory.js';
 import PongGamePage from './pages/PongGamePage.js';
 import PongAIGamePage from './pages/PongAIGamePage.js';
+import PopUpTournament from './pages/PopUpTournament.js';
 
 export default class App extends Component
 {
@@ -29,7 +30,8 @@ export default class App extends Component
                             <div className="${ProtectedRoute.name}" path="/game-pvp" component="${PongGamePage.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/game-ai" component="${PongAIGamePage.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/settings" component="${PopUpSettings.name}"></div>
-                            <div className="${ProtectedRoute.name}" path="/tournament" component="${TournamentHistory.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/tournament/register" component="${PopUpTournament.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/tournament/board" component="${TournamentHistory.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/" component="${MainMenu.name}"></div>
                         </div>
                     </div>

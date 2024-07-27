@@ -7,14 +7,18 @@ export default class TournamentHistory extends Component
     constructor(props, context)
     {
         super(props, context);
-        this.state = { showModal: false };
+        this.state = {
+            showModal: false
+        };
     }
 
-    handleModalOpen() {
+    handleModalOpen()
+    {
         this.setState({showModal: true});
     }
 
-    handleModalClose() {
+    handleModalClose()
+    {
         this.setState({showModal: false});
     }
 

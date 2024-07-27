@@ -12,11 +12,11 @@ export default class TwoFactorAuth extends Component
     
     handleButtonSendAgain() 
     {
-    
         alert('Button Send Again clicked!');
     }
 
-    handleCloseButtonClick() {
+    handleCloseButtonClick()
+    {
         alert('Close button clicked!');
     }
 

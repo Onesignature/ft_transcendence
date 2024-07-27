@@ -10,10 +10,16 @@ export default class PopUpTournament extends Component
         const player2 = document.getElementById('player2').value;
         const player3 = document.getElementById('player3').value;
         const player4 = document.getElementById('player4').value;
-        alert(`Players: ${player1}, ${player2}, ${player3}, ${player4}`);
+
+        if (!player1 || !player2 || !player3 || !player4)
+        {
+            alert(`Please enter valid player names`);
+        }
     }
-    handleCloseButtonClick() {
-        alert('Close button clicked!');
+
+    handleCloseButtonClick()
+    {
+        this.context.navigate('/main-menu');
     }
 
     render()
