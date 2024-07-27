@@ -22,7 +22,7 @@ export default class PongGameBoard extends Component
 
     onMount()
     {
-        this.running = true;
+        this.running = !this.props.pause;
         this.canvas = this.canvasRef.current;
         this.canvasContext = this.canvas.getContext("2d");
         
