@@ -23,7 +23,7 @@ import PongGameBoard from './components/PongGameboard.js';
 import PongAIGameBoard from './components/PongAIGameBoard.js';
 import ConfettiEffect from './components/ConfettiEffect.js';
 import PongTournamentGame from './pages/PongTournamentGame.js';
-import TestComponent from './components/TestComponent.js';
+import AILogo from './components/AILogo.js';
 
 // Main
 window.App = App;
@@ -41,6 +41,7 @@ window.PlayerInfo = PlayerInfo;
 window.PongGameBoard = PongGameBoard;
 window.PongAIGameBoard = PongAIGameBoard;
 window.PopUpConfirmation = PopUpConfirmation;
+window.AILogo = AILogo;
 
 // Pages
 window.Login = Login;
@@ -55,6 +56,3 @@ window.TournamentRegistration = TournamentRegistration;
 window.TournamentRankings = TournamentRankings;
 window.PongTournamentGame = PongTournamentGame;
 window.Settings = Settings;
-
-// Debug
-window.TestComponent = TestComponent;

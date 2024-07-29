@@ -30,7 +30,6 @@ export default class PongTournamentGame extends Component
                 
                 match.winner = scoreOne >= this.maxScore ? this.playerOneName : this.playerTwoName;
                 match.status = 'Done';
-                console.log(tournament);
                 
                 this.context.navigate('/tournament/rankings', { tournament });
                 return;

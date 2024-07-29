@@ -1,4 +1,4 @@
-import { HostRoot, ClassComponent } from "../shared/OnionNodeTags.js";
+import { HostRoot, ClassComponent, HostComponent } from "../shared/OnionNodeTags.js";
 
 export function updateOnNodes(node, nodeList)
 {
@@ -74,7 +74,6 @@ export function updateNodeFromNodeList(node, nodeList)
                 newNodeList.push(oldNode);
                 break;
             }
-
         }
         if (!found)
         {

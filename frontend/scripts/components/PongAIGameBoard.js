@@ -25,9 +25,9 @@ export default class PongAIGameBoard extends Component
         this.running = !this.props.pause;
         this.canvas = this.canvasRef.current;
         this.canvasContext = this.canvas.getContext("2d");
-        
+
         this.initializeGame();
-        
+
         window.addEventListener("resize", this.adjustPaddlePositions);
         window.addEventListener("keydown", this.handleKeyDown);
         window.addEventListener("keyup", this.handleKeyUp);
@@ -63,6 +63,7 @@ export default class PongAIGameBoard extends Component
             height: 80,
             color: '#ffd335',
             speed: 10,
+            difficulty: this.props.difficulty || 1 // Add difficulty parameter (1: Easy, 2: Medium, 3: Hard)
         };
 
         this.INITIAL_SPEED = 8;
@@ -98,21 +99,40 @@ export default class PongAIGameBoard extends Component
 
     updatePlayerPositions()
     {
-        if (this.keysPressed["w"] && this.playerOne.y - this.playerOne.speed > 0)
-        {
+        // Player One controls
+        if (this.keysPressed["w"] && this.playerOne.y - this.playerOne.speed > 0) {
             this.playerOne.y -= this.playerOne.speed;
         }
-        if (this.keysPressed["s"] && this.playerOne.y + this.playerOne.height + this.playerOne.speed < this.canvas.height)
-        {
+        if (this.keysPressed["s"] && this.playerOne.y + this.playerOne.height + this.playerOne.speed < this.canvas.height) {
             this.playerOne.y += this.playerOne.speed;
         }
-        if (this.keysPressed["ArrowUp"] && this.playerTwo.y - this.playerTwo.speed > 0)
+
+        // Player Two (AI) controls
+        this.updateAIPlayer();
+    }
+
+    updateAIPlayer()
+    {
+        // Predict the ball's future Y position
+        const ballFutureY = this.ball.y + (this.ball.speedY * 1); // Predict position 1 second ahead
+
+        // Determine the target Y position for the AI paddle
+        const targetY = ballFutureY - (this.playerTwo.height / 2);
+
+        // Smoothly move AI paddle towards the target Y position
+        // Adjust difficultyFactor to make AI easier or harder
+        const difficultyFactors = [0.1, 0.05, 0.01]; // Difficulty levels (0: Easy, 1: Medium, 2: Hard)
+        const difficultyFactor = difficultyFactors[this.playerTwo.difficulty - 1] || 0.1;
+        this.playerTwo.y += (targetY - this.playerTwo.y) * difficultyFactor;
+
+        // Ensure AI paddle stays within canvas bounds
+        if (this.playerTwo.y < 0)
         {
-            this.playerTwo.y -= this.playerTwo.speed;
+            this.playerTwo.y = 0;
         }
-        if (this.keysPressed["ArrowDown"] && this.playerTwo.y + this.playerTwo.height + this.playerTwo.speed < this.canvas.height)
+        if (this.playerTwo.y + this.playerTwo.height > this.canvas.height)
         {
-            this.playerTwo.y += this.playerTwo.speed;
+            this.playerTwo.y = this.canvas.height - this.playerTwo.height;
         }
     }
 
@@ -126,7 +146,9 @@ export default class PongAIGameBoard extends Component
             this.canvasContext.fill();
         }
         else
+        {
             this.canvasContext.fillRect(element.x, element.y, element.width, element.height);
+        }
     }
 
     normalizeSpeed()
@@ -181,18 +203,15 @@ export default class PongAIGameBoard extends Component
     resetBall()
     {
         this.ballSpeed = this.INITIAL_SPEED;
-        if (this.scoreOne > this.scoreTwo)
-        {
+        if (this.scoreOne > this.scoreTwo) {
             this.ball.speedX = this.ballSpeed;
-        }
-        else
-        {
+        } else {
             this.ball.speedX = -this.ballSpeed;
         }
         this.ball.x = this.canvas.width / 2;
         this.ball.y = this.canvas.height / 2;
         this.ball.speedY = 0;
-        
+
         this.resetPaddles();
     }
 
@@ -218,20 +237,19 @@ export default class PongAIGameBoard extends Component
 
     loop()
     {
-        if (!this.running)
-            return;
-        
+        if (!this.running) return;
+
         this.updatePlayerPositions();
-        
+
         this.ballWallCollision();
         this.ballPaddleCollision(this.playerOne);
         this.ballPaddleCollision(this.playerTwo);
-        
+
         this.ball.x += this.ball.speedX;
         this.ball.y += this.ball.speedY;
-        
+
         this.drawElements();
-        
+
         requestAnimationFrame(this.loop);
     }
 

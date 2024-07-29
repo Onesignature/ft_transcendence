@@ -145,8 +145,6 @@ export default class TournamentRankings extends Component
     {
         const { tournament } = this.props;
         const matches = tournament.matches;
-
-        console.log(tournament);
         
         return String.raw`
             <link rel="stylesheet" href="/styles/TournamentRankings.css">

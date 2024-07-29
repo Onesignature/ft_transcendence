@@ -1,4 +1,5 @@
 import { Component } from "../../modules/onion/index.js";
+import AILogo from "../components/AILogo.js";
 import BackButton from "../components/BackButton.js";
 import PlayerInfo from "../components/PlayerInfo.js";
 import PongAIGameBoard from "../components/PongAIGameBoard.js";
@@ -64,7 +65,8 @@ export default class PongAIGame extends Component
             <link rel="stylesheet" href="/styles/PongNormalGame.css">
             <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>
             <div class="gameContainer">
-            <div className="${PlayerInfo.name}" playerOne="${this.playerOneName}" playerTwo="${this.playerTwoName}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
+                <div className="${AILogo.name}"></div>
+                <div className="${PlayerInfo.name}" playerOne="${this.playerOneName}" playerTwo="${this.playerTwoName}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
                 <div className="${PongAIGameBoard.name}" pause="${showModal}" onClickUpdateScore="${this.updateScore.name}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
             </div>
             ${showModal ? String.raw`<div className="${PopUpConfirmation.name}" message="Are you sure you want to exit?" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}

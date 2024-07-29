@@ -1,17 +1,25 @@
 {
-    "LOGIN" : "Connexion",
+    "LOGIN_TITLE": "Profitez du Pong",
+    "LOGIN_SUBTITLE": "Connectez-vous avec un compte 42",
+    "LOGIN_BUTTON": "Se connecter",
 
-    "ENTER_OTP":"Entrez le code OTP",
+    "ENTER_OTP": "Entrez le OTP",
 
-    "PLAY" : "Jouer",
-    "TOURNAMENT" : "Tournoi",
-    "SETTINGS" : "Paramètres",
-    "LOGOUT" : "Déconnexion",
-    "MAIN_MENU": "Menu Principal",
-    "START" : "Démarrer",
+    "PLAY": "Jouer",
+    "TOURNAMENT": "Tournoi",
+    "SETTINGS": "Paramètres",
+    "LOGOUT": "Se déconnecter",
+    "MAIN_MENU": "Menu principal",
+    "START": "Démarrer",
+    "CONTINUE": "Continuer",
+    "FINISH": "Terminer",
 
-    "2FA": "Authentification à deux facteurs",
+    "2FA": "Authentification à deux facteurs (2FA)",
+    "LANGUAGE": "Langue",
 
+    "SEND_AGAIN": "Envoyer à nouveau",
+    "CONFIRM": "Confirmer",
+    
     "WINNER": "Gagnant",
     "VICTORY": "Victoire",
     "DEFEATED": "Défait",
