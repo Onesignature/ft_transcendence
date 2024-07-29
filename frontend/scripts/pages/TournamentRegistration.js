@@ -7,7 +7,7 @@ export default class TournamentRegistration extends Component
     handleButtonStart() 
     {
         const playerIds = ['player1', 'player2', 'player3', 'player4'];
-        const players = playerIds;//playerIds.map(id => document.getElementById(id).value.trim());
+        const players = playerIds.map(id => document.getElementById(id).value.trim());
 
         if (!this.areValidNames(players))
             return;

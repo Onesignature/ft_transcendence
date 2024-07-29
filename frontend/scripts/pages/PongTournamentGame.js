@@ -3,7 +3,6 @@ import BackButton from "../components/BackButton.js";
 import PlayerInfo from "../components/PlayerInfo.js";
 import PongGameBoard from "../components/PongGameboard.js";
 import PopUpConfirmation from "../components/PopUpConfirmation.js";
-import Winner from "./Winner.js";
 
 export default class PongTournamentGame extends Component
 {
@@ -24,6 +23,18 @@ export default class PongTournamentGame extends Component
     {
         if (this.state.scoreOne != scoreOne || this.state.scoreTwo != scoreTwo)
         {
+            if (scoreOne >= this.maxScore || scoreTwo >= this.maxScore)
+            {
+                const { tournament } = this.props;
+                const match = tournament.matches[tournament.activeMatchIndex];
+                
+                match.winner = scoreOne >= this.maxScore ? this.playerOneName : this.playerTwoName;
+                match.status = 'Done';
+                console.log(tournament);
+                
+                this.context.navigate('/tournament/rankings', { tournament });
+                return;
+            }
             this.setState({ scoreOne, scoreTwo });
         }
     }
@@ -46,18 +57,18 @@ export default class PongTournamentGame extends Component
     render()
     {
         const { scoreOne, scoreTwo, showModal } = this.state;
+        const { tournament } = this.props;
 
-        if (scoreOne >= this.maxScore || scoreTwo >= this.maxScore)
-        {
-            const winnerName = scoreOne >= this.maxScore ? this.playerOneName : this.playerTwoName;
-            return String.raw`
-                <div className="${Winner.name}" playerName="${winnerName}"></div>
-            `;
-        }
+        const matchIndex = tournament.activeMatchIndex;
+        const match = tournament.matches[matchIndex];
+        this.playerOneName = match.players[0];
+        this.playerTwoName = match.players[1];
+
         return String.raw`
             <link rel="stylesheet" href="/styles/PongNormalGame.css">
             <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>
             <div class="gameContainer">
+                <div class="matchInfo">Match ${matchIndex + 1}</div>
                 <div className="${PlayerInfo.name}" playerOne="${this.playerOneName}" playerTwo="${this.playerTwoName}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
                 <div className="${PongGameBoard.name}" pause="${showModal}" onClickUpdateScore="${this.updateScore.name}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
             </div>

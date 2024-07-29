@@ -33,9 +33,10 @@ export default class TournamentRankings extends Component
         if (matches[0].status === 'Pending')
         {
             matches[0].status = 'Active';
+            this.activeMatchIndex = 0;
             return;
         }
-        if (matches[0].status = 'Active')
+        if (matches[0].status === 'Active')
         {
             this.activeMatchIndex = 0;
             return;
@@ -45,6 +46,7 @@ export default class TournamentRankings extends Component
         if (matches[1].status === 'Pending')
         {
             matches[1].status = 'Active';
+            this.activeMatchIndex = 1;
             return;
         }
         if (matches[1].status === 'Active')
@@ -58,6 +60,7 @@ export default class TournamentRankings extends Component
         {
             matches[2].players = [ matches[0].winner, matches[1].winner ];
             matches[2].status = 'Active';
+            this.activeMatchIndex = 2;
             return;
         }
         if (matches[2].status === 'Active')
@@ -91,7 +94,8 @@ export default class TournamentRankings extends Component
     handleContinueButtonClick()
     {
         const tournament = this.props.tournament;
-        this.context.navigate("/tournament/game", { matches: tournament.matches, activeMatchIndex: this.activeMatchIndex});
+        tournament.activeMatchIndex = this.activeMatchIndex;
+        this.context.navigate("/tournament/game", { tournament });
     }
 
     handleFinishButtonClick()
@@ -102,21 +106,22 @@ export default class TournamentRankings extends Component
     createMatchPair(match, index)
     {
         const matchNum = index + 1;
-        let [selectClassMatch, selectClassOne, selectClassTwo] = ["", "", ""];
+        let [selectClassMatch, selectClassHeader, selectClassOne, selectClassTwo] = ["", "", "", ""];
     
         if (match.status === 'Active')
         {
-            [selectClassMatch, selectClassOne, selectClassTwo] = ["current", "current", "current"];
+            [selectClassMatch, selectClassHeader, selectClassOne, selectClassTwo] = ["current", "current", "current", "current"];
         }
         else if (match.status === 'Done')
         {
+            selectClassMatch = "current";
             selectClassOne = match.winner === match.players[0] ? "winner" : "loser";
             selectClassTwo = match.winner === match.players[1] ? "winner" : "loser";
         }
     
         return String.raw`
             <div class="match ${selectClassMatch}">
-                <h2 class="sub-header ${selectClassMatch}">${this.context.localizeText('MATCH')} ${matchNum}</h2>
+                <h2 class="sub-header ${selectClassHeader}">${this.context.localizeText('MATCH')} ${matchNum}</h2>
                 <div class="player ${selectClassOne}">${match.players[0]}</div>
                 <div class="player ${selectClassTwo}">${match.players[1]}</div>
             </div>
@@ -140,6 +145,8 @@ export default class TournamentRankings extends Component
     {
         const { tournament } = this.props;
         const matches = tournament.matches;
+
+        console.log(tournament);
         
         return String.raw`
             <link rel="stylesheet" href="/styles/TournamentRankings.css">
@@ -154,7 +161,7 @@ export default class TournamentRankings extends Component
                 <div class="match ${this.state.isCompleted ? "current" : ""}">
                     <img style="width: 20%; margin-bottom: 10px;" src="/assets/icons/CrownIcon.svg" alt="Crown Icon">
                     <h2 class="sub-header">${this.context.localizeText('WINNER')}</h2>
-                    <div class="player" id="player7">${matches[2].winner}</div>
+                    <div class="player ${this.state.isCompleted ? "current" : ""}">${matches[2].winner}</div>
                 </div>
                 ${this.createNextButton()}
             </div>

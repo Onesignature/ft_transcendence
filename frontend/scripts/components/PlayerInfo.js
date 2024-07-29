@@ -7,9 +7,9 @@ export default class PlayerInfo extends Component
         return String.raw`
             <link rel="stylesheet" href="/styles/PlayerInfo.css">
             <div id="playerInfo">
-                <div>${this.props.playerOne}</div>
+                <div class="playerName">${this.props.playerOne}</div>
                 <div id="score">${this.props.scoreOne} : ${this.props.scoreTwo}</div>
-                <div>${this.props.playerTwo}</div>
+                <div class="playerName">${this.props.playerTwo}</div>
             </div>
         `;
     }

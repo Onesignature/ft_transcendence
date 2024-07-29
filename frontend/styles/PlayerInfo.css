@@ -5,6 +5,7 @@
     color: #ffd335;
     font-size: 24px;
     font-family: 'Jost', sans-serif;
+    font-weight: 700;
     user-select: none;
     margin-bottom: 10px;
 }
@@ -15,6 +16,7 @@
     padding: 5px;
     width: 200px;
     overflow: hidden;
+    font-weight: 700;
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: center;
@@ -25,6 +27,7 @@
     width: 150px;
     display: flex;
     justify-content: center;
+    font-weight: 700;
     color: #ffffff;
     font-size: 40px;
     margin: 0 50px;

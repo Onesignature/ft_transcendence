@@ -51,13 +51,13 @@ export default class PongAIGame extends Component
         if (scoreOne >= this.maxScore)
         {
             return String.raw`
-                <div className="${Winner.name}" name="${this.playerOneName}"></div>
+                <div className="${Winner.name}" playerName="${this.playerOneName}"></div>
             `;
         }
         else if (scoreTwo >= this.maxScore)
         {
             return String.raw`
-                <div className="${Loser.name}" name="${this.playerOneName}"></div>
+                <div className="${Loser.name}" playerName="${this.playerOneName}"></div>
             `;
         }
         return String.raw`
