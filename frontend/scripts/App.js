@@ -6,16 +6,17 @@ import ProtectedRoute from './components/ProtectedRoute.js';
 
 import Login from './pages/Login.js';
 import MainMenu from './pages/MainMenu.js';
-import TwoFactorAuth from './pages/2FA.js';
-import PopUpSettings from './pages/PopUpSettings.js';
-import PopUpModes from './pages/PopUpModes.js';
-import TournamentHistory from './pages/TournamentHistory.js';
-import PongGamePage from './pages/PongGamePage.js';
-import PongAIGamePage from './pages/PongAIGamePage.js';
-import PopUpTournament from './pages/PopUpTournament.js';
+import TwoFactorAuth from './pages/TwoFactorAuth.js';
+import Settings from './pages/Settings.js';
+import PongGameModes from './pages/PongGameModes.js';
+import TournamentRankings from './pages/TournamentRankings.js';
+import PongNormalGame from './pages/PongNormalGame.js';
+import PongAIGame from './pages/PongAIGame.js';
+import TournamentRegistration from './pages/TournamentRegistration.js';
+import PongTournamentGame from './pages/PongTournamentGame.js';
 
 export default class App extends Component
-{
+{   
     render()
     {
         return String.raw`
@@ -26,12 +27,13 @@ export default class App extends Component
                             <div className="${Route.name}" path="/login" component="${Login.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/2fa" component="${TwoFactorAuth.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/main-menu" component="${MainMenu.name}"></div>
-                            <div className="${ProtectedRoute.name}" path="/game-mode" component="${PopUpModes.name}"></div>
-                            <div className="${ProtectedRoute.name}" path="/game-pvp" component="${PongGamePage.name}"></div>
-                            <div className="${ProtectedRoute.name}" path="/game-ai" component="${PongAIGamePage.name}"></div>
-                            <div className="${ProtectedRoute.name}" path="/settings" component="${PopUpSettings.name}"></div>
-                            <div className="${ProtectedRoute.name}" path="/tournament/register" component="${PopUpTournament.name}"></div>
-                            <div className="${ProtectedRoute.name}" path="/tournament/board" component="${TournamentHistory.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/game-mode" component="${PongGameModes.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/game-pvp" component="${PongNormalGame.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/game-ai" component="${PongAIGame.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/tournament/register" component="${TournamentRegistration.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/tournament/rankings" component="${TournamentRankings.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/tournament/game" component="${PongTournamentGame.name}"></div>
+                            <div className="${ProtectedRoute.name}" path="/settings" component="${Settings.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/" component="${MainMenu.name}"></div>
                         </div>
                     </div>

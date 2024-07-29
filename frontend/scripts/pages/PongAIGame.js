@@ -6,7 +6,7 @@ import PopUpConfirmation from "../components/PopUpConfirmation.js";
 import Loser from "./Loser.js";
 import Winner from "./Winner.js";
 
-export default class PongAIGamePage extends Component
+export default class PongAIGame extends Component
 {
     constructor(props, context)
     {
@@ -61,7 +61,7 @@ export default class PongAIGamePage extends Component
             `;
         }
         return String.raw`
-            <link rel="stylesheet" href="/styles/PongGamePage.css">
+            <link rel="stylesheet" href="/styles/PongNormalGame.css">
             <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>
             <div class="gameContainer">
             <div className="${PlayerInfo.name}" playerOne="${this.playerOneName}" playerTwo="${this.playerTwoName}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>

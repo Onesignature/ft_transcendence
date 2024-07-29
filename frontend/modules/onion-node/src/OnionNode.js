@@ -34,7 +34,7 @@ export function createHostRootNode()
     return createNode(HostRoot, null, null);
 }
 
-export function createNodeFromDOMElement(element, caseSensitiveString)
+export function createNodeFromDOMElement(element, htmlString)
 {
     let key = element.key;
     let elementType = element.nodeType;
@@ -46,7 +46,7 @@ export function createNodeFromDOMElement(element, caseSensitiveString)
     if (type = getComponentNameFromDOMElement(element))
     {
         nodeTag = ClassComponent;
-        let options = { element: element, children: element.childNodes, htmlString: caseSensitiveString };
+        let options = { element: element, children: element.childNodes, htmlString: htmlString };
         stateNode = createClassComponent(type, options);
     }
     else
@@ -60,7 +60,7 @@ export function createNodeFromDOMElement(element, caseSensitiveString)
     {
         for (let attr of element.attributes)
         {
-            let name = findCaseSensitiveValue(caseSensitiveString, attr.name);
+            let name = getCorrectCaseProp(htmlString, attr.name);
             let value = convertStringToType(attr.value);
             if (attr.name === "key")
                 key = value;
@@ -87,19 +87,20 @@ function getComponentNameFromDOMElement(element)
     return (element.nodeType != TEXT_NODE && element.getAttribute(className.toLowerCase()));
 }
 
-function findCaseSensitiveValue(targetString, key)
+function getCorrectCaseProp(htmlString, lowercasedProp)
 {
-    if (!targetString)
-        return key;
-
-    // Find the lowercase key in the target string
-    let index = targetString.toLowerCase().indexOf(key.toLowerCase());
+    const propPattern = new RegExp(`\\s(${lowercasedProp})="`, 'gi');
+    let match;
+    const props = new Set();
     
-    if (index === -1)
-        return key;
-    
-    // Extract the substring from the original target string
-    let caseSensitiveValue = targetString.substring(index, index + key.length);
-    
-    return caseSensitiveValue;
+    while ((match = propPattern.exec(htmlString)) !== null)
+    {
+        props.add(match[1]);
+    }
+  
+    if (props.size > 0)
+    {
+        return [...props][0];
+    }
+    return lowercasedProp;
 }

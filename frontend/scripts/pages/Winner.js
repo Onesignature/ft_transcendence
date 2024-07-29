@@ -1,5 +1,6 @@
 import { Component } from "../../modules/onion/index.js";
 import BaseButton from "../components/BaseButton.js";
+import ConfettiEffect from "../components/ConfettiEffect.js";
 import PongLogo from "../components/PongLogo.js";
 
 export default class Winner extends Component
@@ -7,23 +8,6 @@ export default class Winner extends Component
     handleButtonClickMainMenu() 
     {
         this.context.navigate('/main-menu');
-    }
-
-    createConfetti()
-    {
-        const confettiCount = 150; // Increase number of confetti elements
-        const colors = ['#FFD335', '#FF4A4A', '#00E7FD', '#7100FE'];
-        let confettiHTML = '';
-    
-        for (let i = 0; i < confettiCount; i++) {
-            const left = `${Math.random() * 100}vw`;
-            const animationDelay = `${Math.random() * 3}s`;
-            const backgroundColor = colors[i % colors.length];
-    
-            confettiHTML += String.raw`<div class="confetti" style="left: ${left}; animation-delay: ${animationDelay}; background-color: ${backgroundColor};"></div>`;
-        }
-    
-        return confettiHTML;
     }
     
     render()
@@ -34,9 +18,9 @@ export default class Winner extends Component
             <h2 style="font-size: 70pt; color: #FFD335;">${this.context.localizeText('VICTORY')}</h2>
             <img style="width: 4%; margin-bottom: 10px;" src="./assets/icons/CrownIcon.svg" alt="Crown Icon">
 
-            <div class="winner-name" id="winner-name">${this.props.name}</div>
+            <div class="winner-name" id="winner-name">${this.props.playerName}</div>
             <div buttonstylepath="/styles/BaseButton.css" buttonclass="base-button" className="${BaseButton.name}" text="${this.context.localizeText('MAIN_MENU')}" onClick="${this.handleButtonClickMainMenu.name}"></div>
-            ${this.createConfetti()}
+            <div className="${ConfettiEffect.name}"></div>
         `;
     }
 }

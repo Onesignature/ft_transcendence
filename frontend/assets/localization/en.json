@@ -11,6 +11,8 @@
     "LOGOUT" : "Logout",
     "MAIN_MENU": "Main Menu",
     "START" : "Start",
+    "CONTINUE" : "Continue",
+    "FINISH" : "Finish",
 
     "2FA": "Two-Factor Authentication (2FA)",
     "LANGUAGE": "Language",

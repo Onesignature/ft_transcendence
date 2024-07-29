@@ -48,4 +48,16 @@ Component.prototype.setState = function (partialState, callback)
     document.dispatchEvent(onStateChangeEvent);
 };
 
+Component.prototype.forceUpdate = function (callback)
+{
+    const onStateChangeEvent = new CustomEvent('component.stateChange', {
+        detail: {
+            instance: this,
+            state: { __forceUpdate: true },
+            callback: callback
+        }
+    });
+    document.dispatchEvent(onStateChangeEvent);
+}
+
 export { Component };

@@ -5,7 +5,7 @@ import PongGameBoard from "../components/PongGameboard.js";
 import PopUpConfirmation from "../components/PopUpConfirmation.js";
 import Winner from "./Winner.js";
 
-export default class PongGamePage extends Component
+export default class PongNormalGame extends Component
 {
     constructor(props, context)
     {
@@ -51,11 +51,11 @@ export default class PongGamePage extends Component
         {
             const winnerName = scoreOne >= this.maxScore ? this.playerOneName : this.playerTwoName;
             return String.raw`
-                <div className="${Winner.name}" name="${winnerName}"></div>
+                <div className="${Winner.name}" playerName="${winnerName}"></div>
             `;
         }
         return String.raw`
-            <link rel="stylesheet" href="/styles/PongGamePage.css">
+            <link rel="stylesheet" href="/styles/PongNormalGame.css">
             <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>
             <div class="gameContainer">
                 <div className="${PlayerInfo.name}" playerOne="${this.playerOneName}" playerTwo="${this.playerTwoName}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>

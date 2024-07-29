@@ -23,7 +23,7 @@ export default class TwoFactorAuth extends Component
     render()
     {
         return String.raw`
-            <link rel="stylesheet" href="/styles/2FA.css">
+            <link rel="stylesheet" href="/styles/TwoFactorAuth.css">
             <div class="window">
                 <div class="window-header">
                     <div className="${CloseButton.name}" onClick="${this.handleCloseButtonClick.name}"></div>

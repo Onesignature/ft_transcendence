@@ -2,7 +2,7 @@ import { Component } from "../../modules/onion/index.js";
 import CloseButton from "../components/CloseButton.js";
 import ModesButton from "../components/ModesButton.js";
 
-export default class PopUpModes extends Component
+export default class PongGameModes extends Component
 {
     handleAIButtonClick() 
     {
@@ -22,7 +22,7 @@ export default class PopUpModes extends Component
     render()
     {
         return String.raw`
-            <link rel="stylesheet" href="/styles/PopUpModes.css">
+            <link rel="stylesheet" href="/styles/PongGameModes.css">
             <div class="window">
                 <div class="window-header">
                     <div className="${CloseButton.name}" onClick="${this.handleCloseButtonClick.name}"></div>
