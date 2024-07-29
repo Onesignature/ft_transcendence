@@ -1,11 +1,8 @@
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib import admin
 from django.urls import path, include
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),    
-    path('', include('accounts.urls')), # include your app urls.py here
+    path('oauth/', include('oauth.urls')),
+    path('preferences/', include('preferences.urls')),
 ]

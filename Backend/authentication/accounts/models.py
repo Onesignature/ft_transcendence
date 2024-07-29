@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-import uuid
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -16,4 +15,3 @@ class OTP(models.Model):
 
     def __str__(self):
         return f"OTP for {self.user.username}"
-    
