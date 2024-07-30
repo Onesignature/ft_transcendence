@@ -22,7 +22,8 @@ export default class PongGameBoard extends Component
         this.trail = [];
         this.explosions = [];
         this.shakeDuration = 0;
-        this.explosionActive = false;
+        this.freezeBall = true;
+        this.startDelayTime = 800;
     }
 
     onMount() 
@@ -59,6 +60,7 @@ export default class PongGameBoard extends Component
             height: 100,
             color: '#ffd335',
             speed: 10,
+            difficulty: this.props.difficulty || 1
         };
 
         this.playerTwo = {
@@ -68,7 +70,7 @@ export default class PongGameBoard extends Component
             height: 100,
             color: '#ffd335',
             speed: 10,
-            difficulty: this.props.difficulty || 2
+            difficulty: this.props.difficulty || 1
         };
 
         this.INITIAL_SPEED = 8;
@@ -88,7 +90,15 @@ export default class PongGameBoard extends Component
         this.predictionInterval = 1000;
 
         this.adjustPaddlePositions();
+        this.startDelay();
         this.loop();
+    }
+
+    startDelay() 
+    {
+        setTimeout(() => {
+            this.freezeBall = false;
+        }, this.startDelayTime);
     }
 
     getRandomDirection() 
@@ -127,9 +137,9 @@ export default class PongGameBoard extends Component
     {
         this.updatePlayer("w", "s", this.playerOne);
 
-        if (this.props.isAIEnabled)
+        if (this.props.isAIEnabled && !this.freezeBall)
         {
-            this.updateAIPlayer();
+            this.updateAIPlayer(this.playerTwo);
         }
         else
         {
@@ -160,7 +170,7 @@ export default class PongGameBoard extends Component
         return predictedY;
     }
 
-    updateAIPlayer()
+    updateAIPlayer(player)
     {
         const currentTime = Date.now();
     
@@ -179,36 +189,36 @@ export default class PongGameBoard extends Component
         const ballPosition = this.ballPosition || this.getCurrentBallPosition();
     
         // Calculate predicted ball’s intercept Y position
-        const targetY = this.calculateInterceptY(ballPosition, ballSpeedX, ballSpeedY) - (this.playerTwo.height / 2);
+        const targetY = this.calculateInterceptY(ballPosition, ballSpeedX, ballSpeedY) - (player.height / 2);
     
-        // Difficulty levels: 0.1 for easy, 0.05 for medium, and 0.02 for hard
-        const difficultyFactors = [0.03, 0.06, 0.8];
-        const difficultyFactor = difficultyFactors[this.playerTwo.difficulty - 1] || 0.1;
+        // Difficulty levels: 0.01 for easy, 0.05 for medium, and 0.8 for hard
+        const difficultyFactors = [0.045, 0.06, 0.08];
+        const difficultyFactor = difficultyFactors[player.difficulty - 1] || 0.045;
     
         // Calculate movement towards the target Y position
-        const movement = (targetY - this.playerTwo.y) * difficultyFactor;
+        const movement = (targetY - player.y) * difficultyFactor;
     
         // Ensure the AI paddle moves at the same speed as Player One's paddle
-        const paddleSpeed = this.playerOne.speed;
+        const paddleSpeed = player.speed;
     
         // Move the AI paddle towards the target position
         if (Math.abs(movement) > paddleSpeed)
         {
-            this.playerTwo.y += (movement > 0 ? paddleSpeed : -paddleSpeed);
+            player.y += (movement > 0 ? paddleSpeed : -paddleSpeed);
         }
         else
         {
-            this.playerTwo.y += movement;
+            player.y += movement;
         }
     
         // Ensure the AI paddle stays within canvas boundaries
-        if (this.playerTwo.y < 0)
+        if (player.y < 0)
         {
-            this.playerTwo.y = 0;
+            player.y = 0;
         }
-        if (this.playerTwo.y + this.playerTwo.height > this.canvas.height)
+        if (player.y + player.height > this.canvas.height)
         {
-            this.playerTwo.y = this.canvas.height - this.playerTwo.height;
+            player.y = this.canvas.height - player.height;
         }
     }
     
@@ -246,13 +256,13 @@ export default class PongGameBoard extends Component
         {
             this.scoreOne += 1;
             this.createExplosion(this.ball.x, this.ball.y);
-            this.explosionActive = true;
+            this.freezeBall = true;
         } 
         else if (this.ball.x - this.ball.speedX < this.ball.radius) 
         {
             this.scoreTwo += 1;
             this.createExplosion(this.ball.x, this.ball.y);
-            this.explosionActive = true;
+            this.freezeBall = true;
         }
     }
 
@@ -346,7 +356,7 @@ export default class PongGameBoard extends Component
                 this.explosions.splice(explosionIndex, 1);
                 if (this.explosions.length === 0) 
                 {
-                    this.explosionActive = false;
+                    this.freezeBall = false;
                     this.resetBall();
                     this.displayScores();
                 }
@@ -393,7 +403,7 @@ export default class PongGameBoard extends Component
         this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawElement(this.playerOne);
         this.drawElement(this.playerTwo);
-        if (!this.explosionActive) 
+        if (!this.freezeBall) 
         {
             this.drawElement(this.ball);
         }
@@ -436,7 +446,7 @@ export default class PongGameBoard extends Component
         if (!this.running) return;
 
         this.updatePlayerPositions();
-        if (!this.explosionActive) 
+        if (!this.freezeBall) 
         {
             this.updateBallPosition();
         }
@@ -444,7 +454,7 @@ export default class PongGameBoard extends Component
         this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.drawElements();
-        if (!this.explosionActive) 
+        if (!this.freezeBall) 
         {
             this.drawBallTrail();
         }
