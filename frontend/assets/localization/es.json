@@ -32,5 +32,7 @@
     "PLAYER": "Jugador",
     "YES": "Sí",
     "NO": "No",
-    "YOU_SURE": "Estás seguro de que quieres salir?"
+    "YOU_SURE": "¿Estás seguro de que quieres salir?",
+    "VALID_PLAYER": "Por favor ingrese nombres de jugadores válidos",
+    "UNIQUE_PLAYER": "Los nombres de los jugadores deben ser únicos"
 }

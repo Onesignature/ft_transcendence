@@ -21,13 +21,13 @@ export default class TournamentRegistration extends Component
     {
         // Check for empty player names
         if (players.some(player => !player)) {
-            alert('Please enter valid player names');
+            alert(this.context.localizeText('VALID_PLAYER'));
             return false;
         }
         // Check for duplicate player names
         const uniquePlayers = new Set(players);
         if (uniquePlayers.size !== players.length) {
-            alert('Player names must be unique');
+            alert(this.context.localizeText('UNIQUE_PLAYER'));
             return false;
         }
         return true;

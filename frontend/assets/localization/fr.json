@@ -27,10 +27,12 @@
     "MODE": "Choisissez le mode",
 
     "ALIAS_NAME": "Choisissez un pseudonyme",
-    "MATCH": "Match",
+    "MATCH": "Correspondre",
 
     "PLAYER": "Joueur",
     "YES": "Oui",
     "NO": "Non",
-    "YOU_SURE": "Êtes-vous sûr de vouloir quitter?"
+    "YOU_SURE": "Êtes-vous sûr de vouloir quitter?",
+    "VALID_PLAYER": "Veuillez entrer des noms de joueurs valides",
+    "UNIQUE_PLAYER": "Les noms des joueurs doivent être uniques"
 }

@@ -32,6 +32,7 @@
     "PLAYER": "Player",
     "YES": "Yes",
     "NO": "No",
-    "YOU_SURE": "Are you sure you want to exit?"
-
+    "YOU_SURE": "Are you sure you want to exit?",
+    "VALID_PLAYER": "Please enter valid player names",
+    "UNIQUE_PLAYER": "Player names must be unique"
 }
