@@ -19,8 +19,7 @@ import ProtectedRoute from './components/ProtectedRoute.js';
 import PongNormalGame from './pages/PongNormalGame.js';
 import PongAIGame from './pages/PongAIGame.js';
 import PlayerInfo from './components/PlayerInfo.js';
-import PongGameBoard from './components/PongGameboard.js';
-import PongAIGameBoard from './components/PongAIGameBoard.js';
+import PongGameBoard from './components/PongGameBoard.js';
 import ConfettiEffect from './components/ConfettiEffect.js';
 import PongTournamentGame from './pages/PongTournamentGame.js';
 import AILogo from './components/AILogo.js';
@@ -39,7 +38,6 @@ window.PongLogo = PongLogo;
 window.ConfettiEffect = ConfettiEffect;
 window.PlayerInfo = PlayerInfo;
 window.PongGameBoard = PongGameBoard;
-window.PongAIGameBoard = PongAIGameBoard;
 window.PopUpConfirmation = PopUpConfirmation;
 window.AILogo = AILogo;
 

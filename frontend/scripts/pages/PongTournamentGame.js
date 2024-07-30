@@ -1,7 +1,7 @@
 import { Component } from "../../modules/onion/index.js";
 import BackButton from "../components/BackButton.js";
 import PlayerInfo from "../components/PlayerInfo.js";
-import PongGameBoard from "../components/PongGameboard.js";
+import PongGameBoard from "../components/PongGameBoard.js";
 import PopUpConfirmation from "../components/PopUpConfirmation.js";
 
 export default class PongTournamentGame extends Component
