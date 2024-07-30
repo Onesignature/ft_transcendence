@@ -86,15 +86,23 @@ def auth_token(request):
         }
     )
 
-    # Check if the UserProfile already exists
-    if not UserProfile.objects.filter(user=user).exists():
-        UserProfile.objects.create(user=user)
+    # Extract profile picture URL
+    profile_picture_url = user_info.get('image', {}).get('versions', {}).get('medium', '')
+
+    # Update or create the UserProfile
+    UserProfile.objects.update_or_create(
+        user=user,
+        defaults={
+            'profile_picture_url': profile_picture_url
+        }
+    )
 
     refresh = RefreshToken.for_user(user)
     return Response({
         'access_token': str(refresh.access_token),
         'refresh_token': str(refresh),
     })
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

@@ -6,6 +6,7 @@ class UserProfile(models.Model):
     preferences = models.JSONField(default=dict)
     language_preference = models.CharField(max_length=10, default='EN')
     is_2fa_enabled = models.BooleanField(default=False)
+    profile_picture_url = models.URLField(max_length=255, blank=True, null=True) 
 
 class OTP(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

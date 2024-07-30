@@ -16,6 +16,7 @@ def me(request):
         'username': user.username,
         'language_preference': user_profile.language_preference,
         'is_2fa_enabled': user_profile.is_2fa_enabled,
+        'profile_picture_url': user_profile.profile_picture_url,
     }
     return Response(user_data)
 
