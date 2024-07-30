@@ -27,5 +27,11 @@
     "MODE": "Choose the mode",
 
     "ALIAS_NAME": "Choose alias name",
-    "MATCH": "Match"
+    "MATCH": "Match",
+
+    "PLAYER": "Player",
+    "YES": "Yes",
+    "NO": "No",
+    "YOU_SURE": "Are you sure you want to exit?"
+
 }

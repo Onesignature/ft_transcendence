@@ -1,18 +1,18 @@
 {
     "LOGIN_TITLE": "Disfruta del Pong",
-    "LOGIN_SUBTITLE": "Inicia sesión con la cuenta de 42",
+    "LOGIN_SUBTITLE": "Iniciar sesión con la cuenta 42",
     "LOGIN_BUTTON": "Iniciar sesión",
 
-    "ENTER_OTP": "Introduce el OTP",
+    "ENTER_OTP": "Ingrese el OTP",
 
     "PLAY": "Jugar",
     "TOURNAMENT": "Torneo",
-    "SETTINGS": "Ajustes",
+    "SETTINGS": "Configuraciones",
     "LOGOUT": "Cerrar sesión",
-    "MAIN_MENU": "Menú principal",
-    "START": "Iniciar",
+    "MAIN_MENU": "Menú Principal",
+    "START": "Comenzar",
     "CONTINUE": "Continuar",
-    "FINISH": "Finalizar",
+    "FINISH": "Terminar",
 
     "2FA": "Autenticación de Dos Factores (2FA)",
     "LANGUAGE": "Idioma",
@@ -26,6 +26,11 @@
 
     "MODE": "Elige el modo",
 
-    "ALIAS_NAME": "Elige un nombre de alias",
-    "MATCH": "Partido"
+    "ALIAS_NAME": "Elige un alias",
+    "MATCH": "Partido",
+
+    "PLAYER": "Jugador",
+    "YES": "Sí",
+    "NO": "No",
+    "YOU_SURE": "Estás seguro de que quieres salir?"
 }
