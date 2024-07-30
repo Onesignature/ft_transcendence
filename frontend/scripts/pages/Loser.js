@@ -9,7 +9,7 @@ export default class Loser extends Component
     {
         this.context.navigate('/main-menu');
     }
-      
+
     render()
     {   
         return String.raw`
@@ -18,7 +18,7 @@ export default class Loser extends Component
             <h2 style="font-size: 70pt; color: #FF4A4A;">${this.context.localizeText('DEFEATED')}</h2>
             <img id="angry-bot" style="width: 4%; margin-bottom: 10px;" src="./assets/icons/Ai_icon_angry.svg" alt="Crown Icon">
             
-            <div class="bot-name" id="winner-name">By AI</div>
+            <div class="bot-name" id="winner-name">${this.context.localizeText('BY_AI')}</div>
             <div buttonstylepath="/styles/BaseButton.css" buttonclass="base-button" className="${BaseButton.name}" text="${this.context.localizeText('MAIN_MENU')}" onClick="${this.handleButtonClickMainMenu.name}"></div>
         `;
     }

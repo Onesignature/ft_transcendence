@@ -1,38 +1,39 @@
 {
     "LOGIN_TITLE": "Profitez du Pong",
-    "LOGIN_SUBTITLE": "Connectez-vous avec le compte 42",
-    "LOGIN_BUTTON": "Connexion",
+    "LOGIN_SUBTITLE": "Connectez-vous avec un compte 42",
+    "LOGIN_BUTTON": "Se connecter",
 
-    "ENTER_OTP": "Entrez le OTP",
+    "ENTER_OTP": "Entrez le code OTP",
 
     "PLAY": "Jouer",
     "TOURNAMENT": "Tournoi",
     "SETTINGS": "Paramètres",
     "LOGOUT": "Déconnexion",
-    "MAIN_MENU": "Menu Principal",
+    "MAIN_MENU": "Menu principal",
     "START": "Démarrer",
     "CONTINUE": "Continuer",
     "FINISH": "Terminer",
 
-    "2FA": "Authentification à Deux Facteurs (2FA)",
+    "2FA": "Authentification à deux facteurs (2FA)",
     "LANGUAGE": "Langue",
 
-    "SEND_AGAIN": "Envoyer de nouveau",
+    "SEND_AGAIN": "Envoyer à nouveau",
     "CONFIRM": "Confirmer",
     
     "WINNER": "Gagnant",
     "VICTORY": "Victoire",
     "DEFEATED": "Défait",
+    "BY_AI": "Par IA",
 
     "MODE": "Choisissez le mode",
 
-    "ALIAS_NAME": "Choisissez un pseudonyme",
-    "MATCH": "Correspondre",
+    "ALIAS_NAME": "Choisissez un nom d'alias",
+    "MATCH": "Match",
 
     "PLAYER": "Joueur",
     "YES": "Oui",
     "NO": "Non",
-    "YOU_SURE": "Êtes-vous sûr de vouloir quitter?",
+    "YOU_SURE": "Êtes-vous sûr de vouloir quitter ?",
     "VALID_PLAYER": "Veuillez entrer des noms de joueurs valides",
     "UNIQUE_PLAYER": "Les noms des joueurs doivent être uniques"
 }
