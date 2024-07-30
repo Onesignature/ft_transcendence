@@ -164,7 +164,7 @@ export default class TournamentRankings extends Component
                 ${this.createNextButton()}
             </div>
             ${this.state.isCompleted ? String.raw`<div className="${ConfettiEffect.name}"></div>` : ""}
-            ${this.state.showModal ? String.raw`<div className="${PopUpConfirmation.name}" message="Are you sure you want to exit?" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}
+            ${this.state.showModal ? String.raw`<div className="${PopUpConfirmation.name}" message="${this.context.localizeText('YOU_SURE')}" onClickClose="${this.handleModalClose.name}" onClickDone="${this.handleModalDone.name}"></div>` : ""}
         `;
     }
 }
