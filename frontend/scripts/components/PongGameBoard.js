@@ -86,8 +86,9 @@ export default class PongGameBoard extends Component
             speedY: this.getRandomDirection() * (Math.random() * 2 - 1) * this.ballSpeed,
         };
 
-        this.lastPredictionTime = Date.now();
-        this.predictionInterval = 1000;
+        this.lastUpdateTime = Date.now();
+        this.updateInterval = 1000;
+        this.lastBall = this.getCurrentBall();
 
         this.adjustPaddlePositions();
         this.startDelay();
@@ -147,11 +148,13 @@ export default class PongGameBoard extends Component
         }
     }
 
-    getCurrentBallPosition()
+    getCurrentBall()
     {
         return {
             x: this.ball.x,
-            y: this.ball.y
+            y: this.ball.y,
+            speedX: this.ball.speedX,
+            speedY: this.ball.speedY
         };
     }
 
@@ -178,38 +181,27 @@ export default class PongGameBoard extends Component
         if (currentTime - this.lastUpdateTime >= this.updateInterval)
         {
             this.lastUpdateTime = currentTime;
-            this.ballPosition = this.getCurrentBallPosition(); // Update the last known ball position
+            this.lastBall = this.getCurrentBall(); // Update the last known ball position
         }
     
         // Ball speed
-        const ballSpeedX = this.ball.speedX;
-        const ballSpeedY = this.ball.speedY;
+        const ballSpeedX = this.lastBall.speedX;
+        const ballSpeedY = this.lastBall.speedY;
     
         // Use the last known ball position to calculate the intercept
-        const ballPosition = this.ballPosition || this.getCurrentBallPosition();
+        const ballPosition = { x: this.lastBall.x, y: this.lastBall.y };
     
         // Calculate predicted ball’s intercept Y position
         const targetY = this.calculateInterceptY(ballPosition, ballSpeedX, ballSpeedY) - (player.height / 2);
-    
-        // Difficulty levels: 0.01 for easy, 0.05 for medium, and 0.8 for hard
-        const difficultyFactors = [0.045, 0.06, 0.08];
-        const difficultyFactor = difficultyFactors[player.difficulty - 1] || 0.045;
-    
-        // Calculate movement towards the target Y position
-        const movement = (targetY - player.y) * difficultyFactor;
     
         // Ensure the AI paddle moves at the same speed as Player One's paddle
         const paddleSpeed = player.speed;
     
         // Move the AI paddle towards the target position
-        if (Math.abs(movement) > paddleSpeed)
-        {
-            player.y += (movement > 0 ? paddleSpeed : -paddleSpeed);
-        }
-        else
-        {
-            player.y += movement;
-        }
+        if (player.y > targetY + 5 && player.y - paddleSpeed > 0)
+            player.y -= paddleSpeed;
+        else if (player.y < targetY - 5 && player.y + player.height + paddleSpeed < this.canvas.height)
+            player.y += paddleSpeed;
     
         // Ensure the AI paddle stays within canvas boundaries
         if (player.y < 0)
