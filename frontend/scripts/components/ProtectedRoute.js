@@ -8,46 +8,94 @@ export default class ProtectedRoute extends Component
         super(props, context);
         this.state = {
             isAuthenticated: false,
-            isLoading: true,
+            isLoading: true
         };
+        this.user = null;
     }
 
     async onMount()
     {
-        // try
-        // {
-        //     const response = await fetch('http://localhost:3000/protected', {
-        //         credentials: 'include',
-        //     });
+        const prevToken = JSON.parse(localStorage.getItem('token'));
+        const newToken = this.context.props.token;
+        console.log(`prevToken: ${prevToken}`);
+        console.log(`newToken: ${newToken}`);
+
+        if (!prevToken && !newToken)
+        {
+            this.setState({ isAuthenticated: false, isLoading: false });
+            return;
+        }
         
-        //     if (response.ok)
-        //         this.setState({ isAuthenticated: true, isLoading: false });
-        //     else
-        //         this.setState({ isAuthenticated: false, isLoading: false });
-        // }
-        // catch (error)
-        // {
-        //     this.setState({ isAuthenticated: false, isLoading: false });
-        // }
+        const accessToken = newToken?.access_token || prevToken.access_token;
         
-        // TODO: do backend implementation above
-        setTimeout(() => {
-            this.setState({ isAuthenticated: true, isLoading: false });
-        }, 1000);
+        try
+        {
+            const response = await fetch('http://0.0.0.0:8000/preferences/me/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json', 
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            });
+        
+            if (response.ok)
+            {
+                this.user = await response.json();
+                console.log(this.user);
+                if (newToken)
+                {
+                    if (this.user.is_2fa_enabled)
+                    {
+                        this.context.navigate("/2fa", { user: this.user, token: newToken });
+                    }
+                    else
+                    {
+                        localStorage.setItem('token', JSON.stringify(newToken));
+                        this.setState({ isAuthenticated: true, isLoading: false });
+                    }
+                }
+                else
+                {
+                    this.setState({ isAuthenticated: true, isLoading: false });
+                }
+            }
+            else
+            {
+                console.error('Failed to fetch me:', response.status, response.statusText);
+                alert('Authentication failed or session timed out, please try to login again.');
+                this.setState({ isAuthenticated: false, isLoading: false });
+            }
+        }
+        catch (error)
+        {
+            console.error(error.message || error);
+            this.setState({ isAuthenticated: false, isLoading: false });
+        }
     }
 
     render()
     {
+        this.context.user = this.user;
+
         if (this.state.isLoading)
         {
             return String.raw`<span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>`;
         }
         if (this.state.isAuthenticated)
         {
+            this.context.token = JSON.parse(localStorage.getItem('token'));
             return String.raw`
                 <div className="${Route.name}" ${this.props.exact ? "exact": ""} path="${this.props.path}" component="${this.props.component}" componentProps="${this.props.componentProps}"></div>
             `;
         }
+        // if (this.state.is2fa)
+        // {
+        //     this.context.token = this.token;
+        //     console.log(this.context.token);
+        //     return String.raw`
+        //         <div className="${TwoFactorAuth.name}" path="/2fa" component="${TwoFactorAuth.name}"></div>
+        //     `;
+        // }
         return String.raw`
             <div className="${Redirect.name}" to="/login"></div>
         `;

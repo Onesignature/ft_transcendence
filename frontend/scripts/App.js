@@ -6,7 +6,6 @@ import ProtectedRoute from './components/ProtectedRoute.js';
 
 import Login from './pages/Login.js';
 import MainMenu from './pages/MainMenu.js';
-import TwoFactorAuth from './pages/TwoFactorAuth.js';
 import Settings from './pages/Settings.js';
 import PongGameModes from './pages/PongGameModes.js';
 import TournamentRankings from './pages/TournamentRankings.js';
@@ -14,9 +13,11 @@ import PongNormalGame from './pages/PongNormalGame.js';
 import PongAIGame from './pages/PongAIGame.js';
 import TournamentRegistration from './pages/TournamentRegistration.js';
 import PongTournamentGame from './pages/PongTournamentGame.js';
+import Auth from './pages/Auth.js';
+import TwoFactorAuth from './pages/TwoFactorAuth.js';
 
 export default class App extends Component
-{   
+{
     render()
     {
         return String.raw`
@@ -25,7 +26,8 @@ export default class App extends Component
                     <div className="${Router.name}">
                         <div className="${Routes.name}">
                             <div className="${Route.name}" path="/login" component="${Login.name}"></div>
-                            <div className="${ProtectedRoute.name}" path="/2fa" component="${TwoFactorAuth.name}"></div>
+                            <div className="${Route.name}" path="/oauth/callback" component="${Auth.name}"></div>
+                            <div className="${Route.name}" path="/2fa" component="${TwoFactorAuth.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/main-menu" component="${MainMenu.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/game-mode" component="${PongGameModes.name}"></div>
                             <div className="${ProtectedRoute.name}" path="/game-pvp" component="${PongNormalGame.name}"></div>

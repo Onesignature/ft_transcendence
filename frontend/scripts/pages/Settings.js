@@ -3,25 +3,83 @@ import CloseButton from "../components/CloseButton.js";
 
 export default class Settings extends Component
 {
+    constructor(props, context)
+    {
+        super(props, context);
+        this.state = {
+            isLoading: true,
+            is2faEnabled: false,
+            language: 'en'
+        };
+    }
+
+    onMount()
+    {
+        console.log("Settings");
+        console.log(this.context.user);
+        this.setState({
+            isLoading: false,
+            is2faEnabled: this.context.user.is_2fa_enabled,
+            language: this.context.user.language_preference.toLowerCase()
+        });
+    }
 
     handleLanguageChangeToEn()
-    {
-        this.context.setLanguage('en');
+    {   
+        this.updatePrefs(this.state.is2faEnabled, 'en');
     }
 
     handleLanguageChangeToFr()
     {
-        this.context.setLanguage('fr');
+        this.updatePrefs(this.state.is2faEnabled, 'fr');
     }
 
     handleLanguageChangeToEs()
     {
-        this.context.setLanguage('es');
+        this.updatePrefs(this.state.is2faEnabled, 'es');
     }
 
     handle2FAChange() 
     {
-        alert('2FA');
+        console.log("called");
+        const checkbox = document.getElementById('2fa');
+        console.log(checkbox.checked);
+        this.updatePrefs(checkbox.checked, this.state.language);
+    }
+
+    async updatePrefs(is2faEnabled, language)
+    {
+        try
+        {
+            const response = await fetch('http://0.0.0.0:8000/preferences/save-prefs/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.context.token.access_token}`
+                },
+                body: JSON.stringify({
+                    language_preference: language,
+                    is_2fa_enabled: is2faEnabled,
+                })
+            });
+        
+            if (response.ok)
+            {
+                console.log(`is2faEnabled: ${is2faEnabled}, language: ${language}`);
+                this.setState({ is2faEnabled, language });
+                this.context.setLanguage(language);
+            }
+            else
+            {
+                alert('Authentication failed or session timed out, please try to login again.');
+                this.context.navigate('/login');
+            }
+        }
+        catch (error)
+        {
+            console.error(error.message || error);
+            this.context.navigate('/login');
+        }
     }
 
     handleCloseButtonClick()
@@ -31,6 +89,12 @@ export default class Settings extends Component
 
     render()
     {
+        const { is2faEnabled, language, isLoading } = this.state;
+
+        if (isLoading)
+        {
+            return String.raw`<span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>`;
+        }
         return String.raw`
             <link rel="stylesheet" href="/styles/Settings.css">
             <div class="window">
@@ -41,13 +105,13 @@ export default class Settings extends Component
                     <h2>${this.context.localizeText('SETTINGS')}</h2>
                     <div class="setting">
                         <span>${this.context.localizeText('2FA')}</span>
-                        <input type="checkbox" id="2fa" onClick="${this.handle2FAChange.name}">
+                        <input type="checkbox" id="2fa" onClick="${this.handle2FAChange.name}" ${is2faEnabled ? "checked" : ""}>
                     </div>
                     <div class="setting">
                         <span>${this.context.localizeText('LANGUAGE')}</span>
-                        <img ${this.context.language === "en" ? "class='selected'" : ""} src="./assets/icons/Flag_of_the_United_States.svg" alt="English" id="lang-en" onClick="${this.handleLanguageChangeToEn.name}">
-                        <img ${this.context.language === "fr" ? "class='selected'" : ""} src="./assets/icons/Flag_of_France.svg" alt="French" id="lang-fr" onClick="${this.handleLanguageChangeToFr.name}">
-                        <img ${this.context.language === "es" ? "class='selected'" : ""} src="./assets/icons/Flag_of_Spain.svg" alt="Spanish" id="lang-es" onClick="${this.handleLanguageChangeToEs.name}">
+                        <img ${language === "en" ? "class='selected'" : ""} src="./assets/icons/Flag_of_the_United_States.svg" alt="English" id="lang-en" onClick="${this.handleLanguageChangeToEn.name}">
+                        <img ${language === "fr" ? "class='selected'" : ""} src="./assets/icons/Flag_of_France.svg" alt="French" id="lang-fr" onClick="${this.handleLanguageChangeToFr.name}">
+                        <img ${language === "es" ? "class='selected'" : ""} src="./assets/icons/Flag_of_Spain.svg" alt="Spanish" id="lang-es" onClick="${this.handleLanguageChangeToEs.name}">
                     </div>
                 </div>
             </div>

@@ -138,9 +138,10 @@ export default class PongGameBoard extends Component
     {
         this.updatePlayer("w", "s", this.playerOne);
 
-        if (this.props.isAIEnabled && !this.freezeBall)
+        if (this.props.isAIEnabled)
         {
-            this.updateAIPlayer(this.playerTwo);
+            if (!this.freezeBall)
+                this.updateAIPlayer(this.playerTwo);
         }
         else
         {

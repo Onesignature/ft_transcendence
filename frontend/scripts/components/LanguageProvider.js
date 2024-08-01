@@ -21,6 +21,10 @@ export default class LanguageProvider extends Component
     }
 
     setLanguage = async (lang) => {
+        lang = lang.toLowerCase();
+        if (this.state.language === lang)
+            return;
+        
         this.setState({ loading: true });
         await LocalizationManager.setLanguage(lang);
         this.setState({ language: lang, loading: false });

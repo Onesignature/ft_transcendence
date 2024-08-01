@@ -91,12 +91,12 @@ export default class TournamentRegistration extends Component
                 <div class="window-content">
                     <h2>${this.context.localizeText('ALIAS_NAME')}</h2>
                     <div>
-                        <input type="text" class="alias-input" placeholder="${this.context.localizeText('PLAYER')} 1" id="player1">
-                        <input type="text" class="alias-input" placeholder="${this.context.localizeText('PLAYER')} 2" id="player2">
+                        <input type="text" class="alias-input" placeholder="${this.context.localizeText('PLAYER')} 1" maxlength="10"  id="player1">
+                        <input type="text" class="alias-input" placeholder="${this.context.localizeText('PLAYER')} 2" maxlength="10" id="player2">
                     </div>
                     <div>
-                        <input type="text" class="alias-input" placeholder="${this.context.localizeText('PLAYER')} 3" id="player3">
-                        <input type="text" class="alias-input" placeholder="${this.context.localizeText('PLAYER')} 4" id="player4">
+                        <input type="text" class="alias-input" placeholder="${this.context.localizeText('PLAYER')} 3" maxlength="10" id="player3">
+                        <input type="text" class="alias-input" placeholder="${this.context.localizeText('PLAYER')} 4" maxlength="10" id="player4">
                     </div>
                     <div buttonstylepath="/styles/BaseButton.css" buttonclass="base-button" className="${BaseButton.name}" text="${this.context.localizeText('START')}" onClick="${this.handleButtonStart.name}"></div>
                 </div>

@@ -38,18 +38,37 @@ export default class MainMenu extends Component
         this.setState({showModal: false});
     }
 
-    handleModalDone()
+    async handleModalDone()
     {
-        this.context.navigate("/login");
+        localStorage.setItem('token', null);
+        try
+        {
+            await fetch('http://0.0.0.0:8000/oauth/logout/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.context.token.access_token}`
+                }
+            });
+        
+            this.context.navigate('/login');
+        }
+        catch (error)
+        {
+            console.error(error.message || error);
+            this.context.navigate('/login');
+        }
     }
 
     render()
     {
+        const profilePic = this.context.user?.profile_picture_url || '/assets/icons/DefaultProfilePicture.svg';
+        console.log("MainMenu");
+        console.log(this.context.user);
         return String.raw`
             <link rel="stylesheet" href="/styles/MainMenu.css">
             <div class="profile-container">
-                <img id="profile-picture" class="profile-picture" src="./assets/icons/DefaultProfilePicture.svg" alt="Profile Picture">
-                <div id="username" class="username">username</div>
+                <img id="profile-picture" class="profile-picture" src="${profilePic}" alt="Profile Picture">
+                <div id="username" class="username">${this.context.user.username}</div>
             </div>
             <div className="${PongLogo.name}"></div>
             <div buttonStylePath="/styles/PlayButton.css" buttonClass="play-button" className="${BaseButton.name}" text="${this.context.localizeText('PLAY')}" onClick="${this.handleButtonClickPlay.name}"></div>

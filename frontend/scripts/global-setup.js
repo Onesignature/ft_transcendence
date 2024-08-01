@@ -23,6 +23,7 @@ import PongGameBoard from './components/PongGameBoard.js';
 import ConfettiEffect from './components/ConfettiEffect.js';
 import PongTournamentGame from './pages/PongTournamentGame.js';
 import AILogo from './components/AILogo.js';
+import Auth from './pages/Auth.js';
 
 // Main
 window.App = App;
@@ -43,6 +44,7 @@ window.AILogo = AILogo;
 
 // Pages
 window.Login = Login;
+window.Auth = Auth;
 window.TwoFactorAuth = TwoFactorAuth;
 window.MainMenu = MainMenu;
 window.PongGameModes = PongGameModes;

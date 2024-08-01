@@ -13,12 +13,35 @@ export default class Login extends Component
         };
     }
 
-    handleClick()
+    async handleClick()
     {
         this.setState({isLoading: true});
-        setTimeout(() => {
-            this.onAuthenticated();
-        }, 1000);
+        
+        try
+        {
+            const response = await fetch('http://0.0.0.0:8000/oauth/authorize/', {
+                method: 'GET'
+            });
+            
+            if (response.ok)
+            {
+                const auth = await response.json();
+                console.log(auth);
+                window.location.href = auth.authorization_url;
+            }
+            else
+            {
+                console.log(response);
+                console.error(`Failed to fetch oauth/authorize/:`, response.status, response.statusText);
+                alert('Authentication failed, please try again!');
+                this.setState({isLoading: false});
+            }
+        }
+        catch (error)
+        {
+            console.error(error.message || error);
+            this.setState({isLoading: false});
+        }
     }
 
     onAuthenticated()
