@@ -18,7 +18,8 @@ export default class LanguageProvider extends Component
     {
         // console.log("onMount");
         const user = JSON.parse(localStorage.getItem('user'));
-        const language = user?.language_preference || this.state.language;
+        let language = user?.language_preference || this.state.language;
+        language = language.toLowerCase();
         await LocalizationManager.setLanguage(language);
         this.setState({ isLoading: false });
     }
