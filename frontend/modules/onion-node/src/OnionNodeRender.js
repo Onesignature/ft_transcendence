@@ -49,7 +49,7 @@ function renderOnClassNode(node, container)
     let pendingState = node.pendingState;
 
     // Don't render if there are no changes
-    if (!newNodeMount && !pendingContext && !pendingProps && !pendingState)
+    if (!stateNode || (!newNodeMount && !pendingContext && !pendingProps && !pendingState))
         return;
 
     if (pendingContext)
