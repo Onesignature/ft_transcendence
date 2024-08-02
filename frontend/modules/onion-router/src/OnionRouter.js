@@ -10,6 +10,7 @@ export default class Router extends Component
             props: {}
         };
         this.navigate = this.navigate.bind(this);
+        this.handlePopState = this.handlePopState.bind(this);
     }
 
     onMount()

@@ -8,8 +8,6 @@ export default class Auth extends Component
         
         const url = new URL(window.location.href);
         this.code = url.searchParams.get('code');
-
-        console.log(this.code);
     }
 
     async onMount()
@@ -29,7 +27,6 @@ export default class Auth extends Component
             if (response.ok)
             {
                 const token = await response.json();
-                console.log(token);
                 this.context.navigate('/main-menu', { token });
             }
             else
@@ -49,7 +46,7 @@ export default class Auth extends Component
     render()
     {   
         return String.raw`
-            <span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>;
+            <span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>
         `;
     }
 }

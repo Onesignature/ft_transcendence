@@ -7,7 +7,7 @@ export class LocalizationManager
     {
         try
         {
-            const response = await fetch(`./assets/localization/${this.language}.json`);
+            const response = await fetch(`/assets/localization/${this.language}.json`);
             if (!response.ok)
                 throw new Error(`Could not load ${this.language} translations`);
 

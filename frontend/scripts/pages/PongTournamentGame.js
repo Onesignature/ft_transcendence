@@ -10,6 +10,7 @@ export default class PongTournamentGame extends Component
     {
         super(props, context);
         this.state = {
+            isLoading: true,
             scoreOne: 0,
             scoreTwo: 0,
             showModal: false
@@ -17,6 +18,19 @@ export default class PongTournamentGame extends Component
         this.maxScore = 5;
         this.playerOneName = "Player 1";
         this.playerTwoName = "Player 2";
+    }
+
+    onMount()
+    {
+        if (!this.props.tournament || !this.props.tournament.matches)
+        {
+            alert('Your tournament game session has expired, probably due to a page refresh. You will be returned to the main menu.');
+            this.context.navigate('/main-menu');
+        }
+        else
+        {
+            this.setState({ isLoading: false });
+        }
     }
 
     updateScore(scoreOne, scoreTwo)
@@ -55,7 +69,11 @@ export default class PongTournamentGame extends Component
 
     render()
     {
-        const { scoreOne, scoreTwo, showModal } = this.state;
+        const { scoreOne, scoreTwo, showModal, isLoading } = this.state;
+        if (isLoading)
+        {
+            return String.raw`<span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>`;
+        }
         const { tournament } = this.props;
 
         const matchIndex = tournament.activeMatchIndex;
@@ -67,7 +85,7 @@ export default class PongTournamentGame extends Component
             <link rel="stylesheet" href="/styles/PongNormalGame.css">
             <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>
             <div class="gameContainer">
-                <div class="matchInfo">Match ${matchIndex + 1}</div>
+                <div class="matchInfo">${this.context.localizeText('MATCH')} ${matchIndex + 1}</div>
                 <div className="${PlayerInfo.name}" playerOne="${this.playerOneName}" playerTwo="${this.playerTwoName}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
                 <div className="${PongGameBoard.name}" pause="${showModal}" onClickUpdateScore="${this.updateScore.name}" scoreOne="${scoreOne}" scoreTwo="${scoreTwo}"></div>
             </div>

@@ -17,8 +17,6 @@ export default class ProtectedRoute extends Component
     {
         const prevToken = JSON.parse(localStorage.getItem('token'));
         const newToken = this.context.props.token;
-        console.log(`prevToken: ${prevToken}`);
-        console.log(`newToken: ${newToken}`);
 
         if (!prevToken && !newToken)
         {
@@ -41,7 +39,7 @@ export default class ProtectedRoute extends Component
             if (response.ok)
             {
                 this.user = await response.json();
-                console.log(this.user);
+                localStorage.setItem('user', JSON.stringify(this.user));
                 if (newToken)
                 {
                     if (this.user.is_2fa_enabled)

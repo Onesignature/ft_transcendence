@@ -22,8 +22,8 @@ export default class App extends Component
     {
         return String.raw`
             <div class="d-flex justify-content-center flex-column align-items-center vh-100">
-                <div className="${LanguageProvider.name}">
-                    <div className="${Router.name}">
+                <div className="${Router.name}">
+                    <div className="${LanguageProvider.name}">
                         <div className="${Routes.name}">
                             <div className="${Route.name}" path="/login" component="${Login.name}"></div>
                             <div className="${Route.name}" path="/oauth/callback" component="${Auth.name}"></div>

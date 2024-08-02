@@ -1,4 +1,4 @@
-import { Component } from "../../onion/index.js";
+import Onion, { Component } from "../../onion/index.js";
 
 export default class Link extends Component
 {
@@ -20,7 +20,7 @@ export default class Link extends Component
     {
         return String.raw`
             <a style="${this.props.style}" href="${this.props.to}" onClick="${this.handleClick.name}">
-                ${this.props.children}
+                ${Onion.Children.combine(this.props.children)}
             </a>
         `;
     }

@@ -8,18 +8,31 @@ export default class TwoFactorAuth extends Component
     {
         super(props, context);
         this.state = {
-            isLoading: false,
+            isLoading: true,
+            disableBtn: false,
+            loadSendBtn: false,
+            loadConfirmBtn: false,
         };
     }
 
-    onMount()
+    async onMount()
     {
-        this.handleButtonSendAgain();
+        const { token, user } = this.props;
+        if (!token || !user)
+        {
+            alert('Login session expired');
+            this.context.navigate('/login');
+        }
+        else 
+        {
+            let isLoading = !await this.sendOtp();
+            this.setState({isLoading});
+        }
     }
 
     async handleButtonConfirm() 
     {
-        this.setState({isLoading: true});
+        this.setState({disableBtn: true, loadConfirmBtn: true});
 
         const { token, user } = this.props;
 
@@ -46,8 +59,8 @@ export default class TwoFactorAuth extends Component
             }
             else
             {
-                alert('OTP is incorrect!');
-                this.setState({isLoading: false});
+                alert('OTP is incorrect');
+                this.setState({disableBtn: false, loadConfirmBtn: false});
             }
         }
         catch (error)
@@ -59,8 +72,12 @@ export default class TwoFactorAuth extends Component
     
     async handleButtonSendAgain() 
     {
-        this.setState({isLoading: true});
+        this.setState({disableBtn: true, loadSendBtn: true});
+        await this.sendOtp();
+    }
 
+    async sendOtp()
+    {
         const { token } = this.props;
         try
         {
@@ -71,22 +88,24 @@ export default class TwoFactorAuth extends Component
                 }
             });
         
+            this.setState({disableBtn: false, loadSendBtn: false});
             if (response.ok)
             {
                 alert(`OTP has been sent to your intra email. If you don't see it in your inbox, please check your spam or junk folder.`);
+                return true;
             }
             else
             {
                 console.error('Failed to send-otp:', response.status, response.statusText);
                 alert('An error occurred. Please try sending again.');
             }
-            this.setState({isLoading: false});
         }
         catch (error)
         {
             console.error(error.message || error);
             this.context.navigate('/login');
         }
+        return false;
     }
 
     handleCloseButtonClick()
@@ -96,12 +115,9 @@ export default class TwoFactorAuth extends Component
 
     render()
     {
-        const { token } = this.props;
-        if (!token)
+        if (this.state.isLoading)
         {
-            return String.raw`
-                <div className="${Redirect.name}" to="/"></div>
-            `;
+            return String.raw`<span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>`;
         }
         return String.raw`
             <link rel="stylesheet" href="/styles/TwoFactorAuth.css">
@@ -112,8 +128,8 @@ export default class TwoFactorAuth extends Component
                 <div class="window-content">
                     <h2>${this.context.localizeText('ENTER_OTP')}</h2>
                     <input type="text" class="code-input" placeholder="******" maxlength="6" id="otp_code">
-                    <div className="${BaseButton.name}" text="${this.context.localizeText('SEND_AGAIN')}" onClick="${this.handleButtonSendAgain.name}" isDisabled="${this.state.isLoading}" isLoading="${this.state.isLoading}"></div>
-                    <div buttonStylePath="/styles/PlayButton.css" buttonClass="play-button" className="${BaseButton.name}" text="${this.context.localizeText('CONFIRM')}" onClick="${this.handleButtonConfirm.name}" isDisabled="${this.state.isLoading}"></div>
+                    <div className="${BaseButton.name}" text="${this.context.localizeText('SEND_AGAIN')}" onClick="${this.handleButtonSendAgain.name}" isDisabled="${this.state.disableBtn}" isLoading="${this.state.loadSendBtn}"></div>
+                    <div buttonStylePath="/styles/PlayButton.css" buttonClass="play-button" className="${BaseButton.name}" text="${this.context.localizeText('CONFIRM')}" onClick="${this.handleButtonConfirm.name}" isDisabled="${this.state.disableBtn}" isLoading="${this.state.loadConfirmBtn}"></div>
                 </div>
             </div>
         `;

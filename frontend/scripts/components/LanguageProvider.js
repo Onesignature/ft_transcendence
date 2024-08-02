@@ -1,4 +1,4 @@
-import { Component } from "../../modules/onion/index.js";
+import Onion, { Component } from "../../modules/onion/index.js";
 import LocalizationManager from "../../modules/localization/index.js";
 
 export default class LanguageProvider extends Component
@@ -7,8 +7,8 @@ export default class LanguageProvider extends Component
     {
         super(props, context);
         this.state = {
+            isLoading: true,
             language: 'en',
-            loading: true,
         };
         this.setLanguage = this.setLanguage.bind(this);
         this.localizeText = this.localizeText.bind(this);
@@ -16,18 +16,34 @@ export default class LanguageProvider extends Component
 
     async onMount()
     {
-        await LocalizationManager.setLanguage('en');
-        this.setState({ loading: false });
+        console.log("onMount");
+        const user = JSON.parse(localStorage.getItem('user'));
+        const language = user?.language_preference || this.state.language;
+        await LocalizationManager.setLanguage(language);
+        this.setState({ isLoading: false });
+    }
+
+    shouldComponentUpdate(newProps, newState)
+    {
+        console.log("shouldComponentUpdate");
+        const user = JSON.parse(localStorage.getItem('user'));
+        console.log(user);
+        console.log(newState);
+        console.log(this.state);
+        if (newState && ((newState.language && newState.language !== this.state.language) || newState.isLoading))
+            return true;
+        if ((!user || this.state.language === user.language_preference))
+            return true;
+
+        this.setLanguage(user.language_preference);
+        return false;
     }
 
     setLanguage = async (lang) => {
-        lang = lang.toLowerCase();
-        if (this.state.language === lang)
-            return;
-        
-        this.setState({ loading: true });
+        lang = lang.toLowerCase();        
+        this.setState({ isLoading: true });
         await LocalizationManager.setLanguage(lang);
-        this.setState({ language: lang, loading: false });
+        this.setState({ language: lang, isLoading: false });
     };
 
     localizeText(key)
@@ -41,10 +57,10 @@ export default class LanguageProvider extends Component
         this.context.setLanguage = this.setLanguage;
         this.context.localizeText = this.localizeText;
 
-        if (this.state.loading)
+        if (this.state.isLoading)
         {
             return String.raw`<span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>`;
         }
-        return String.raw`${this.props.children}`;
+        return String.raw`${Onion.Children.combine(this.props.children)}`;
     }
 }

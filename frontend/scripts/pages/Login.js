@@ -26,12 +26,10 @@ export default class Login extends Component
             if (response.ok)
             {
                 const auth = await response.json();
-                console.log(auth);
                 window.location.href = auth.authorization_url;
             }
             else
             {
-                console.log(response);
                 console.error(`Failed to fetch oauth/authorize/:`, response.status, response.statusText);
                 alert('Authentication failed, please try again!');
                 this.setState({isLoading: false});

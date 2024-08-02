@@ -15,8 +15,6 @@ export default class Settings extends Component
 
     onMount()
     {
-        console.log("Settings");
-        console.log(this.context.user);
         this.setState({
             isLoading: false,
             is2faEnabled: this.context.user.is_2fa_enabled,
@@ -41,9 +39,7 @@ export default class Settings extends Component
 
     handle2FAChange() 
     {
-        console.log("called");
         const checkbox = document.getElementById('2fa');
-        console.log(checkbox.checked);
         this.updatePrefs(checkbox.checked, this.state.language);
     }
 
@@ -65,7 +61,6 @@ export default class Settings extends Component
         
             if (response.ok)
             {
-                console.log(`is2faEnabled: ${is2faEnabled}, language: ${language}`);
                 this.setState({ is2faEnabled, language });
                 this.context.setLanguage(language);
             }

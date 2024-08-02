@@ -9,6 +9,7 @@ export default class TournamentRankings extends Component
     {
         super(props, context);
         this.state = {
+            isLoading: true,
             showModal: false,
             isCompleted: false
         };
@@ -17,8 +18,16 @@ export default class TournamentRankings extends Component
 
     onMount()
     {
-        this.initializeMatch(this.props.tournament.matches);
-        this.forceUpdate();
+        if (!this.props.tournament || !this.props.tournament.matches)
+        {
+            alert('Your tournament session has expired, probably due to a page refresh. You will be returned to the main menu.');
+            this.context.navigate('/main-menu');
+        }
+        else
+        {
+            this.initializeMatch(this.props.tournament.matches);
+            this.setState({ isLoading: false });
+        }
     }
 
     initializeMatch(matches)
@@ -143,9 +152,13 @@ export default class TournamentRankings extends Component
 
     render()
     {
+        if (this.state.isLoading)
+        {
+            return String.raw`<span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>`;
+        }
         const { tournament } = this.props;
         const matches = tournament.matches;
-        
+
         return String.raw`
             <link rel="stylesheet" href="/styles/TournamentRankings.css">
             <div className="${BackButton.name}" text="▲" onClick="${this.handleModalOpen.name}">▲</div>

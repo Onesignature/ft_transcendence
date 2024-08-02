@@ -41,6 +41,7 @@ export default class MainMenu extends Component
     async handleModalDone()
     {
         localStorage.setItem('token', null);
+        localStorage.setItem('user', null);
         try
         {
             await fetch('http://0.0.0.0:8000/oauth/logout/', {
@@ -62,8 +63,7 @@ export default class MainMenu extends Component
     render()
     {
         const profilePic = this.context.user?.profile_picture_url || '/assets/icons/DefaultProfilePicture.svg';
-        console.log("MainMenu");
-        console.log(this.context.user);
+
         return String.raw`
             <link rel="stylesheet" href="/styles/MainMenu.css">
             <div class="profile-container">
