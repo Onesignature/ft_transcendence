@@ -40,7 +40,7 @@ export default class TwoFactorAuth extends Component
         const otp_code = document.getElementById("otp_code").value;
         try
         {
-            const response = await fetch('http://0.0.0.0:8000/preferences/verify-otp/', {
+            const response = await fetch('https://localhost:8000/preferences/verify-otp/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export default class TwoFactorAuth extends Component
         const { token } = this.props;
         try
         {
-            const response = await fetch('http://0.0.0.0:8000/preferences/send-otp/', {
+            const response = await fetch('https://localhost:8000/preferences/send-otp/', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token.access_token}`

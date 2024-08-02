@@ -44,7 +44,7 @@ export default class MainMenu extends Component
         localStorage.setItem('user', null);
         try
         {
-            await fetch('http://0.0.0.0:8000/oauth/logout/', {
+            await fetch('https://localhost:8000/oauth/logout/', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${this.context.token.access_token}`

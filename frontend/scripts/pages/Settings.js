@@ -47,7 +47,7 @@ export default class Settings extends Component
     {
         try
         {
-            const response = await fetch('http://0.0.0.0:8000/preferences/save-prefs/', {
+            const response = await fetch('https://localhost:8000/preferences/save-prefs/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

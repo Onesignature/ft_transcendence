@@ -19,7 +19,7 @@ export default class Login extends Component
         
         try
         {
-            const response = await fetch('http://0.0.0.0:8000/oauth/authorize/', {
+            const response = await fetch('https://localhost:8000/oauth/authorize/', {
                 method: 'GET'
             });
             

@@ -14,7 +14,7 @@ export default class Auth extends Component
     {
         try
         {
-            const response = await fetch('http://0.0.0.0:8000/oauth/authToken/', {
+            const response = await fetch('https://localhost:8000/oauth/authToken/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

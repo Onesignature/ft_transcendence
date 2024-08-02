@@ -15,4 +15,4 @@ set -e
 /opt/venv/bin/python manage.py collectstatic --noinput
 
 # Start the server
-/opt/venv/bin/gunicorn main.wsgi:application --bind 0.0.0.0:8000 --workers 3
+/opt/venv/bin/gunicorn main.wsgi:application --bind 0.0.0.0:8000 --workers 3 --certfile=/app/localhost.crt --keyfile=/app/localhost.key

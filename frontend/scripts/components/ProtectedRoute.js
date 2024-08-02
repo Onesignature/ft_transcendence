@@ -28,7 +28,7 @@ export default class ProtectedRoute extends Component
         
         try
         {
-            const response = await fetch('http://0.0.0.0:8000/preferences/me/', {
+            const response = await fetch('https://localhost:8000/preferences/me/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json', 

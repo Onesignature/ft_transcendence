@@ -89,8 +89,18 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5501',
     'http://localhost:80',
     'http://127.0.0.1:80',
+    'http://localhost:443',
+    'http://127.0.0.1:443',
     'http://127.0.0.1',
     'http://localhost',
+    'https://localhost:5501',
+    'https://127.0.0.1:5501',
+    'https://localhost:80',
+    'https://127.0.0.1:80',
+    'https://localhost:443',
+    'https://127.0.0.1:443',
+    'https://127.0.0.1',
+    'https://localhost',
 ]
 
 ROOT_URLCONF = 'main.urls'
@@ -158,6 +168,22 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
+# Ensure secure cookies are used
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Redirect HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Secure content types
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable HSTS
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 
 # Static files (CSS, JavaScript, Images)
