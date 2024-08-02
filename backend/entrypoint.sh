@@ -7,6 +7,7 @@ set -e
 /app/wait-for-it.sh db:5432 --timeout=30 --strict -- echo "PostgreSQL is up - executing command"
 
 # Run database migrations
+/opt/venv/bin/python manage.py makemigrations accounts --noinput
 /opt/venv/bin/python manage.py makemigrations --noinput
 /opt/venv/bin/python manage.py migrate --noinput
 
