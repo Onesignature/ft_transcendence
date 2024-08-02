@@ -11,6 +11,7 @@ export default class LanguageProvider extends Component
             language: 'en',
         };
         this.setLanguage = this.setLanguage.bind(this);
+        this.setLanguageSilently = this.setLanguageSilently.bind(this);
         this.localizeText = this.localizeText.bind(this);
     }
 
@@ -30,6 +31,11 @@ export default class LanguageProvider extends Component
         this.setState({ language: lang, isLoading: false });
     };
 
+    setLanguageSilently = async (lang) => {
+        lang = lang.toLowerCase();        
+        await LocalizationManager.setLanguage(lang);
+    };
+
     localizeText(key)
     {
         return LocalizationManager.getString(key);
@@ -39,6 +45,7 @@ export default class LanguageProvider extends Component
     {
         this.context.language = this.state.language;
         this.context.setLanguage = this.setLanguage;
+        this.context.setLanguageSilently = this.setLanguageSilently;
         this.context.localizeText = this.localizeText;
 
         if (this.state.isLoading)

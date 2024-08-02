@@ -40,6 +40,7 @@ export default class ProtectedRoute extends Component
             {
                 this.user = await response.json();
                 localStorage.setItem('user', JSON.stringify(this.user));
+                await this.context.setLanguageSilently(this.user.language_preference);
                 if (newToken)
                 {
                     if (this.user.is_2fa_enabled)
