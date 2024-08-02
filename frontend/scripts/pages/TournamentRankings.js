@@ -20,7 +20,7 @@ export default class TournamentRankings extends Component
     {
         if (!this.props.tournament || !this.props.tournament.matches)
         {
-            alert('Your tournament session has expired, probably due to a page refresh. You will be returned to the main menu.');
+            alert(this.context.localizeText('TOURNAMENT_MSG'));
             this.context.navigate('/main-menu');
         }
         else

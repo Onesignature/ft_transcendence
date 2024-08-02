@@ -24,7 +24,7 @@ export default class PongTournamentGame extends Component
     {
         if (!this.props.tournament || !this.props.tournament.matches)
         {
-            alert('Your tournament game session has expired, probably due to a page refresh. You will be returned to the main menu.');
+            alert(this.context.localizeText('TOURNAMENT_GAME_MSG'));
             this.context.navigate('/main-menu');
         }
         else

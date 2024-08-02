@@ -31,7 +31,7 @@ export default class Login extends Component
             else
             {
                 console.error(`Failed to fetch oauth/authorize/:`, response.status, response.statusText);
-                alert('Authentication failed, please try again!');
+                alert(this.context.localizeText('AUTH_FAILED_MSG'));
                 this.setState({isLoading: false});
             }
         }

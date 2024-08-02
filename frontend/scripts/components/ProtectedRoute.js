@@ -61,7 +61,7 @@ export default class ProtectedRoute extends Component
             else
             {
                 console.error('Failed to fetch me:', response.status, response.statusText);
-                alert('Authentication failed or session timed out, please try to login again.');
+                alert(this.context.localizeText('AUTH_MSG'));
                 this.setState({ isAuthenticated: false, isLoading: false });
             }
         }

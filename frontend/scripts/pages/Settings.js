@@ -66,7 +66,7 @@ export default class Settings extends Component
             }
             else
             {
-                alert('Authentication failed or session timed out, please try to login again.');
+                alert(this.context.localizeText('AUTH_MSG'));
                 this.context.navigate('/login');
             }
         }

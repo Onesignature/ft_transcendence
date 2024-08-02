@@ -20,7 +20,7 @@ export default class TwoFactorAuth extends Component
         const { token, user } = this.props;
         if (!token || !user)
         {
-            alert('Login session expired');
+            alert(this.context.localizeText('2FA_LOGIN_EXPIRED'));
             this.context.navigate('/login');
         }
         else 
@@ -59,7 +59,7 @@ export default class TwoFactorAuth extends Component
             }
             else
             {
-                alert('OTP is incorrect');
+                alert(this.context.localizeText('2FA_OTP_FAILED'));
                 this.setState({disableBtn: false, loadConfirmBtn: false});
             }
         }
@@ -91,13 +91,13 @@ export default class TwoFactorAuth extends Component
             this.setState({disableBtn: false, loadSendBtn: false});
             if (response.ok)
             {
-                alert(`OTP has been sent to your intra email. If you don't see it in your inbox, please check your spam or junk folder.`);
+                alert(this.context.localizeText('2FA_OTP_SENT'));
                 return true;
             }
             else
             {
                 console.error('Failed to send-otp:', response.status, response.statusText);
-                alert('An error occurred. Please try sending again.');
+                alert(this.context.localizeText('2FA_ERROR_MSG'));
             }
         }
         catch (error)

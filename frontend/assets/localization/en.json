@@ -35,5 +35,16 @@
     "NO": "No",
     "YOU_SURE": "Are you sure you want to exit?",
     "VALID_PLAYER": "Please enter valid player names",
-    "UNIQUE_PLAYER": "Player names must be unique"
+    "UNIQUE_PLAYER": "Player names must be unique",
+
+    "AUTH_MSG": "Authentication failed or session timed out, please try to login again.",
+    "AUTH_FAILED_MSG": "Authentication failed, please try again!",
+    "TOURNAMENT_GAME_MSG": "Your tournament game session has expired, probably due to a page refresh. You will be returned to the main menu.",
+    "TOURNAMENT_MSG": "Your tournament session has expired, probably due to a page refresh. You will be returned to the main menu.",
+
+    "2FA_LOGIN_EXPIRED": "Login session expired",
+    "2FA_OTP_FAILED": "OTP is incorrect",
+    "2FA_OTP_SENT": "OTP has been sent to your intra email. If you don't see it in your inbox, please check your spam or junk folder.",
+    "2FA_ERROR_MSG": "An error occurred. Please try sending again."
+
 }
