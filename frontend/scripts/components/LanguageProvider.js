@@ -16,28 +16,11 @@ export default class LanguageProvider extends Component
 
     async onMount()
     {
-        // console.log("onMount");
         const user = JSON.parse(localStorage.getItem('user'));
         let language = user?.language_preference || this.state.language;
         language = language.toLowerCase();
         await LocalizationManager.setLanguage(language);
         this.setState({ isLoading: false });
-    }
-
-    shouldComponentUpdate(newProps, newState)
-    {
-        // console.log("shouldComponentUpdate");
-        // const user = JSON.parse(localStorage.getItem('user'));
-        // console.log(user);
-        // console.log(newState);
-        // console.log(this.state);
-        // if (newState && ((newState.language && newState.language !== this.state.language) || newState.isLoading))
-        //     return true;
-        // if ((!user || this.state.language === user.language_preference))
-        //     return true;
-
-        // this.setLanguage(user.language_preference);
-        return true;
     }
 
     setLanguage = async (lang) => {
