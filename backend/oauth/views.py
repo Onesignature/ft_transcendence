@@ -14,7 +14,7 @@ from django.utils import timezone
 
 load_dotenv()
 
-intraAuthUrl = os.environ.get("INTRA_AUTH_URL")
+intraAuthUrl = os.environ.get("INTRA_AUTHORIZE_URL")
 intraTokenUrl = os.environ.get("INTRA_TOKEN_URL")
 intraUserInfoUrl = os.environ.get("INTRA_USER_INFO_URL")
 clientId = os.environ.get("CLIENT_ID")
