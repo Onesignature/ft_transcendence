@@ -45,6 +45,7 @@ Transcendence is a project developed as part of the final stage in the 42 curric
 
 
 <br>
+<br>
 
 ## Deployment
 
@@ -54,6 +55,10 @@ Transcendence is a project developed as part of the final stage in the 42 curric
 - go to ```Authorise With 42 Intra```
 - Enjoy
 
+<br>
+
+
+## Contributers
 
 <table>
 <tr>
