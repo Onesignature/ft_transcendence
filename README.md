@@ -3,13 +3,21 @@
     <img src="https://i.imgur.com/vhriKbO.gif" alt="Logo" width="150" height="150">
   </a>
   <h3 align="center">Transcendence</h3>
-  
   Final common core project of 42 Abu Dhabi
+  <br>
+  <br>
+</div>
+
+<div align="center">
+<a href="https://github.com/hadi14250">
+    <img src="https://i.imgur.com/jmJefdA.gif" alt="Logo"  width="600" height="320">
+  </a>
+
 
 </div>
 
 <br>
-<br>
+
 
 # Transcendence
 
@@ -43,3 +51,5 @@ Transcendence is a project developed as part of the final stage in the 42 curric
 - start Docker
 - run ```docker-compose up --build```
 - go to ```https://localhost:80/```
+- go to ```Authorise With 42 Intra```
+- Enjoy
