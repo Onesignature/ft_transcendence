@@ -49,10 +49,10 @@ Transcendence is a project developed as part of the final stage in the 42 curric
 
 ## Deployment
 
-- start Docker
-- run ```docker-compose up --build```
-- go to ```https://localhost:80/```
-- go to ```Authorise With 42 Intra```
+- Start Docker
+- Run ```docker-compose up --build```
+- Go to ```https://localhost:80/```
+- Authorise With 42 Intra
 - Enjoy
 
 
