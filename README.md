@@ -61,6 +61,7 @@ Transcendence is a project developed as part of the final stage in the 42 curric
 ## Contributers
 
 <table>
+
 <tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/hadi14250>
@@ -76,7 +77,21 @@ Transcendence is a project developed as part of the final stage in the 42 curric
             <sub style="font-size:14px"><b>Bilal Saeed</b></sub>
         </a>
     </td>
+		<td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/muhammadganiev>
+            <img src="https://avatars.githubusercontent.com/u/47109261?v=4" width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Casper/>
+            <br />
+            <sub style="font-size:14px"><b>Faraz Khan</b></sub>
+        </a>
+    </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/Faraz7704>
+            <img src="https://avatars.githubusercontent.com/u/7315918?v=4" width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Casper/>
+            <br />
+            <sub style="font-size:14px"><b>Faraz Khan</b></sub>
+        </a>
+    </td>
+	<td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/Faraz7704>
             <img src="https://avatars.githubusercontent.com/u/7315918?v=4" width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Casper/>
             <br />
@@ -85,3 +100,4 @@ Transcendence is a project developed as part of the final stage in the 42 curric
     </td>
 </tr>
 </table>
+
