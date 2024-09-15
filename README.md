@@ -27,7 +27,9 @@ Transcendence is a project developed as part of the final stage in the 42 curric
 
 ## Distinctive Features
 
-To overcome the restriction on using front-end frameworks, we created our own, inspired by React. We named it **The Onion from Work** 
+To overcome the restriction on using front-end frameworks, we created our own, inspired by React. We named it **The Onion from Work**.
+
+<br>
 
 ## Tech Stack
 
