@@ -1,0 +1,25 @@
+.perspective-button {
+    position: absolute;
+    outline: none;
+    top: 20px;
+    right: 20px; /* Move the button to the right */
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid #FFD335;
+    justify-content: center;
+    color: #FFD335;
+    padding: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    text-transform: uppercase;
+}
+
+.perspective-button:hover {
+    background-color: #FFD335;
+    color: black;
+    border-color: transparent;
+}
