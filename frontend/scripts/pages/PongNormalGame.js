@@ -2,7 +2,7 @@ import { Component } from "../../modules/onion/index.js";
 import BackButton from "../components/BackButton.js";
 import BaseButton from "../components/BaseButton.js";
 import PlayerInfo from "../components/PlayerInfo.js";
-import PongGameBoard from "../components/PongGameboard.js";
+import PongGameBoard from "../components/PongGameBoard.js";
 import PongGameBoard3D from "../components/PongGameBoard3D.js";
 import PopUpConfirmation from "../components/PopUpConfirmation.js";
 import Winner from "./Winner.js";
