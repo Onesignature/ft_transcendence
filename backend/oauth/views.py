@@ -15,7 +15,7 @@ INTRA_AUTHORIZE_URL = "https://api.intra.42.fr/oauth/authorize"
 INTRA_TOKEN_URL = "https://api.intra.42.fr/oauth/token"
 INTRA_USER_INFO_URL = "https://api.intra.42.fr/v2/me"
 CLIENT_ID = 'u-s4t2ud-434210c1463ba59055ca161772f77b2fafc69b6e8f210036ffdb992f09b57f76'
-CLIENT_SECRET = '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'
+CLIENT_SECRET = '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'
 REDIRECT_URI = 'http://localhost:80/oauth/callback/'
 
 
