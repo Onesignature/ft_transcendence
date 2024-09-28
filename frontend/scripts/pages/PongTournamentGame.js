@@ -77,7 +77,7 @@ export default class PongTournamentGame extends Component
 
     render()
     {
-        const { scoreOne, scoreTwo, showModal, isLoading } = this.state;
+        const { scoreOne, scoreTwo, showModal, isLoading, showPerspective } = this.state;
         if (isLoading)
         {
             return String.raw`<span style="margin:2.5px;" class="d-flex spinner-border spinner-border-medium" role="status" aria-hidden="true"></span>`;
