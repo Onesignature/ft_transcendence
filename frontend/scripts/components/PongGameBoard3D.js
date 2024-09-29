@@ -79,7 +79,6 @@ export default class PongGameBoard3D extends Component
         this.createPaddles();
         this.createBall();
         this.createBorders(); // Adding borders to the canvas
-        this.createMidLine(); // Adding mid-line to the canvas
     }
 
     createPaddles() 
@@ -117,17 +116,6 @@ export default class PongGameBoard3D extends Component
         const borderMesh = new THREE.LineSegments(borderGeometry, borderMaterial);
         borderMesh.position.set(0, 0, 0); // Center the border to match the canvas exactly
         this.scene.add(borderMesh);
-    }
-
-    createMidLine() 
-    {
-        // Create a mid-line in the center
-        const midLineGeometry = new THREE.PlaneGeometry(1, 600); // Full height for mid-line
-        const midLineMaterial = new THREE.MeshBasicMaterial({ color: 0xFFD335 });
-
-        const midLineMesh = new THREE.Mesh(midLineGeometry, midLineMaterial);
-        midLineMesh.position.set(0, 0, 1); // Position at the center, z slightly forward for visibility
-        this.scene.add(midLineMesh);
     }
 
     initializeGame() 
@@ -236,12 +224,12 @@ export default class PongGameBoard3D extends Component
             let timeToWall;
             if (ballSpeedY > 0) 
             {
-                // Ball is moving downwards
+                // Ball is moving upwards
                 timeToWall = (290 - predictedY) / ballSpeedY;
             } 
             else 
             {
-                // Ball is moving upwards
+                // Ball is moving downwards
                 timeToWall = (-290 - predictedY) / ballSpeedY;
             }
     
@@ -329,13 +317,17 @@ export default class PongGameBoard3D extends Component
         if (this.ball.position.x + this.ballDirection.x > 450) // Right wall (half of 900)
         {
             this.scoreOne += 1;
-            this.displayScores();
+            // this.displayScores();
+            this.createExplosion(this.ball.position.clone());
+            this.shakeDuration = 20; // Start screen shake
             this.resetBall();
         } 
         else if (this.ball.position.x + this.ballDirection.x < -450) // Left wall (half of 900)
         {
             this.scoreTwo += 1;
-            this.displayScores();
+            // this.displayScores();
+            this.createExplosion(this.ball.position.clone());
+            this.shakeDuration = 20; // Start screen shake
             this.resetBall();
         }
     }
@@ -388,6 +380,37 @@ export default class PongGameBoard3D extends Component
         this.props.onClickUpdateScore(this.scoreOne, this.scoreTwo);
     }
 
+    createExplosion(position)
+    {
+        // Create an expanding sphere at the given position
+        const geometry = new THREE.SphereGeometry(10, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0xFF0000, transparent: true, opacity: 1 });
+        const explosion = new THREE.Mesh(geometry, material);
+        explosion.position.copy(position);
+        explosion.scale.set(1, 1, 1);
+        this.scene.add(explosion);
+        // Add to explosions array with initial properties
+        this.explosions.push({ mesh: explosion, scaleSpeed: 0.5, opacitySpeed: 0.05 });
+    }
+
+    updateExplosions()
+    {
+        for (let i = this.explosions.length - 1; i >= 0; i--) 
+        {
+            const explosion = this.explosions[i];
+            // Increase the scale
+            explosion.mesh.scale.addScalar(explosion.scaleSpeed);
+            // Decrease the opacity
+            explosion.mesh.material.opacity -= explosion.opacitySpeed;
+            // Remove explosion if fully faded
+            if (explosion.mesh.material.opacity <= 0)
+            {
+                this.scene.remove(explosion.mesh);
+                this.explosions.splice(i,1);
+            }
+        }
+    }
+
     loop() 
     {
         if (!this.running) return;
@@ -396,6 +419,25 @@ export default class PongGameBoard3D extends Component
         if (!this.freezeBall) 
         {
             this.updateBallPosition();
+        }
+
+        this.updateExplosions();
+
+        if (this.shakeDuration > 0)
+        {
+            const shakeAmount = 5; // Adjust shake intensity
+            const shakeX = (Math.random() - 0.5) * shakeAmount;
+            const shakeY = (Math.random() - 0.5) * shakeAmount;
+            const shakeZ = (Math.random() - 0.5) * shakeAmount;
+            this.camera.position.x += shakeX;
+            this.camera.position.y += shakeY;
+            this.camera.position.z += shakeZ;
+            this.shakeDuration--;
+        }
+        else
+        {
+            // Reset camera position if not shaking
+            this.camera.position.set(0, 0, 700);
         }
 
         this.renderer.render(this.scene, this.camera);
