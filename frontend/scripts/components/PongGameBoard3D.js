@@ -317,18 +317,16 @@ export default class PongGameBoard3D extends Component
         if (this.ball.position.x + this.ballDirection.x > 450) // Right wall (half of 900)
         {
             this.scoreOne += 1;
-            // this.displayScores();
             this.createExplosion(this.ball.position.clone());
             this.shakeDuration = 20; // Start screen shake
-            this.resetBall();
+            this.freezeBall = true;
         } 
         else if (this.ball.position.x + this.ballDirection.x < -450) // Left wall (half of 900)
         {
             this.scoreTwo += 1;
-            // this.displayScores();
             this.createExplosion(this.ball.position.clone());
             this.shakeDuration = 20; // Start screen shake
-            this.resetBall();
+            this.freezeBall = true;
         }
     }
 
@@ -407,6 +405,7 @@ export default class PongGameBoard3D extends Component
             {
                 this.scene.remove(explosion.mesh);
                 this.explosions.splice(i,1);
+                this.displayScores();
             }
         }
     }
