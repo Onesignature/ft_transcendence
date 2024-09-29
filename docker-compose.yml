@@ -13,6 +13,7 @@ services:
       context: ./backend
     volumes:
       - ./backend:/app
+      - ./ssl:/app/ssl
     ports:
       - "8000:8000"
     depends_on:
@@ -23,6 +24,8 @@ services:
   frontend:
     build:
       context: ./frontend
+    volumes:
+      - ./ssl:/etc/nginx/ssl
     ports:
       - "80:80"
       - "443:443"

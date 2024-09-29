@@ -7,9 +7,6 @@ RUN rm /etc/nginx/conf.d/default.conf
 # Copy the custom Nginx configuration file
 COPY nginx.conf /etc/nginx/conf.d
 
-# Copy SSL certificates
-COPY ssl /etc/nginx/ssl
-
 # Ensure the directory is clean before copying new files
 RUN rm -rf /usr/share/nginx/html/*
 
